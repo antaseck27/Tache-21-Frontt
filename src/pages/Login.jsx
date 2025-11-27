@@ -16,7 +16,6 @@ EyeSlashIcon,
 * - redirection vers /dashboard via useNavigate (pas de backend requis)
 * - Commentaires indiquant où intégrer le backend (fetch/axios)
 
-* Image (texture/gauche) : /mnt/data/IMG_4CBB6992-D35B-42BB-B611-26B53B2D38E2.jpeg
 */
 
 export default function Login() {
