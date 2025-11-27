@@ -9,6 +9,9 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
 import Transfer from "./pages/Transfer";
+import Paiement from "./pages/Paiement";
+
+
 import Profile from "./pages/Profile";
 import Support from "./pages/Support";
 
@@ -30,6 +33,8 @@ export default function App() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="transactions" element={<Transactions />} />
         <Route path="transfer" element={<Transfer />} />
+        <Route path="/paiement" element={<Paiement />} />
+
         <Route path="profile" element={<Profile />} />
         <Route path="support" element={<Support />} />
       </Route>
