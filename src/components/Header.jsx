@@ -1,69 +1,195 @@
 
 
-// Header.jsx
-import React from "react";
 
-export default function Header() {
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Bars3Icon,
+  BellIcon,
+  MoonIcon,
+  SunIcon,
+} from "@heroicons/react/24/outline";
+
+export default function Header({ onOpenSidebar }) {
+  const navigate = useNavigate();
+  const [openProfile, setOpenProfile] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+
+  /* ---------------------- Dark Mode ---------------------- */
+  const [darkMode, setDarkMode] = useState(() => {
+    const stored = localStorage.getItem("darkMode");
+    if (stored !== null) return stored === "true";
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
+
+  const profileRef = useRef();
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", darkMode);
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
+
+  /* ---------------------- Fermer dropdown si clic extérieur ---------------------- */
+  useEffect(() => {
+    const handler = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setOpenProfile(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  /* ---------------------- Déconnexion ---------------------- */
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
-    <header className="fixed top-0 left-0 right-0 h-16 bg-white shadow-sm flex items-center px-4 md:px-6 z-50">
-      
-      {/* Left — Logo + Search */}
-      <div className="flex items-center gap-3 md:gap-6">
+    <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 transition-colors duration-300">
+      <div className="max-w-[1400px] mx-auto flex items-center h-20 px-3 md:px-6 md:gap-4">
         
-        {/* Logo + App name */}
-        <div className="flex items-center gap-2 text-xl font-bold text-blue-600">
-          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white">
+        {/* Hamburger (Mobile) */}
+        <div className="md:hidden mr-3">
+          <button
+            onClick={onOpenSidebar}
+            className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+          >
+            <Bars3Icon className="w-6 h-6 text-gray-700 dark:text-gray-200" />
+          </button>
+        </div>
+
+        {/* Logo */}
+        <Link to="/dashboard" className="flex items-center gap-3 mr-3 flex-shrink-0">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-violet-600 text-white flex items-center justify-center text-lg font-bold">
             B
           </div>
-          <span className="hidden sm:block">BankApp</span>
-        </div>
+          <div className="hidden md:block">
+            <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+              BankApp
+            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-300">
+              Gestion bancaire
+            </p>
+          </div>
+        </Link>
 
-        {/* Search bar (hidden on mobile) */}
-        <div className="hidden md:block">
-          <input
-            type="search"
-            placeholder="Rechercher une transaction..."
-            className="w-60 md:w-80 lg:w-96 px-4 py-2 rounded-lg border border-gray-200 
-                       focus:ring-2 focus:ring-blue-200 transition-all"
-          />
-        </div>
-      </div>
-
-      {/* Right — Icons + Profile */}
-      <div className="ml-auto flex items-center gap-4">
-
-        {/* Example icon — hidden on xs */}
-        <button className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition">
-          <svg
-            className="w-5 h-5 text-gray-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 15s1.5-2 5-2 5 2 5 2"
+        {/* Search bar */}
+        <div className="flex-1 flex justify-center min-w-0 relative">
+          {/* Desktop */}
+          <div className="hidden md:block w-full max-w-xl">
+            <input
+              type="text"
+              placeholder="Rechercher une transaction..."
+              className="w-full pl-4 pr-12 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-300 transition"
             />
-            <circle cx="9" cy="7" r="4" strokeWidth="2" />
-          </svg>
-        </button>
-
-        {/* User info */}
-        <div className="flex items-center gap-3">
-          <div className="hidden sm:block text-sm text-gray-700">
-            Mouhamed
-            <div className="text-xs text-gray-400">Client Premium</div>
           </div>
 
-          <img
-            src="https://i.pinimg.com/1200x/99/25/63/9925634eb606190b64cb37be81fce494.jpg"
-            alt="avatar"
-            className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full object-cover border-2 border-white shadow"
-          />
+          {/* Mobile Search */}
+          {mobileSearchOpen && (
+            <div className="absolute top-20 left-0 w-full px-3 md:hidden">
+              <div className="relative">
+                <input
+                  autoFocus
+                  type="text"
+                  placeholder="Rechercher..."
+                  className="w-full pl-3 pr-10 py-2 rounded-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600"
+                />
+                <button
+                  onClick={() => setMobileSearchOpen(false)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-200"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Mobile Search Icon */}
+          <button
+            onClick={() => setMobileSearchOpen((prev) => !prev)}
+            className="md:hidden p-2 ml-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            <svg
+              className="w-5 h-5 text-gray-700 dark:text-gray-200"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 21l-4.35-4.35M10.5 18A7.5 7.5 0 1010.5 3a7.5 7.5 0 000 15z"
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* Right Actions */}
+        <div className="flex items-center gap-2 ml-3 flex-shrink-0 md:gap-3">
+
+          {/* Dark Mode */}
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+          >
+            {darkMode ? (
+              <SunIcon className="w-5 h-5 text-yellow-400" />
+            ) : (
+              <MoonIcon className="w-5 h-5 text-gray-700 dark:text-gray-200" />
+            )}
+          </button>
+
+          {/* Notifications */}
+          <button className="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+            <BellIcon className="w-5 h-5 text-gray-700 dark:text-gray-200" />
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5">
+              2
+            </span>
+          </button>
+
+          {/* Profile Dropdown */}
+          <div className="relative" ref={profileRef}>
+            <button
+              onClick={() => setOpenProfile((prev) => !prev)}
+              className="px-3 py-2 text-sm font-medium rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+            >
+              Mouhamed ▾
+            </button>
+
+            {openProfile && (
+              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-md overflow-hidden z-50">
+                <Link
+                  to="/account"
+                  onClick={() => setOpenProfile(false)}
+                  className="block px-4 py-3 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 border-b border-gray-200 dark:border-gray-700"
+                >
+                  Mon compte
+                </Link>
+
+                <Link
+                  to="/profile"
+                  onClick={() => setOpenProfile(false)}
+                  className="block px-4 py-3 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 border-b border-gray-200 dark:border-gray-700"
+                >
+                  Profil
+                </Link>
+
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-3 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200"
+                >
+                  Déconnexion
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>
   );
 }
+
+
