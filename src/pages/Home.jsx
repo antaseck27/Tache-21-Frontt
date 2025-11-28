@@ -88,6 +88,7 @@ export default function Home() {
             >
               Se connecter
             </Link>
+
           </div>
         </div>
       </div>
