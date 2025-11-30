@@ -96,7 +96,7 @@ export default function Dashboard() {
             <div className="flex justify-between items-start">
               <div>
                 <div className="text-sm opacity-90">Solde Total</div>
-                <div className="text-3xl font-semibold mt-2">{showBalance ? "24 580.45 €" : "•••• ••••"}</div>
+                <div className="text-sm font-semibold mt-2">{showBalance ? "24 580.45 €" : "•••• ••••"}</div>
                 <div className="text-sm mt-2 opacity-80">+12.5% ce mois</div>
               </div>
               <button
@@ -113,14 +113,14 @@ export default function Dashboard() {
         {/* Revenus */}
         <Card>
           <div className="text-sm text-gray-500">Revenus ce mois</div>
-          <div className="text-2xl font-semibold mt-2">7 200.00 €</div>
+          <div className="text-sm font-semibold mt-2">7 200.00 €</div>
           <div className="text-sm text-green-500 mt-2">+8.2% vs mois dernier</div>
         </Card>
 
         {/* Dépenses */}
         <Card>
           <div className="text-sm text-gray-500">Dépenses ce mois</div>
-          <div className="text-2xl font-semibold mt-2">4 500.00 €</div>
+          <div className="text-sm font-semibold mt-2">4 500.00 €</div>
           <div className="text-sm text-red-400 mt-2">-3.5% vs mois dernier</div>
         </Card>
       </div>

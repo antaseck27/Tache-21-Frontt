@@ -24,7 +24,7 @@
 body {
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 13px;;
+  font-size: 15px;;
   
 }
 
@@ -78,7 +78,7 @@ code {
    padding: 8%;
    border-radius: 50%;
    color: white;
-   font-size: 25px;
+   font-size: 20px;
 }
 
 /* les bouton qui se trouve sur les section infoPerso et securite*/
