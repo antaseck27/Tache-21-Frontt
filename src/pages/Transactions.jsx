@@ -49,7 +49,7 @@ export default function Transactions() {
         <div className="bg-white  rounded-xl p-5" style={{boxShadow:"2px 0 12px rgb(172, 171, 171)"}}>
           <p className="text-gray-700 font-semibold">
             Total Transactions <br />
-            <span className="text-2xl font-bold text-blue-600">{filteredTransactions.length}</span>
+            <span className="text-sm font-bold text-blue-600">{filteredTransactions.length}</span>
             <br />
             <span className="text-gray-500 text-sm">Ce mois</span>
           </p>
@@ -57,7 +57,7 @@ export default function Transactions() {
         <div className="bg-white  rounded-xl p-5" style={{boxShadow:"2px 0 12px rgb(172, 171, 171)"}}>
           <p className="text-gray-700 font-semibold">
             Total Revenus <br />
-            <span className="text-2xl font-bold text-green-600">+{totalRevenus.toFixed(2)} €</span>
+            <span className="text-sm font-bold text-green-600">+{totalRevenus.toFixed(2)} €</span>
             <br />
             <span className="text-gray-500 text-sm">Ce mois</span>
           </p>
