@@ -15,13 +15,23 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 
+// export default function Sidebar({ open, onClose }) {
+//   const linkClass = ({ isActive }) =>
+//     `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+//       isActive
+//         ? "bg-gradient-to-r from-blue-600 to-violet-600 text-white"
+//         : "text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+//     }`;
+
 export default function Sidebar({ open, onClose }) {
   const linkClass = ({ isActive }) =>
     `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
       isActive
-        ? "bg-gradient-to-r from-blue-600 to-violet-600 text-white"
-        : "text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+        ? "bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] text-[#f4efe6]"
+        : "text-[#6b5a49] hover:bg-[#d8c4a8]/30"
     }`;
+
+
 
   // Fonction pour fermer le drawer sur mobile au clic d'un lien
   const handleLinkClick = () => {
@@ -50,9 +60,14 @@ export default function Sidebar({ open, onClose }) {
         >
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-violet-600 flex items-center justify-center text-white">
+              {/* <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-violet-600 flex items-center justify-center text-white">
                 B
-              </div>
+              </div> */}
+
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] flex items-center justify-center text-white font-semibold shadow-sm">
+  B
+</div>
+
               <div>
                 <div className="text-lg font-semibold text-gray-800 dark:text-gray-100">
                   BankApp
@@ -120,7 +135,7 @@ export default function Sidebar({ open, onClose }) {
       {/* Desktop fixed sidebar */}
       <aside className="hidden md:fixed md:inset-y-0 md:left-0 md:w-72 md:bg-white  md:p-6 md:overflow-y-auto md:flex md:flex-col">
         <div>
-          <div className="flex items-center gap-3 mb-8">
+          {/* <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-violet-600 flex items-center justify-center text-white">
               B
             </div>
@@ -132,7 +147,21 @@ export default function Sidebar({ open, onClose }) {
                 Gestion bancaire
               </div>
             </div>
-          </div>
+          </div> */}
+          <div className="flex items-center gap-3 mb-8">
+  <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] flex items-center justify-center text-white font-semibold shadow-sm">
+    B
+  </div>
+  <div>
+    <div className="text-lg font-semibold text-[#6b5a49]">
+      BankApp
+    </div>
+    <div className="text-xs text-[#8f7e6b]">
+      Gestion bancaire
+    </div>
+  </div>
+</div>
+
 
           <nav className="space-y-2">
             <NavLink to="/dashboard" className={linkClass}>

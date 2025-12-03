@@ -11,7 +11,7 @@ export default function AppLayout() {
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
   return (
-    <div className="min-h-screen flex bg-gray-100">
+    <div className="min-h-screen flex  bg-[#f7f3ee] text-[#6b5a49]">
       {/* Sidebar avec toggle */}
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 

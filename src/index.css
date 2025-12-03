@@ -11,7 +11,7 @@
   scrollbar-width: none;
 }
 
-:root {
+/* :root {
   --gradient-blue-purple: linear-gradient(90deg, #2563eb, #9333ea);
   --gradient-blue-cyan: linear-gradient(90deg, #3b82f6, #06b6d4);
   --gradient-green-emerald: linear-gradient(90deg, #22c55e, #10b981);
@@ -19,14 +19,72 @@
   --gradient-pink-purple: linear-gradient(90deg, #ec4899, #9333ea);
   --gradient-pink-dark: linear-gradient(90deg, #ec4899, #f43f5e);
   --gradient-purple-pink: linear-gradient(90deg, #9333ea, #ec4899);
+} */
+
+:root {
+  --gradient-beige-gold: linear-gradient(90deg, #d6c7b4, #bfa98a);
+  --gradient-beige-brown: linear-gradient(90deg, #e8dcc7, #c1a381);
+  --gradient-beige-rose: linear-gradient(90deg, #e7d8c7, #d4b8a5);
+  --gradient-beige-soft: linear-gradient(90deg, #f3e8d7, #dfcdb9);
+  --gradient-beige-sand: linear-gradient(90deg, #eadfcf, #d1bfa8);
 }
 
-body {
+
+@keyframes floatY {
+0% { transform: translateY(0px); }
+50% { transform: translateY(-10px); }
+100% { transform: translateY(0px); }
+}
+.animate-float {
+animation: floatY 6s ease-in-out infinite;
+}
+
+/* Fade up on load */
+@keyframes fadeUp {
+0% { opacity: 0; transform: translateY(12px); }
+100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+animation: fadeUp 700ms cubic-bezier(.2,.9,.3,1) both;
+}
+
+/* Small pulse (already similar to tailwind's) */
+@keyframes tinyPulse {
+0% { transform: scale(1); opacity: 1;}
+50% { transform: scale(1.08); opacity: .9;}
+100% { transform: scale(1); opacity: 1;}
+}
+.pulse-soft {
+animation: tinyPulse 2.6s ease-in-out infinite;
+}
+
+/* Tailwind micro utility fallback for beige colors if you didn't add custom palette */
+.bg-beige-50 { background-color: #f8f1e7; }
+.text-beige-900 { color: #3f352c; }
+.text-beige-700 { color: #7b6f63; }
+.bg-beige-100 { background-color: #fff6ee; }
+.border-beige-200 { border-color: #efe1d3; }
+.prose-beige :where(h1,h2,h3,h4,h5,h6){ color: #3f352c; }
+
+
+/* body {
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: linear-gradient(90deg, #fce9d1, #bfa98a);
   font-size: 15px;;
   
+} */
+/* couleur principale du body */
+body {
+  background-color: #f7f3ee; /* beige très clair, style crème */
+  color: #6b5a49; /* texte principal beige foncé */
+  font-family: 'Inter', sans-serif; /* moderne et lisible */
 }
+body {
+  @apply bg-[#f7f3ee] text-[#6b5a49];
+}
+
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

@@ -49,7 +49,7 @@ export default function Header({ onOpenSidebar }) {
   return (
     <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 transition-colors duration-300">
       <div className="max-w-[1400px] mx-auto flex items-center h-20 px-3 md:px-6 md:gap-4">
-        
+
         {/* Hamburger (Mobile) */}
         <div className="md:hidden mr-3">
           <button
@@ -62,7 +62,7 @@ export default function Header({ onOpenSidebar }) {
 
         {/* Logo */}
         <Link to="/dashboard" className="flex items-center gap-3 mr-3 flex-shrink-0">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-violet-600 text-white flex items-center justify-center text-lg font-bold">
+          {/* <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-violet-600 text-white flex items-center justify-center text-lg font-bold">
             B
           </div>
           <div className="hidden md:block">
@@ -72,7 +72,23 @@ export default function Header({ onOpenSidebar }) {
             <p className="text-xs text-gray-500 dark:text-gray-300">
               Gestion bancaire
             </p>
+          </div> */}
+
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] flex items-center justify-center text-white font-semibold shadow-sm">
+              BR
+            </div>
+            <div>
+              <div className="text-lg font-semibold text-[#6b5a49]">
+                BankRewmi
+              </div>
+              <div className="text-xs text-[#8f7e6b]">
+                {/* Gestion bancaire */}
+                Sa Karàngué Koppar
+              </div>
+            </div>
           </div>
+
         </Link>
 
         {/* Search bar */}
@@ -82,7 +98,7 @@ export default function Header({ onOpenSidebar }) {
             <input
               type="text"
               placeholder="Rechercher une transaction..."
-              className="w-full pl-4 pr-12 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-300 transition"
+              className="w-full pl-4 pr-12 py-3 rounded-xl  bg-[#f7f3ee] text-[#6b5a49] border border-gray-200 focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-300 transition"
             />
           </div>
 
@@ -154,7 +170,7 @@ export default function Header({ onOpenSidebar }) {
           <div className="relative" ref={profileRef}>
             <button
               onClick={() => setOpenProfile((prev) => !prev)}
-              className="px-3 py-2 text-sm font-medium rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+              className="px-3 py-2 text-sm font-medium rounded-full  bg-[#f7f3ee] text-[#6b5a49] dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
             >
               Mouhamed ▾
             </button>

@@ -10,6 +10,8 @@ import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
 import Transfer from "./pages/Transfer";
 import Paiement from "./pages/Paiement";
+import ForgotPassword from "./pages/ForgotPassword";
+
 
 
 import Profile from "./pages/Profile";
@@ -23,10 +25,13 @@ const isLoggedIn = () => localStorage.getItem("token") ? true : false;
 export default function App() {
   return (
     <Routes>
+      kp^()
       {/* Pages publiques */}
       <Route path="/" element={<Home />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/forgot" element={<ForgotPassword />} />
+
 
       {/* Route protégée */}
       <Route path="/" element={isLoggedIn() ? <AppLayout /> : <Navigate to="/login" replace />}>
