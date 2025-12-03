@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import Input from "../components/input";
 
 export default function Support() {
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+
   const faqs = [
     {
       question: "Comment effectuer un virement ?",
@@ -8,7 +13,7 @@ export default function Support() {
         "Pour effectuer un virement, rendez-vous dans la section 'Transfert', choisissez le type de virement (interne ou externe), remplissez les informations nécessaires (destinataire, montant, description) et validez. Les virements internes sont instantanés, les virements SEPA peuvent prendre 1 à 3 jours ouvrés.",
     },
     {
-      question: "Comment securiser un compte?",
+      question: "Comment sécuriser un compte?",
       answer:
         "Nous vous recommandons d'activer l'authentification à deux facteurs (2FA) dans les paramètres de sécurité. Vous pouvez également activer l'authentification biométrique si votre appareil le permet. Assurez-vous d'utiliser un mot de passe fort et unique, et changez-le régulièrement.",
     },
@@ -23,7 +28,7 @@ export default function Support() {
         "Vous pouvez commander une nouvelle carte dans la section 'Dashboard' en cliquant sur 'Ajouter une carte'. Sélectionnez le type de carte souhaité, confirmez votre adresse de livraison et validez. Votre nouvelle carte sera livrée sous 5 à 7 jours ouvrés.",
     },
     {
-      question: "Comment consulter mon historique de transction ?",
+      question: "Comment consulter mon historique de transaction ?",
       answer:
         "Rendez-vous dans la section 'Transactions' où vous trouverez l'historique complet de toutes vos opérations. Vous pouvez filtrer par date, type (revenus/dépenses), catégorie et utiliser la barre de recherche pour trouver une transaction spécifique.",
     },
@@ -50,12 +55,23 @@ export default function Support() {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Email:", email);
+    console.log("Sujet:", subject);
+    console.log("Message:", message);
+    // Réinitialiser les champs
+    setEmail("");
+    setSubject("");
+    setMessage("");
+  };
+
   return (
-    <div className="p-6 max-w-7xl mx-auto bg-gray-100 min-h-screen">
+    <div className="p-6 max-w-7xl mx-auto min-h-screen">
       {/* Header */}
       <div className="text-center mb-10">
-        <h1 className="text-3xl">Support & Aide</h1>
-        <p>Nous sommes là pour vous aider 24/7</p>
+        <h1 className="text-3xl font-semibold">Support & Aide</h1>
+        <p className="text-gray-600 animate-wiggle">Nous sommes là pour vous aider 24/7</p>
       </div>
 
       {/* Contact cards */}
@@ -84,7 +100,7 @@ export default function Support() {
           </div>
           <p className="text-lg font-semibold">Par email</p>
           <p className="text-sm text-gray-500 mb-2">Réponse sous 24h</p>
-          <p className="text-green-600 font-medium">support@bankapp.com</p>
+          <p className="text-green-600 font-medium">bankrewmi@gmail.com</p>
         </div>
       </div>
 
@@ -98,18 +114,10 @@ export default function Support() {
 
           <div className="divide-y">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="py-3 cursor-pointer"
-                onClick={() => toggleFAQ(index)}
-              >
+              <div key={index} className="py-3 cursor-pointer" onClick={() => toggleFAQ(index)}>
                 <div className="flex justify-between items-center">
                   <span>{faq.question}</span>
-                  <i
-                    className={`bi bi-chevron-down transition-transform ${
-                      openIndex === index ? "rotate-180" : ""
-                    }`}
-                  ></i>
+                  <i className={`bi bi-chevron-down transition-transform ${ openIndex === index ? "rotate-180" : "" }`}></i>
                 </div>
                 <div
                   className={`mt-2 text-sm text-gray-600 ${
@@ -142,36 +150,32 @@ export default function Support() {
           {/* Contact form */}
           <div className="rounded-xl bg-white shadow-sm p-6">
             <h2 className="text-lg font-semibold mb-4">Nous contacter</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm text-gray-600">Email</label>
-                <input
-                  type="email"
-                  className="w-full border rounded-lg px-3 py-2 mt-1 shadow-sm"
-                />
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <Input label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Entrez votre email"/>
+
+              <Input label="Sujet" value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Sujet du message"/>
+
+              <div className="flex flex-col gap-2 my-2 w-full">
+                <label className="font-medium text-sm">Message</label>
+                <textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Votre message" rows={4} className="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" />
               </div>
-              <div>
-                <label className="text-sm text-gray-600">Sujet</label>
-                <input type="text" className="w-full border rounded-lg px-3 py-2 mt-1 shadow-sm"/>
-              </div>
-              <div>
-                <label className="text-sm text-gray-600">Message</label>
-                <textarea className="w-full border rounded-lg px-3 py-2 mt-1 shadow-sm"rows="4"></textarea>
-              </div>
-              <button className="w-full bg-gradient-to-r from-blue-600 to-violet-600 text-white py-3 rounded-lg flex items-center justify-center gap-2"><i className="bi bi-send"></i> Envoyer le message</button>
-            </div>
+
+              <button type="submit" className="w-full bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] text-[#f4efe6] text-white py-3 rounded-lg flex items-center justify-center gap-2">
+                <i className="bi bi-send"></i> Envoyer le message
+              </button>
+            </form>
           </div>
         </div>
       </div>
 
       {/* Ressources utiles */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 rounded-xl bg-white shadow-sm p-6 mt-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 rounded-xl bg-white shadow-sm p-6 mt-6">
         <div className="col-span-1 lg:col-span-3">
           <h1 className="text-xl font-semibold mb-4">Ressources utiles</h1>
         </div>
 
         <div className="flex items-start gap-3 rounded-xl bg-gray-100 shadow-sm p-4">
-          <i class="fa-regular fa-circle-question text-xl text-blue-500 p-2"></i>
+          <i className="fa-regular fa-circle-question text-xl text-blue-500 p-2"></i>
           <div>
             <h2 className="font-semibold">Guide d'utilisation</h2>
             <p className="text-sm text-gray-600">
@@ -180,17 +184,10 @@ export default function Support() {
           </div>
         </div>
         <div className="flex items-start gap-3 rounded-xl bg-gray-100 shadow-sm p-4">
-          <i class="fa-regular fa-circle-play text-xl text-purple-500 p-2"></i>
+          <i className="fa-regular fa-circle-play text-xl text-purple-500 p-2"></i>
           <div>
             <h2 className="font-semibold">Tutoriels vidéo</h2>
             <p className="text-sm text-gray-600">Apprenez avec nos tutoriels pas à pas</p>
-          </div>
-        </div>
-        <div className="flex items-start gap-3 rounded-xl bg-gray-100 shadow-sm p-4">
-          <i class="fa-solid fa-newspaper text-xl text-green-500 p-2"></i>
-          <div>
-            <h2 className="font-semibold">Blog et actualités</h2>
-            <p className="text-sm text-gray-600">Restez informé des dernières nouveautés</p>
           </div>
         </div>
       </div>
