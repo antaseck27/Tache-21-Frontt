@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import Input from "../components/input";
+import ChatBot from "../components/chatbot";
 
 export default function Support() {
+  const [showChat, setShowChat] = useState(false);
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [openIndex, setOpenIndex] = useState(null);
 
   const faqs = [
     {
@@ -49,8 +52,6 @@ export default function Support() {
     },
   ];
 
-  const [openIndex, setOpenIndex] = useState(null);
-
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
@@ -60,7 +61,6 @@ export default function Support() {
     console.log("Email:", email);
     console.log("Sujet:", subject);
     console.log("Message:", message);
-    // Réinitialiser les champs
     setEmail("");
     setSubject("");
     setMessage("");
@@ -71,11 +71,14 @@ export default function Support() {
       {/* Header */}
       <div className="text-center mb-10">
         <h1 className="text-3xl font-semibold">Support & Aide</h1>
-        <p className="text-gray-600 animate-wiggle">Nous sommes là pour vous aider 24/7</p>
+        <p className="text-gray-600 animate-wiggle">
+          Nous sommes là pour vous aider 24/7
+        </p>
       </div>
 
       {/* Contact cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        {/* Téléphone */}
         <div className="rounded-xl p-6 shadow-sm bg-white text-center flex flex-col items-center">
           <div className="text-4xl text-blue-500 mb-3">
             <i className="bi bi-telephone"></i>
@@ -84,16 +87,24 @@ export default function Support() {
           <p className="text-sm text-gray-500 mb-2">Disponible 24h/24, 7j/7</p>
           <p className="text-blue-600 font-medium">0800 XXX XXX</p>
         </div>
+
+        {/* Chat en direct */}
         <div className="rounded-xl p-6 shadow-sm bg-white text-center flex flex-col items-center">
           <div className="text-4xl text-purple-500 mb-3">
             <i className="bi bi-chat-dots"></i>
           </div>
           <p className="text-lg font-semibold">Chat en direct</p>
           <p className="text-sm text-gray-500 mb-2">Réponse en moins de 2 min</p>
-          <a href="#" className="text-purple-600 font-medium underline">
+
+          <button
+            onClick={() => setShowChat(true)}
+            className="text-purple-600 font-medium underline"
+          >
             Démarrer le chat
-          </a>
+          </button>
         </div>
+
+        {/* Email */}
         <div className="rounded-xl p-6 shadow-sm bg-white text-center flex flex-col items-center">
           <div className="text-4xl text-green-500 mb-3">
             <i className="bi bi-envelope"></i>
@@ -106,6 +117,7 @@ export default function Support() {
 
       {/* FAQ and sidebar */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* FAQ */}
         <div className="lg:col-span-2 rounded-xl bg-white shadow-sm p-6">
           <h2 className="text-lg font-semibold mb-1">Questions fréquentes</h2>
           <p className="text-sm text-gray-500 mb-4">
@@ -117,13 +129,9 @@ export default function Support() {
               <div key={index} className="py-3 cursor-pointer" onClick={() => toggleFAQ(index)}>
                 <div className="flex justify-between items-center">
                   <span>{faq.question}</span>
-                  <i className={`bi bi-chevron-down transition-transform ${ openIndex === index ? "rotate-180" : "" }`}></i>
+                  <i className={`bi bi-chevron-down transition-transform ${openIndex === index ? "rotate-180" : "" }`}></i>
                 </div>
-                <div
-                  className={`mt-2 text-sm text-gray-600 ${
-                    openIndex === index ? "" : "hidden"
-                  }`}
-                >
+                <div className={`mt-2 text-sm text-gray-600 ${ openIndex === index ? "" : "hidden"}`}>
                   {faq.answer}
                 </div>
               </div>
@@ -151,13 +159,12 @@ export default function Support() {
           <div className="rounded-xl bg-white shadow-sm p-6">
             <h2 className="text-lg font-semibold mb-4">Nous contacter</h2>
             <form className="space-y-4" onSubmit={handleSubmit}>
-              <Input label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Entrez votre email"/>
+              <Input label="Email" type="email"value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Entrez votre email"/>
 
               <Input label="Sujet" value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Sujet du message"/>
-
               <div className="flex flex-col gap-2 my-2 w-full">
                 <label className="font-medium text-sm">Message</label>
-                <textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Votre message" rows={4} className="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" />
+                <textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Votre message" rows={4} className="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"/>
               </div>
 
               <button type="submit" className="w-full bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] text-[#f4efe6] text-white py-3 rounded-lg flex items-center justify-center gap-2">
@@ -170,9 +177,9 @@ export default function Support() {
 
       {/* Ressources utiles */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 rounded-xl bg-white shadow-sm p-6 mt-6">
-        <div className="col-span-1 lg:col-span-3">
-          <h1 className="text-xl font-semibold mb-4">Ressources utiles</h1>
-        </div>
+        <h1 className="text-xl font-semibold mb-4 col-span-2">
+          Ressources utiles
+        </h1>
 
         <div className="flex items-start gap-3 rounded-xl bg-gray-100 shadow-sm p-4">
           <i className="fa-regular fa-circle-question text-xl text-blue-500 p-2"></i>
@@ -183,14 +190,33 @@ export default function Support() {
             </p>
           </div>
         </div>
+
         <div className="flex items-start gap-3 rounded-xl bg-gray-100 shadow-sm p-4">
           <i className="fa-regular fa-circle-play text-xl text-purple-500 p-2"></i>
           <div>
             <h2 className="font-semibold">Tutoriels vidéo</h2>
-            <p className="text-sm text-gray-600">Apprenez avec nos tutoriels pas à pas</p>
+            <p className="text-sm text-gray-600">
+              Apprenez avec nos tutoriels pas à pas
+            </p>
           </div>
         </div>
       </div>
+
+      {showChat && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center">
+    {/* Arrière-plan */}
+    <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setShowChat(false)}></div>
+    {/* Fenêtre ChatBot */}
+    <div className="relative bg-white rounded-xl shadow-xl w-[90%] max-w-md p-6 z-10 flex flex-col">
+      {/* Bouton fermer */}
+      <button onClick={() => setShowChat(false)} className="absolute top-3 right-3 text-gray-600 hover:text-black">
+        <i class="fa-solid fa-x"></i>
+      </button>
+
+      <ChatBot />
     </div>
+  </div>
+)}
+ </div>
   );
 }
