@@ -28,7 +28,7 @@ export default function Sidebar({ open, onClose }) {
     `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
       isActive
         ? "bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] text-[#f4efe6]"
-        : "text-[#6b5a49] hover:bg-[#d8c4a8]/30"
+        : "text-[#6b5a49] hover:bg-[#d8c4a8]/30" 
     }`;
 
 
@@ -73,14 +73,13 @@ export default function Sidebar({ open, onClose }) {
                   BankApp
                 </div>
                 <div className="text-xs text-gray-400 dark:text-gray-300">
-                  Gestion bancaire
+                  Gestion bancaire 
                 </div>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
+              className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
               <XMarkIcon className="w-5 h-5 text-gray-600 dark:text-gray-200" />
             </button>
           </div>
