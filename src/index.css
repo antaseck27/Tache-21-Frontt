@@ -61,7 +61,7 @@ animation: tinyPulse 2.6s ease-in-out infinite;
 /* Tailwind micro utility fallback for beige colors if you didn't add custom palette */
 .bg-beige-50 { background-color: #f8f1e7; }
 .text-beige-900 { color: #3f352c; }
-.text-beige-700 { color: #7b6f63; }
+.text-beige-700 { color: #725d47; }
 .bg-beige-100 { background-color: #fff6ee; }
 .border-beige-200 { border-color: #efe1d3; }
 .prose-beige :where(h1,h2,h3,h4,h5,h6){ color: #3f352c; }
@@ -83,6 +83,11 @@ body {
 body {
   @apply bg-[#f7f3ee] text-[#6b5a49];
 }
+h1 {
+  color: #f8f6f4; /* couleur principale du texte */
+  text-shadow: 0  0 32px rgb(65, 48, 28);
+}
+
 
 
 

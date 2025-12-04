@@ -49,7 +49,7 @@ export default function SignupCompact() {
             <div className="w-14 h-14 rounded-lg bg-white/20 flex items-center justify-center">
               <BanknotesIcon className="w-9 h-9 text-[#6b5a49]" />
             </div>
-            <h1 className="text-4xl font-semibold">BankApp</h1>
+            <h2 className="text-4xl font-semibold">BankRewmi</h2>
           </div>
           <p className="text-base text-[#6b5a49]/90 mb-4">
             Gérez vos finances simplement avec notre plateforme moderne.
@@ -120,6 +120,8 @@ export default function SignupCompact() {
               onChange={(e) => updateField("dateNaissance", e.value)}
               showIcon
               dateFormat="dd/mm/yy"
+               placeholder="Date de naissance"
+
               className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] text-sm"
               
             />

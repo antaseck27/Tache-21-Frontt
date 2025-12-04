@@ -37,7 +37,7 @@ export default function Dashboard() {
     <div className="space-y-6">
       {/* Header Welcome */}
       <div className="p-6 bg-gradient-to-r from-[#f3e8d7] to-[#e8dcc7] rounded-xl shadow-md">
-        <h1 className="text-3xl font-semibold text-[#8f7e6b]">Bienvenue, Mouhamed</h1>
+        <h2 className="text-3xl font-semibold text-[#8f7e6b]">Bienvenue, Mouhamed</h2>
         <p className="text-sm text-[#6b5a49] mt-1">Voici un aperçu de votre situation financière</p>
       </div>
 
@@ -89,8 +89,8 @@ export default function Dashboard() {
             <div className="text-xs opacity-80">{cards[cardIndex].type}</div>
             <div className="text-lg mt-3">{cards[cardIndex].numero}</div>
           </div>
-          <button onClick={prevCard} className="absolute top-1/2 left-0 transform -translate-y-1/2 p-2 text-blue-600"><FiChevronLeft size={24} /></button>
-          <button onClick={nextCard} className="absolute top-1/2 right-0 transform -translate-y-1/2 p-2 text-blue-600"><FiChevronRight size={24} /></button>
+          <button onClick={prevCard} className="absolute top-1/2 left-0 transform -translate-y-1/2 p-2 text-white"><FiChevronLeft size={24} /></button>
+          <button onClick={nextCard} className="absolute top-1/2 right-0 transform -translate-y-1/2 p-2 text-white"><FiChevronRight size={24} /></button>
         </Card>
 
         <div className="lg:col-span-2">
@@ -115,7 +115,7 @@ export default function Dashboard() {
                   <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center"><FiCreditCard /></div>
                   <div>
                     <div className="font-medium">Essence Total</div>
-                    <div className="text-xs text-gray-400">14 Nov, 2025</div>
+                    <div className="text-xs text-zhit-400">14 Nov, 2025</div>
                   </div>
                 </div>
                 <div className="text-red-500">-65.00 €</div>
@@ -138,9 +138,9 @@ export default function Dashboard() {
       {/* Actions */}
       <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[{icon: FiSend, label:"Envoyer", from:"#b9a896", to:"#8f7e6b"},
-          {icon: FiDownload, label:"Recevoir", from:"#d4c2a8", to:"#bfa98a"},
+          {icon: FiDownload, label:"Recevoir", from:"#b9a896", to:"#8f7e6b"},
           {icon: FiCreditCard, label:"Payer", from:"#8f7e6b", to:"#6b5a49"},
-          {icon: FiSave, label:"Épargner", from:"#bfa98a", to:"#a78c6a"}].map((item, i)=>(
+          {icon: FiSave, label:"Épargner", from:"#bfa98a", to:"#8f7e6b"}].map((item, i)=>(
           <div key={i} className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col items-center">
             <div className={`bg-gradient-to-br from-[${item.from}] to-[${item.to}] text-[#f4efe6] w-12 h-12 rounded-lg flex items-center justify-center mb-2`}>
               <item.icon />
