@@ -67,9 +67,9 @@ export default function Support() {
     <div className="p-4 sm:p-6 max-w-7xl mx-auto min-h-screen">
       {/* Header */}
       <div className="text-center mb-10">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold">
           Support & Aide
-        </h1>
+        </h2>
         <p className="text-gray-600 animate-wiggle text-sm md:text-base">
           Nous sommes là pour vous aider 24/7
         </p>
@@ -207,9 +207,9 @@ export default function Support() {
 
       {/* Ressources utiles */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 rounded-xl bg-white shadow-sm p-6 mt-6">
-        <h1 className="text-xl font-semibold mb-4 col-span-2">
+        <h3 className="text-xl font-semibold mb-4 col-span-2">
           Ressources utiles
-        </h1>
+        </h3>
 
         <div className="flex items-start gap-3 rounded-xl bg-gray-100 shadow-sm p-4">
           <i className="fa-regular fa-circle-question text-xl text-blue-500 p-2"></i>

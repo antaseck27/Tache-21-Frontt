@@ -6,6 +6,10 @@ export default function Transactions() {
   const [typeFilter, setTypeFilter] = useState("Tous");
   const [categoryFilter, setCategoryFilter] = useState("Tous");
 
+  // Ajoute cet état en haut de ton composant
+  const [visibleCount, setVisibleCount] = useState(3);
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const transactions = [
     { id: 1, title: "Supermarché Carrefour", category: "Alimentation", type: "Dépense", amount: -85.5, date: "2025-11-17 14:30", icon: <i class="fa-solid fa-cart-shopping"></i>, status: "Complété" },
     { id: 2, title: "Salaire - Entreprise XYZ", category: "Revenus", type: "Revenu", amount: 32000, date: "2025-11-16 09:00", icon: <i class="fa-brands fa-shopify"></i>, status: "Complété" },
@@ -39,30 +43,33 @@ export default function Transactions() {
     .reduce((acc, t) => acc + t.amount, 0);
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 bg-gray-50 min-h-screen font-bold" style={{color:"#6b5a49" }}>
 
-{/* HEADER : mon titre*/}
-      <h1 className="text-3xl font-bold">Transactions</h1>
-      <p className="mb-6">Voici la liste de vos transactions récentes.</p>
+{/* .....................HEADER : mon titre.............................*/}
 
-{/* SECTION 1 : mon 1er section*/}
+      <h2 className="text-3xl font-bold">Transactions</h2>
+      <p className="mb-6 text-sm text-gray-500">Voici la liste de vos transactions récentes.</p>
+
+
+{/* .....................SECTION 1 : mon 1er section ......................................*/}
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 section1">
 
-        <div className="rounded-xl p-5 cart" style={{boxShadow:"2px 0 12px rgb(172, 171, 171)", background:"#e7d8c7"}}>
+        <div className="rounded-xl p-5 cart" style={{boxShadow:"2px 0 12px rgb(172, 171, 171)", background: "var(--gradient-beige-gold)", color:"black"}}>
           <p className="font-semibold"> Total Transactions <br />
             <span className=" font-bold text-blue-600">{filteredTransactions.length}</span>   <br />           
             <span className="text-gray-500 text-sm">Ce mois</span>
           </p>
         </div>
 
-        <div className="rounded-xl p-5 cart" style={{boxShadow:"2px 0 12px rgb(172, 171, 171)", background:"#e7d8c7"}}>
+        <div className="rounded-xl p-5 cart" style={{boxShadow:"2px 0 12px rgb(172, 171, 171)", background: "var(--gradient-beige-gold)", color:"black"}}>
           <p className="font-semibold">Total Revenus <br />
             <span className=" font-bold text-green-600">+{totalRevenus.toFixed(2)} €</span> <br />
             <span className="text-gray-500 text-sm">Ce mois</span>
           </p>
         </div>
 
-        <div className="rounded-xl p-5 cart" style={{boxShadow:"2px 0 12px rgb(172, 171, 171)", background:"#e7d8c7"}}>
+        <div className="rounded-xl p-5 cart" style={{boxShadow:"2px 0 12px rgb(172, 171, 171)", background: "var(--gradient-beige-gold)", color:"black"}}>
           <p className="font-semibold"> Total Dépenses <br />
             <span className=" font-bold text-red-600">{totalDepenses.toFixed(2)} €</span>  <br />
             <span className="text-gray-500 text-sm">Ce mois</span>
@@ -71,7 +78,9 @@ export default function Transactions() {
 
       </div>
 
-{/* SECTION 2 : mon 2er section - barre de recherche Filtres */}
+
+{/* .....................SECTION 2 : mon 2er section - barre de recherche Filtres ......................*/}
+
       <div className="flex flex-wrap gap-4 mb-6">
         <input type="text" placeholder="Rechercher une transaction" className="border border-gray-300 rounded-lg p-2 flex-1"
           onChange={(e) => setSearch(e.target.value)}/>
@@ -94,44 +103,63 @@ export default function Transactions() {
         </select>
       </div>
 
-{/* SECTION 3 : mon 2er section - Liste des transactions */}
-      <h5 className="text-lg font-semibold text-gray-900 mb-4">
-        Liste des transactions ({filteredTransactions.length})
-      </h5>
 
+{/* .................... SECTION 3 : Liste des transactions ......................... */}
+
+      <h5 className="text-lg font-semibold mb-4"> Liste des transactions ({filteredTransactions.length})</h5>
+    
       <div className="section3 space-y-4">
-        {filteredTransactions.map((t) => (
-            <div key={t.id} className="liste rounded-xl  p-4 flex items-center justify-between"
-            style={{boxShadow:"2px 0 12px rgb(172, 171, 171)"}}>
 
-    {/* les Icones */}
+{/* .....On n'affiche que les trois 1er transactions..... */}
+      {filteredTransactions.slice(0, visibleCount).map((t) => (
+          <div key={t.id} className="liste rounded-xl p-4 flex items-center justify-between" style={{ boxShadow: "2px 0 12px rgb(172, 171, 171)" }}>
+              
+    {/* .........Les icones............ */}
             <div className="flex-shrink-0">
-              <span className="text-2xl bg-gray-100 p-2 rounded-full">{t.icon}</span>
+              <span className="text-2xl p-2 rounded-full font-bold" style={{ background: "#e8dcc7" }}>{t.icon} </span>
             </div>
 
-    {/* les Détails */}
+    {/*.......... détails ...............*/}
             <div className="flex-1 mx-4">
-              <p className="text-gray-900 font-medium flex flex-wrap items-center">{t.title}
-                 <span 
-                 className={`ml-3 px-2 py-1 rounded-full text-xs font-semibold 
-                 ${ t.status === "Complété" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>
-                 {t.status}
-                </span>
-              </p>
+                <p className="font-bold flex flex-wrap items-center">{t.title}   
+                  <span className={`ml-3 px-2 py-1 rounded-full text-xs font-semibold 
+                        ${t.status === "Complété" ? "bg-green-100 text-green-700": "bg-red-100 text-red-700"}`}>
+                          {t.status}</span>
+                </p>
 
-              <p className="text-gray-500 text-sm mt-1"> {t.date} <span className="mx-2">-</span> {t.category}</p>
+                <p className="text-gray-400 text-sm mt-1"> {t.date} <span className="mx-2">-</span> {t.category} </p>
             </div>
 
-    {/* Les Montants */}
-            <div 
-              className={`flex-shrink-0 text-right font-bold ${t.amount > 0 ? "text-green-600" : "text-red-600"}`}>
-              {t.amount > 0 ? "+" : ""}{t.amount.toFixed(2)} €
+    {/* .......... montant ..............*/}
+            <div className={`flex-shrink-0 text-right font-bold  ${t.amount > 0 ? "text-green-600" : "text-red-600"}`}>
+              {t.amount > 0 ? "+" : ""}
+              {t.amount.toFixed(2)} €
             </div>
           </div>
         ))}
       </div>
+
+    {/* .......... Bouton Voir........... + */}
+        {/* {visibleCount < filteredTransactions.length && ( */}
+        <div className="text-center mt-4 p-2" style={{ boxShadow: "2px 0 12px rgb(172, 171, 171)" }}>
+          {!isExpanded ? (
+          // BOUTON VOIR PLUS
+          <button onClick={() => {
+                  setVisibleCount(filteredTransactions.length); // afficher tout
+                  setIsExpanded(true);
+                }}className="px-4 py-2 font-semibold">Voir + </button>
+
+                ) : (
+
+          // BOUTON MASQUER
+          <button onClick={() => {
+                  setVisibleCount(3); // revenir à 6
+                  setIsExpanded(false);
+                }}className="px-4 py-2 font-semibold">Masquer</button>
+        )}
+      </div>
     </div>
   );
-}
+ }
 
 

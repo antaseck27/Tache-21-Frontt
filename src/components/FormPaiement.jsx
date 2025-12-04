@@ -21,8 +21,7 @@ const FormPaiement = () => {
   const [newNom, setNewNom] = useState("");
   const [newType, setNewType] = useState("");
 
-
-  // ➤ Ajouter un paiement manuel
+// ➤ Ajouter un paiement manuel
   const handlePaiement = () => {
     if (!beneficiaireInput || !montant)
       return alert("Veuillez remplir les champs obligatoires.");
@@ -43,8 +42,7 @@ const FormPaiement = () => {
     setActiveForm(null);
   };
 
-
-  // ➤ Ajouter dans historique depuis bénéficiaire
+// ➤ Ajouter dans historique depuis bénéficiaire
   const handleBeneficiairePay = (b) => {
     setHistorique([
       {
@@ -57,8 +55,7 @@ const FormPaiement = () => {
     ]);
   };
 
-
-  // ➤ Ajouter un bénéficiaire via modal
+// ➤ Ajouter un bénéficiaire via modal
   const handleAddBeneficiaire = () => {
     if (!newNom || !newType) return;
 
@@ -70,8 +67,7 @@ const FormPaiement = () => {
     setShowModal(false);
   };
 
-
-
+  
   return (
     <div className="container mx-auto p-4 formPaiement">
 
@@ -85,17 +81,17 @@ const FormPaiement = () => {
 
 {/* ..................FORMULAIRE PAIEMENT ACTIVE ........................ */}
       {activeForm === "paiement" && (
-        <div className="bg-white mt-5 p-5 rounded-lg shadow">
+        <div className="bg-white mt-5 p-5 font-bold rounded-lg shadow" style={{color:"#6b5a49"}}>
             <p className="text-lg font-semibold">Paiement manuel</p>
 
             <input type="text" className="border p-2 rounded mt-3 w-full" placeholder="Bénéficiaire" value={beneficiaireInput}
-            onChange={(e) => setBeneficiaireInput(e.target.value)} />
+                   onChange={(e) => setBeneficiaireInput(e.target.value)}  required/>
             
             <input type="text" className="border p-2 rounded mt-3 w-full" placeholder="Montant" value={montant}
-              onChange={(e) => setMontant(e.target.value)} />
+                   onChange={(e) => setMontant(e.target.value)}  required/>
             
-            <input  type="text" className="border p-2 rounded mt-3 w-full" placeholder="Référence" value={reference}
-              onChange={(e) => setReference(e.target.value)} />
+            <input type="text" className="border p-2 rounded mt-3 w-full" placeholder="Référence" value={reference}
+                   onChange={(e) => setReference(e.target.value)}  required/>
             
             <button onClick={handlePaiement} className=" w-full py-2 rounded mt-4" >Effectuer le paiement</button>       
         </div>
@@ -104,7 +100,7 @@ const FormPaiement = () => {
 
 {/* ...................... FORMULAIRE BÉNÉFICIAIRES ........................... */}
       {activeForm === "beneficiaire" && (
-        <div className="bg-white mt-5 p-5 rounded-lg shadow">
+        <div className="bg-white mt-5 p-5 font-bold rounded-lg shadow"  style={{color:"#6b5a49"}}>
           <div className="flex justify-between items-center mb-5">
               <div>
                 <p className="font-semibold">Mes bénéficiaires</p>

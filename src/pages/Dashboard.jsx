@@ -47,8 +47,8 @@ export default function Dashboard() {
           <div className="flex justify-between items-start">
             <div>
               <div className="text-sm opacity-90">Solde Total</div>
-              <div className="text-sm font-semibold mt-2">{showBalance ? "24 580.45 €" : "•••• ••••"}</div>
-              <div className="text-sm mt-2 opacity-80 text-[#d8c4a8]">+12.5% ce mois</div>
+              <div className="text-sm font-semibold mt-2">{showBalance ? "0 FCFA" : "•••• ••••"}</div>
+              <div className="text-sm mt-2 opacity-80 text-[#d8c4a8]">0% ce mois</div>
             </div>
             <button onClick={() => setShowBalance((s) => !s)} className="ml-4 rounded-md bg-[#8f7e6b]/30 p-2 text-[#f4efe6] hover:bg-[#8f7e6b]/50 transition">
               {showBalance ? <FiEye size={18} /> : <FiEyeOff size={18} />}
@@ -57,13 +57,13 @@ export default function Dashboard() {
         </div>
         <Card>
           <div className="text-sm text-gray-500">Revenus ce mois</div>
-          <div className="text-sm font-semibold mt-2">7 200.00 €</div>
-          <div className="text-sm text-green-500 mt-2">+8.2% vs mois dernier</div>
+          <div className="text-sm font-semibold mt-2">0 FCFA</div>
+          <div className="text-sm text-green-500 mt-2">0% vs mois dernier</div>
         </Card>
         <Card>
           <div className="text-sm text-gray-500">Dépenses ce mois</div>
-          <div className="text-sm font-semibold mt-2">4 500.00 €</div>
-          <div className="text-sm text-red-400 mt-2">-3.5% vs mois dernier</div>
+          <div className="text-sm font-semibold mt-2">0 FCFA</div>
+          <div className="text-sm text-red-400 mt-2">0% vs mois dernier</div>
         </Card>
       </div>
 
@@ -73,11 +73,11 @@ export default function Dashboard() {
         <Card className="h-90 flex flex-col items-center justify-center">
           <div className="w-48 h-48 mb-1"><Doughnut data={donutData} options={donutOptions} /></div>
           <ul className="text-sm text-gray-600 space-y-2 w-full max-w-xs">
-            <li className="flex justify-between"><span>Alimentation</span><span>850 €</span></li>
-            <li className="flex justify-between"><span>Transport</span><span>420 €</span></li>
-            <li className="flex justify-between"><span>Loisirs</span><span>320 €</span></li>
-            <li className="flex justify-between"><span>Factures</span><span>1200 €</span></li>
-            <li className="flex justify-between"><span>Autres</span><span>310 €</span></li>
+            <li className="flex justify-between"><span>Alimentation</span><span>8500 FCFA</span></li>
+            <li className="flex justify-between"><span>Transport</span><span>4200 FCFA</span></li>
+            <li className="flex justify-between"><span>Loisirs</span><span>3200 FCFA</span></li>
+            <li className="flex justify-between"><span>Factures</span><span>1200 FCFA</span></li>
+            <li className="flex justify-between"><span>Autres</span><span>3100 FCFA</span></li>
           </ul>
         </Card>
       </div>
@@ -108,7 +108,7 @@ export default function Dashboard() {
                     <div className="text-xs text-gray-400">Aujourd'hui, 14:30</div>
                   </div>
                 </div>
-                <div className="text-red-500">-85.50 €</div>
+                <div className="text-red-500">-85.50 FCFA</div>
               </li>
               <li className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -118,7 +118,7 @@ export default function Dashboard() {
                     <div className="text-xs text-zhit-400">14 Nov, 2025</div>
                   </div>
                 </div>
-                <div className="text-red-500">-65.00 €</div>
+                <div className="text-red-500">-65.00 FCFA</div>
               </li>
               <li className="flex items-center gap-3 justify-between">
                 <div className="flex items-center gap-3">
@@ -128,7 +128,7 @@ export default function Dashboard() {
                     <div className="text-xs text-gray-400">13 Nov, 2025</div>
                   </div>
                 </div>
-                <div className="text-green-500">+150.00 €</div>
+                <div className="text-green-500">+150.00 FCFA</div>
               </li>
             </ul>
           </Card>

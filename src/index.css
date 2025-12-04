@@ -88,6 +88,7 @@ body {
   background-color: linear-gradient(90deg, #fce9d1, #bfa98a);
   font-size: 15px;;
 
+
   
 } */
 /* couleur principale du body */
@@ -97,6 +98,7 @@ body {
   font-family: 'Inter', sans-serif; /* moderne et lisible */
 
   color: #6b5a49;
+
 
 }
 body {
@@ -120,102 +122,83 @@ code {
    transition: transform 0.8s;
    transform: scale(1.04);
 }
-.section3 .liste{
-  background-color: #e7d8c7;
-}
+
 .section3 .liste:hover{
-  background-color: #ebe7e1;
+  background: var(--gradient-beige-gold);
   transition: all 0.3s ease-in-out; 
 }
 
 
 /* ...................................... LA PARTIE PROFIL ................................................. */
 
-
-/*........... Grille principale ..............*/
-.section1-grid{
-   display: grid;
-   grid-template-columns: 30% 70%;
-   gap: 10px;
-   
+.infoPersonel{
+ border-radius: 8px;
+padding: 20px;
 }
-.info{
-  grid-row: span 5;
-  background-color: white;
-  box-shadow: 2px 0 12px rgb(172, 171, 171);
+
+.infoPersonel .photo{
+  background: var(--gradient-beige-gold);
+   height: 76px;
+   width: 18%;
+   margin: auto;
+   padding-top: 6%;
+   border-radius: 50%;
+   color: #6b5a49;
+   font-size: 19px;
+   font-weight: bold;
 }
 
 /* ........Tous Les Sections....... */
- .infoPerso, .securite, .notifications, .Apparence{
-  background-color: white;
+.securite, .notifications, .Apparence{
+ background: #e8dcc7;
   box-shadow: 2px 0 12px rgb(172, 171, 171);
   border-radius: 8px;
   padding: 20px;
+  margin-top: 20px;
+  font-weight: bold;
 } 
-/* la section info */
-.info ul{
-  list-style: none;
-}
 
-.info .photo{
-   background: var(--gradient-blue-purple);
-   height: 80px;
-   width: 28%;
-   margin: auto;
-   padding: 8%;
-   border-radius: 50%;
-   color: white;
-   font-size: 20px;
-}
+
+
 
 /* les bouton qui se trouve sur les section infoPerso et securite*/
-.infoPerso button, .securite button{
-   background-color:#dfdede;
+.securite button{
+   background: var(--gradient-beige-gold);
+   color: #6b5a49;
+   font-weight: bold;
+   cursor: pointer;
 }
 
-.infoPerso button:hover, .securite button:hover{
-   background-color: rgb(231, 229, 229);
+.securite button:hover{
+   background: #e8d8c7;
+    transition: transform 0.8s;
+   transform: scale(1.04);
 }
 
-/* les imput de la section infoPerso*/
-.infoPerso input{
-   background-color:#f7f7f7;
-   width: 100%;
-   border: none;
-   padding: 8px;
-   border-radius: 7px;
-   outline: none;
-}
-/* les labels de la section infoPerso */
-.infoPerso label{
-  font-weight: 500;
-  padding-bottom: 6px;
-}
+
 
 /* la section securité */
 .securite {
   margin-left: 2px;
   width: 99%;
+  margin-top: 10px;
 }
 
 /*les icone de la section securité */ 
 .securite .icone1{
     padding: 1%;
-    background-color:#2564eb25;
     border-radius: 50px;
-    color:#2563eb;
+    background: var(--gradient-beige-gold);
+   color: #6b5a49;
+   font-weight: bold;
 }
-.securite .icone2{
-    padding: 1%;
-    background-color:#9233ea29;
-    border-radius: 50px;
-    color:#9333ea;
-}
+
 .securite .icone3{
-    padding: 1%;
-    background-color:#ef44442f;
-    border-radius: 50px;
-    color:#ef4444;
+   background: var(--gradient-beige-gold);
+   color: #6b5a49;
+   font-weight: bold;
+   border-radius: 50px;
+   padding: 1%;
 }
 .securite i{
     font-size: 20px;
@@ -333,19 +316,33 @@ code {
   border: 1px solid rgb(22, 22, 38) !important;
 }
 
-@media (min-width: 768px) {
-  .section1-grid {
-    grid-template-columns: 1fr 2fr;
+
+@media (max-width: 1024px) { /* tablette */
+  .infoPersonel .photo {
+    width: 25%;
+    height: 80px;
+    font-size: 17px;
   }
 }
-@media (min-width: 768px) {
-  .infoPerso .row {
-    flex-direction: row;
-    flex-wrap: wrap;
+
+
+@media (max-width: 768px) { /* mobile */
+  .infoPersonel .photo {
+    width: 20%;
+    height: 85px;
+    font-size: 16px;
   }
-  .infoPerso .col-lg-6 { flex: 0 0 50%; }
-  .infoPerso .col-lg-12 { flex: 0 0 100%; }
 }
+
+@media (max-width: 400px) { /* petit mobile */
+  .infoPersonel .photo {
+    width: 22%;
+    height: 66px;
+    font-size: 16px;
+    background: #22c55e;
+  }
+}
+
 
 
 
@@ -355,7 +352,7 @@ code {
 .section1 .blocBouton{
   box-shadow: 2px 0 12px rgb(172, 171, 171);
   border-radius: 10px;
-  background-color: #d6c7b4;
+  background-color: #e8dcc7;
 }
 .section1 .blocBouton:hover{
   transition: transform 0.8s;
@@ -363,71 +360,80 @@ code {
 }
 
 .section1 .icone1{
-  background-color:#22c55e;
+  background: var(--gradient-beige-gold);
+   color: #6b5a49;
+   font-weight: bold;
   padding: 10px 20px 10px 20px;
   border-radius: 12px;
-  color: #e7d8c7;
   width: 60%;
   margin: auto;
 }
 
 .section1 .icone2{
-  background-color: #2563eb;
+  background: var(--gradient-beige-gold);
+   color: #6b5a49;
+   font-weight: bold;
   padding: 10px 20px 10px 20px;
   border-radius: 12px;
-  color: #e7d8c7;
   width: 60%;
   margin: auto;
 }
 
 .section1 .icone3{
-  background-color: #f97316;
+   background: var(--gradient-beige-gold);
+   color: #6b5a49;
+   font-weight: bold;
   padding: 10px 1px 10px 1px;
   border-radius: 12px;
-  color: #e7d8c7;
   width: 60%;
   margin: auto;
 }
 
 .section1 .icone4{
-  background-color:#3b82f6;
+  background: var(--gradient-beige-gold);
   padding: 10px 20px 10px 20px;
   border-radius: 12px;
-  color: #e7d8c7;
+  color: #6b5a49;
+  font-weight: bold;
   width: 60%;
   margin: auto;
 }
 
 .iconeMobile{
-  background-color:#22c55e;
+  background: var(--gradient-beige-gold);
+   color: #6b5a49;
+   font-weight: bold;
   padding-top: 12px;
   border-radius: 7px;
-  color: #e7d8c7;
   width: 12%;
+  
 }
 
 .iconeInternet{
-  background-color:#2563eb;
+  background: var(--gradient-beige-gold);
+   color: #6b5a49;
   padding-top: 12px;
   border-radius: 7px;
-  color: #e7d8c7;
   width: 12%;
+  font-weight: bold;
 }
 
 .iconeElectricite{
-  background-color:#f97316;
+  background: var(--gradient-beige-gold);
+   color: #6b5a49;
   padding-top: 12px;
   border-radius: 7px;
-  color: white;
   width: 12%;
+  font-weight: bold;
 }
 
 .iconeEau{
-  background-color:#3b82f6;
+  background: var(--gradient-beige-gold);
   padding-top: 12px;
   border-radius: 7px;
-  color: white;
+  color: #6b5a49;
   width: 12%;
+  font-weight: bold;
 }
 .form{
   width: 60%;
@@ -491,7 +497,7 @@ code {
 
 /* .............formPaiement............... */
 .formPaiement .barreMenu{
-  background-color: #e7d8c7;
+  background-color: #e8dcc7;
   padding-bottom: 10px;
 } 
 
