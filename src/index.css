@@ -81,29 +81,26 @@ animation: tinyPulse 2.6s ease-in-out infinite;
 
 /* body  bg-[#f7f3ee] text-[#6b5a49] */
 
-body {
+/* body {
 
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-color: linear-gradient(90deg, #fce9d1, #bfa98a);
   font-size: 15px;;
+}  */
 
-
-  
-} */
 /* couleur principale du body */
+
 body {
-  background-color: #f7f3ee; /* beige très clair, style crème */
-  color: #6b5a49; /* texte principal beige foncé */
-  font-family: 'Inter', sans-serif; /* moderne et lisible */
-
-  color: #6b5a49;
-
-
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333; /* gris foncé pour un style professionnel */
 }
-body {
-  @apply bg-[#f7f3ee] text-[#6b5a49];
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 500; /* titres un peu plus épais */
 }
+
 h1 {
   color: #f8f6f4; /* couleur principale du texte */
   text-shadow: 0  0 32px rgb(65, 48, 28);

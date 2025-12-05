@@ -59,7 +59,7 @@ export default function ChatBot() {
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-3 space-y-2">
         {messages.map((msg, index) => (
-          <div key={index} className={`p-2 rounded-lg max-w-[80%] ${ msg.from === "bot" ? "bg-gray-100 text-gray-800 self-start" : "bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] text-[#f4efe6] text-white self-end"}`}>
+          <div key={index} className={`p-2 rounded-lg max-w-[80%] ${ msg.from === "bot" ? "bg-beige-900 text-bg-beige-900 self-start" : "bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] text-[#f4efe6] text-white self-end"}`}>
             {msg.text}
           </div>
         ))}
@@ -68,7 +68,7 @@ export default function ChatBot() {
       {/* Input */}
       <div className="flex gap-2 mt-2">
         <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyPress} placeholder="Tapez votre message..." className="flex-1 p-2 border rounded-lg focus:outline-none"/>
-        <button onClick={sendMessage} className="bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] text-[#f4efe6] text-white px-4 rounded-lg hover:bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] text-[#f4efe6]">
+        <button onClick={sendMessage} className="bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] text-beige-900 text-white px-4 rounded-lg hover:bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] text-[#f4efe6]">
           Envoyer
         </button>
       </div>

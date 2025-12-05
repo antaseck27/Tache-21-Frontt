@@ -1,6 +1,7 @@
 
+
 // // src/App.jsx
-// import React from "react";
+// import React, { useState, useEffect } from "react";
 // import { Routes, Route, Navigate } from "react-router-dom";
 
 // import Home from "./pages/Home";
@@ -11,44 +12,43 @@
 // import Transfer from "./pages/Transfer";
 // import Paiement from "./pages/Paiement";
 // import ForgotPassword from "./pages/ForgotPassword";
-
-
-
 // import Profile from "./pages/Profile";
 // import Support from "./pages/Support";
 
 // import AppLayout from "./layouts/AppLayout";
 
-// // Fonction de vérification de login
-// const isLoggedIn = () => localStorage.getItem("token") ? true : false;
-
 // export default function App() {
+//   const [loggedIn, setLoggedIn] = useState(false);
+
+//   // Vérifie si un token est déjà stocké
+//   useEffect(() => {
+//     setLoggedIn(localStorage.getItem("token") ? true : false);
+//   }, []);
+
 //   return (
 //     <Routes>
-//       kp^()
 //       {/* Pages publiques */}
 //       <Route path="/" element={<Home />} />
 //       <Route path="/signup" element={<Signup />} />
-//       <Route path="/login" element={<Login />} />
+//       <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
 //       <Route path="/forgot" element={<ForgotPassword />} />
 
-
-//       {/* Route protégée */}
-//       <Route path="/" element={isLoggedIn() ? <AppLayout /> : <Navigate to="/login" replace />}>
-//         <Route path="dashboard" element={<Dashboard />} />
+//       {/* Routes protégées */}
+//       <Route element={loggedIn ? <AppLayout /> : <Navigate to="/login" replace />}>
+//         <Route path="dashboard" element={<Dashboard setLoggedIn={setLoggedIn} />} />
 //         <Route path="transactions" element={<Transactions />} />
 //         <Route path="transfer" element={<Transfer />} />
-//         <Route path="/paiement" element={<Paiement />} />
-
+//         <Route path="paiement" element={<Paiement />} />
 //         <Route path="profile" element={<Profile />} />
 //         <Route path="support" element={<Support />} />
 //       </Route>
 
-//       {/* Si aucune route n'est trouvée */}
+//       {/* Fallback */}
 //       <Route path="*" element={<Navigate to="/" replace />} />
 //     </Routes>
 //   );
 // }
+
 
 
 // src/App.jsx
@@ -69,33 +69,65 @@ import Support from "./pages/Support";
 import AppLayout from "./layouts/AppLayout";
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+// true => dark, false => light
+const [darkMode, setDarkMode] = useState(() => {
+try {
+const saved = localStorage.getItem("theme"); // "dark" or "light"
+if (saved === "dark") return true;
+if (saved === "light") return false;
+} catch (e) {}
+// fallback to system preference
+if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+return true;
+}
+return false;
+});
 
-  // Vérifie si un token est déjà stocké
-  useEffect(() => {
-    setLoggedIn(localStorage.getItem("token") ? true : false);
-  }, []);
+// apply class on mount + whenever darkMode changes (ONLY HERE)
+useEffect(() => {
+if (typeof document === "undefined") return;
+if (darkMode) {
+document.documentElement.classList.add("dark");
+try { localStorage.setItem("theme", "dark"); } catch (e) {}
+} else {
+document.documentElement.classList.remove("dark");
+try { localStorage.setItem("theme", "light"); } catch (e) {}
+}
+}, [darkMode]);
 
-  return (
-    <Routes>
-      {/* Pages publiques */}
-      <Route path="/" element={<Home />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
-      <Route path="/forgot" element={<ForgotPassword />} />
+const [loggedIn, setLoggedIn] = useState(false);
 
-      {/* Routes protégées */}
-      <Route element={loggedIn ? <AppLayout /> : <Navigate to="/login" replace />}>
-        <Route path="dashboard" element={<Dashboard setLoggedIn={setLoggedIn} />} />
-        <Route path="transactions" element={<Transactions />} />
-        <Route path="transfer" element={<Transfer />} />
-        <Route path="paiement" element={<Paiement />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="support" element={<Support />} />
-      </Route>
+useEffect(() => {
+setLoggedIn(localStorage.getItem("token") ? true : false);
+}, []);
 
-      {/* Fallback */}
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
-  );
+return (
+<Routes>
+{/* publiques */}
+<Route path="/" element={<Home />} />
+<Route path="/signup" element={<Signup />} />
+<Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
+<Route path="/forgot" element={<ForgotPassword />} />
+
+{/* protégées */}
+<Route
+element={
+loggedIn ? (
+<AppLayout darkMode={darkMode} setDarkMode={setDarkMode} />
+) : (
+<Navigate to="/login" replace />
+)
+}
+>
+<Route path="dashboard" element={<Dashboard />} />
+<Route path="transactions" element={<Transactions />} />
+<Route path="transfer" element={<Transfer />} />
+<Route path="paiement" element={<Paiement />} />
+<Route path="profile" element={<Profile />} />
+<Route path="support" element={<Support />} />
+</Route>
+
+<Route path="*" element={<Navigate to="/" replace />} />
+</Routes>
+);
 }
