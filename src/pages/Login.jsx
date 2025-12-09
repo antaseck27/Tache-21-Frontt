@@ -1,16 +1,21 @@
 
 
+
 import React, { useState } from "react";
 import { EyeIcon, EyeSlashIcon, BanknotesIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginCard() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Simulation login
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
@@ -21,13 +26,17 @@ export default function LoginCard() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      window.location.href = "/dashboard";
+      // Stockage du token factice
+      localStorage.setItem("token", "fake_token_123");
+      navigate("/dashboard");
     }, 800);
   };
 
   const handleGoogleLogin = () => {
     alert("Connexion avec Google (simulation)");
-    window.location.href = "/dashboard";
+    // Stockage token pour routes protégées
+    localStorage.setItem("token", "fake_token_123");
+    navigate("/dashboard");
   };
 
   return (
@@ -39,7 +48,7 @@ export default function LoginCard() {
             <div className="w-14 h-14 rounded-lg bg-white/20 flex items-center justify-center">
               <BanknotesIcon className="w-9 h-9 text-[#6b5a49]" />
             </div>
-            <h1 className="text-4xl font-semibold">BankApp</h1>
+            <h2 className="text-4xl font-semibold">BankRewmi</h2>
           </div>
           <p className="text-base text-[#6b5a49]/90 mb-4">
             Gérez vos finances simplement avec notre plateforme moderne.
@@ -95,14 +104,14 @@ export default function LoginCard() {
               </button>
             </div>
 
-            {/* Lien Mot de passe oublié */}
+            {/* Lien Reset */}
             <div className="flex justify-end text-sm">
               <a href="/forgot" className="text-[#bfa98a] font-medium hover:underline">
                 Mot de passe oublié ?
               </a>
             </div>
 
-            {/* Bouton Se connecter */}
+            {/* Bouton login */}
             <button
               type="submit"
               className="w-full py-2 rounded-lg bg-[#6b5a49] text-white font-medium text-sm hover:bg-[#5c4d3e]"
@@ -110,7 +119,7 @@ export default function LoginCard() {
               {loading ? "Connexion..." : "Se connecter"}
             </button>
 
-            {/* Bouton Google */}
+            {/* Google Login */}
             <button
               type="button"
               onClick={handleGoogleLogin}
@@ -121,7 +130,6 @@ export default function LoginCard() {
             </button>
           </form>
 
-          {/* Lien vers inscription */}
           <p className="text-center text-sm text-[#8f7e6b] mt-2">
             Pas de compte ?{" "}
             <a href="/signup" className="text-[#bfa98a] font-medium hover:underline">
