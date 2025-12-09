@@ -57,7 +57,7 @@ return (
 <div className="relative" ref={notifRef}>
 <button onClick={() => setOpenNotif(p => !p)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 relative">
 <BellIcon className="w-5 h-5 text-gray-700 dark:text-gray-200" />
-<span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5">2</span>
+{/* <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5">2</span> */}
 </button>
 {openNotif && (
 <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md overflow-hidden z-50">
