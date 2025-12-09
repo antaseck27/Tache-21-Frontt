@@ -8,9 +8,9 @@ export default function Transfer() {
     <div className="min-h-screen bg-slate-50 p-6">
       {/* Header */}
       <div className="max-w-6xl mx-auto text-center mb-8">
-        <h1 className="text-3xl font-bold mb-2">Transfert d'argent</h1>
+        <h1 className="text-3xl font-bold mb-2">Transfert d argent</h1>
         <p className="text-gray-700 text-lg">
-          Envoyez de l'argent à vos proches ou payez vos factures
+          Envoyez de l argent à vos proches ou payez vos factures
         </p>
       </div>
 
@@ -97,7 +97,7 @@ export default function Transfer() {
               <h2 className="text-xl font-semibold mb-6">
                 Transfert externe
                 <p className="text-xs text-gray-400">
-                  Transférez de l'argent entre vos differentes comptes
+                  Transférez de l argent entre vos differentes comptes
                 </p>
               </h2>
               <form className="space-y-4">
