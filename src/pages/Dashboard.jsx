@@ -1,6 +1,5 @@
 
 
-// src/pages/DashboardContent.jsx
 import React, { useState } from "react";
 import { Line, Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, ArcElement, Legend } from "chart.js";
@@ -164,7 +163,7 @@ style={{ background: `linear-gradient(135deg, ${cards[cardIndex].color[0]}, ${ca
 <div className="w-10 h-10 rounded-lg bg-beige-100 dark:bg-[#cbb99a] flex items-center justify-center"><FiCreditCard /></div>
 <div>
 <div className="font-medium dark:text-[#f1e8dc]">Supermarché Carrefour</div>
-<div className="text-xs text-beige-900 dark:text-[#bfb6a5]">Aujourd'hui, 14:30</div>
+<div className="text-xs text-beige-900 dark:text-[#bfb6a5]">Aujourd hui, 14:30</div>
 </div>
 </div>
 <div className="text-red-500">-85.50 FCFA</div>

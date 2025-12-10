@@ -6,10 +6,9 @@ import { Calendar } from "primereact/calendar";
 import {
   EyeIcon,
   EyeSlashIcon,
-  BanknotesIcon,
   CheckCircleIcon
 } from "@heroicons/react/24/outline";
-
+import logo from "../assets/logo.png";
 export default function SignupCompact() {
   const [formData, setFormData] = useState({
     prenom: "",
@@ -47,8 +46,13 @@ export default function SignupCompact() {
         <div className="max-w-lg text-[#6b5a49]">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-14 h-14 rounded-lg bg-white/20 flex items-center justify-center">
-              <BanknotesIcon className="w-9 h-9 text-[#6b5a49]" />
-            </div>
+            <div className=" sm:w-10 sm:h-10 rounded-lg  flex items-center justify-center shadow-lg overflow-hidden">
+              <img 
+                src={logo}   
+                alt="logo"
+                className="  shadow-s object-containm "
+              />
+            </div>            </div>
             <h2 className="text-4xl font-semibold">BankRewmi</h2>
           </div>
           <p className="text-base text-[#6b5a49]/90 mb-4">

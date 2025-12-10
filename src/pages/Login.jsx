@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { EyeIcon, EyeSlashIcon, BanknotesIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
-
+import logo from "../assets/logo.png";
 export default function LoginCard() {
   const navigate = useNavigate();
 
@@ -46,7 +46,13 @@ export default function LoginCard() {
         <div className="max-w-lg text-[#6b5a49]">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-14 h-14 rounded-lg bg-white/20 flex items-center justify-center">
-              <BanknotesIcon className="w-9 h-9 text-[#6b5a49]" />
+              <div className=" sm:w-10 sm:h-10 rounded-lg  flex items-center justify-center shadow-lg overflow-hidden">
+                <img 
+                  src={logo}    // ou ton chemin: "/assets/images/logo.png"
+                  alt="logo"
+                  className="  shadow-s object-containm "
+                />
+              </div>
             </div>
             <h2 className="text-4xl font-semibold">BankRewmi</h2>
           </div>

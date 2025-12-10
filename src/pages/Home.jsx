@@ -1,6 +1,4 @@
 
-
-
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -34,7 +32,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#f3e8d7] text-[#6b5a49]">
-      {/* ======================= HERO SLIDER ======================= */}
       <section className="relative w-full h-[90vh] overflow-hidden flex items-center justify-center">
         {heroImages.map((img, i) => (
           <motion.img
@@ -81,7 +78,7 @@ export default function Home() {
                background: "linear-gradient(90deg, #e4c69bff, #755e3cff)",
                 }}
             >
-              S'inscrire
+              S inscrire
             </Link>
             <Link
               to="/login"
@@ -233,11 +230,7 @@ export default function Home() {
       </section>
 
       {/* ======================= FOOTER ======================= */}
-   {/* <footer className="py-8 text-center text-[#5a4a3a] bg-[#e8dcc7] shadow-[0_4px_20px_rgba(191,169,138,0.5)] rounded-t-xl border-t border-[#d2bca0]">
-  <p className="text-sm md:text-base font-medium">
-    © 2025 BankRewmi — Tous droits réservés
-  </p>
-</footer> */}
+
 <footer className="py-10 bg-[#e8dcc7] text-[#5a4a3a] shadow-[0_4px_20px_rgba(191,169,138,0.5)] rounded-t-xl border-t border-[#d2bca0]">
   <div className="flex flex-col md:flex-row items-center justify-between px-8 md:px-20 gap-4">
     {/* Texte copyright */}
