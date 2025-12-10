@@ -1,11 +1,4 @@
-<<<<<<< HEAD
 // src/components/Header.jsx
-=======
-
-
-
-
->>>>>>> 77f4428 (modification rendu)
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Bars3Icon, BellIcon, MoonIcon, SunIcon } from "@heroicons/react/24/outline";
@@ -38,7 +31,6 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
     <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a] border-b border-gray-200 dark:border-gray-800 transition-colors duration-200">
       <div className="max-w-[1400px] mx-auto flex items-center h-20 px-3 sm:px-4 md:px-6 gap-3">
 
-<<<<<<< HEAD
         {/* Sidebar Button Mobile */}
         <button onClick={onOpenSidebar} className="p-2 rounded md:hidden hover:bg-gray-100 dark:hover:bg-gray-700">
           <Bars3Icon className="w-6 h-6 text-gray-700 dark:text-gray-200" />
@@ -65,30 +57,6 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
               className="w-full pl-4 pr-12 py-3 rounded-xl bg-[#f7f3ee] text-[#6b5a49] border border-gray-200 focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-300 transition"
             />
           </div>
-=======
-return (
-<header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a] border-b  dark:border-gray-800 transition-colors duration-200">
-
-<div className="max-w-[1400px] mx-auto flex items-center h-20 px-3 sm:px-4 md:px-6 gap-3">
-<button onClick={onOpenSidebar} className="p-2 rounded md:hidden hover:bg-beige-100 dark:hover:bg-gray-700">
-<Bars3Icon className="w-9 h-9 text-gray-700 dark:text-gray-200" />
-</button>
-
-<Link to="/dashboard" className="flex items-center gap-3 flex-shrink-0">
-<div className=" sm:w-10 sm:h-10 rounded-lg  flex items-center justify-center shadow-lg overflow-hidden">
-  <img 
-    src={logo}    // ou ton chemin: "/assets/images/logo.png"
-    alt="logo"
-    className="  shadow-s object-containm "
-  />
-</div>
-
-<div className="hidden sm:flex flex-col leading-none">
-<p className="text-sm sm:text-lg font-semibold text-[#6b5a49] dark:text-[#f7f3ee]">BankRewmi</p>
-<p className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">Sa Karàngué Koppar</p>
-</div>
-</Link>
->>>>>>> 77f4428 (modification rendu)
 
           {/* Mobile Search */}
           {mobileSearchOpen && (
