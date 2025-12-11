@@ -1,11 +1,9 @@
-
-
-
 import React, { useState } from "react";
-import { EyeIcon, EyeSlashIcon, BanknotesIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, EyeSlashIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
+
 export default function LoginCard() {
   const navigate = useNavigate();
 
@@ -15,30 +13,56 @@ export default function LoginCard() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Simulation login
-  const handleSubmit = (e) => {
+ const API = import.meta.env.VITE_API_URL; 
+
+  // Appel API login
+  const loginUser = async () => {
+    try {
+      setLoading(true);
+
+      const res = await fetch(`${API}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+      setLoading(false);
+
+      if (!res.ok) {
+        setError(data.message || "Erreur lors de la connexion.");
+        return null;
+      }
+
+      localStorage.setItem("token", data.token);
+      return data;
+
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+      setError("Erreur réseau. Réessayez.");
+      return null;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     if (!email.trim()) return setError("Veuillez saisir votre email.");
     if (!password || password.length < 4) return setError("Mot de passe invalide.");
 
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      // Stockage du token factice
-      localStorage.setItem("token", "fake_token_123");
-      navigate("/dashboard");
-    }, 800);
-  };
+    const result = await loginUser();
+    if (!result) return;
 
-  const handleGoogleLogin = () => {
-    alert("Connexion avec Google (simulation)");
-    // Stockage token pour routes protégées
-    localStorage.setItem("token", "fake_token_123");
     navigate("/dashboard");
   };
 
+  const handleGoogleLogin = () => {
+    alert("Connexion Google (simulation)");
+    localStorage.setItem("token", "fake_token_123");
+    navigate("/dashboard");
+  };
   return (
     <div className="min-h-screen flex">
       {/* LEFT PANEL */}
@@ -46,12 +70,8 @@ export default function LoginCard() {
         <div className="max-w-lg text-[#6b5a49]">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-14 h-14 rounded-lg bg-white/20 flex items-center justify-center">
-              <div className=" sm:w-10 sm:h-10 rounded-lg  flex items-center justify-center shadow-lg overflow-hidden">
-                <img 
-                  src={logo}    // ou ton chemin: "/assets/images/logo.png"
-                  alt="logo"
-                  className="  shadow-s object-containm "
-                />
+              <div className="sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
+                <img src={logo} alt="logo" className="object-contain" />
               </div>
             </div>
             <h2 className="text-4xl font-semibold">BankRewmi</h2>
@@ -83,7 +103,6 @@ export default function LoginCard() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-2">
-            {/* Email */}
             <input
               type="email"
               placeholder="Email"
@@ -92,7 +111,6 @@ export default function LoginCard() {
               className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm"
             />
 
-            {/* Mot de passe */}
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -110,14 +128,12 @@ export default function LoginCard() {
               </button>
             </div>
 
-            {/* Lien Reset */}
             <div className="flex justify-end text-sm">
               <a href="/forgot" className="text-[#bfa98a] font-medium hover:underline">
                 Mot de passe oublié ?
               </a>
             </div>
 
-            {/* Bouton login */}
             <button
               type="submit"
               className="w-full py-2 rounded-lg bg-[#6b5a49] text-white font-medium text-sm hover:bg-[#5c4d3e]"
@@ -125,7 +141,6 @@ export default function LoginCard() {
               {loading ? "Connexion..." : "Se connecter"}
             </button>
 
-            {/* Google Login */}
             <button
               type="button"
               onClick={handleGoogleLogin}
@@ -139,7 +154,7 @@ export default function LoginCard() {
           <p className="text-center text-sm text-[#8f7e6b] mt-2">
             Pas de compte ?{" "}
             <a href="/signup" className="text-[#bfa98a] font-medium hover:underline">
-              S'inscrire
+              S’inscrire
             </a>
           </p>
         </div>

@@ -11,7 +11,7 @@ export default function ForgotPassword() {
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setMessage("");
@@ -19,13 +19,30 @@ export default function ForgotPassword() {
     if (!email.trim()) return setError("Veuillez saisir votre email.");
     if (!emailRegex.test(email)) return setError("Email invalide.");
 
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    // simulation d'envoi email
-    setTimeout(() => {
+      const res = await fetch(`http://localhost:5000/api/auth/forgot-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
       setLoading(false);
-      setMessage("Un lien de réinitialisation a été envoyé à votre email.");
-    }, 1000);
+
+      if (!res.ok) {
+        setError(data.message || "Erreur lors de l'envoi du mail.");
+        return;
+      }
+
+      setMessage(data.message || "Un lien de réinitialisation a été envoyé à votre email.");
+
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+      setError("Erreur réseau. Réessayez.");
+    }
   };
 
   const fadeInUp = {
@@ -43,7 +60,7 @@ export default function ForgotPassword() {
       >
         <h2 className="text-2xl font-semibold text-[#6b5a49] mb-2">Mot de passe oublié</h2>
         <p className="text-sm text-[#8f7e6b] mb-6">
-          Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+          Entrez votre adresse email pour recevoir un lien de réinitialisation.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -51,8 +68,8 @@ export default function ForgotPassword() {
             <label className="block text-sm font-medium text-[#6b5a49]">Email</label>
             <input
               type="email"
-              className="mt-2 w-full px-4 py-3 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:outline-none focus:ring-2 focus:ring-[#bfa98a] shadow-sm hover:shadow-md transition"
               placeholder="votre@email.com"
+              className="mt-2 w-full px-4 py-3 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:outline-none focus:ring-2 focus:ring-[#bfa98a]"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -64,7 +81,7 @@ export default function ForgotPassword() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-1 py-3 rounded-lg bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] text-white font-semibold shadow-md hover:opacity-95 disabled:opacity-60 transition"
+            className="w-full py-3 rounded-lg bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] text-white font-semibold shadow-md hover:opacity-95 disabled:opacity-60"
           >
             {loading ? "Envoi..." : "Envoyer le lien"}
           </button>

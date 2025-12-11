@@ -1,6 +1,3 @@
-
-
-
 import React, { useState } from "react";
 import { Calendar } from "primereact/calendar";
 import {
@@ -9,10 +6,14 @@ import {
   CheckCircleIcon
 } from "@heroicons/react/24/outline";
 import logo from "../assets/logo.png";
+import dayjs from "dayjs";
+
+const API = import.meta.env.VITE_API_URL;
+
 export default function SignupCompact() {
   const [formData, setFormData] = useState({
     prenom: "",
-    nom: "",
+    name: "",
     email: "",
     telephone: "",
     dateNaissance: null,
@@ -21,22 +22,78 @@ export default function SignupCompact() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const updateField = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e) => {
+  // Fonction API pour inscrire l'utilisateur
+  const registerUser = async () => {
+    try {
+      setLoading(true);
+
+      // Convertir la date en ISO string pour MongoDB
+      const isoDate = formData.dateNaissance
+        ? formData.dateNaissance.toISOString()
+        : null;
+
+      const res = await fetch(`${API}/api/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prenom: formData.prenom,
+          name: formData.name,
+          email: formData.email,
+          telephone: formData.telephone,
+          dateDeNaissance: isoDate, // 
+          password: formData.password
+        })
+      });
+
+      const data = await res.json();
+      setLoading(false);
+
+      if (!res.ok) {
+        setError(data.message || "Erreur lors de l'inscription.");
+        return null;
+      }
+
+      return data;
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      setError("Erreur réseau. Réessayez.");
+      return null;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccessMessage("");
 
-    if (!formData.prenom || !formData.nom)
+    if (!formData.prenom || !formData.name)
       return setError("Veuillez saisir votre prénom et nom.");
-    if (!formData.email) return setError("Veuillez saisir votre email.");
+    if (!formData.email)
+      return setError("Veuillez saisir votre email.");
     if (!formData.password || formData.password.length < 4)
       return setError("Mot de passe trop court.");
 
-    window.location.href = "/dashboard";
+    const result = await registerUser();
+    if (!result) return;
+
+    // Formater la date pour le message de succès
+    const formattedDate = dayjs(result.user.dateDeNaissance).format("DD/MM/YYYY");
+    setSuccessMessage(
+      `Compte créé avec succès pour ${result.user.prenom} ${result.user.name}, né(e) le ${formattedDate}`
+    );
+
+    // Redirection après 2 secondes
+    setTimeout(() => {
+      window.location.href = "/login";
+    }, 2000);
   };
 
   return (
@@ -46,13 +103,10 @@ export default function SignupCompact() {
         <div className="max-w-lg text-[#6b5a49]">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-14 h-14 rounded-lg bg-white/20 flex items-center justify-center">
-            <div className=" sm:w-10 sm:h-10 rounded-lg  flex items-center justify-center shadow-lg overflow-hidden">
-              <img 
-                src={logo}   
-                alt="logo"
-                className="  shadow-s object-containm "
-              />
-            </div>            </div>
+              <div className="sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
+                <img src={logo} alt="logo" className="shadow-s object-contain" />
+              </div>
+            </div>
             <h2 className="text-4xl font-semibold">BankRewmi</h2>
           </div>
           <p className="text-base text-[#6b5a49]/90 mb-4">
@@ -81,87 +135,42 @@ export default function SignupCompact() {
             <div className="bg-red-100 text-red-600 px-2 py-1 rounded-lg text-sm">{error}</div>
           )}
 
+          {successMessage && (
+            <div className="bg-green-100 text-green-600 px-2 py-1 rounded-lg text-sm">{successMessage}</div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-2">
             {/* Prénom & Nom */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-              <input
-                type="text"
-                placeholder="Prénom"
-                value={formData.prenom}
-                onChange={(e) => updateField("prenom", e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm"
-              />
-              <input
-                type="text"
-                placeholder="Nom"
-                value={formData.nom}
-                onChange={(e) => updateField("nom", e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm"
-              />
+              <input type="text" placeholder="Prénom" value={formData.prenom} onChange={e => updateField("prenom", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm" />
+              <input type="text" placeholder="Nom" value={formData.name} onChange={e => updateField("name", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm" />
             </div>
 
             {/* Email + Téléphone */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-              <input
-                type="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={(e) => updateField("email", e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm"
-              />
-              <input
-                type="tel"
-                placeholder="Téléphone"
-                value={formData.telephone}
-                onChange={(e) => updateField("telephone", e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm"
-              />
+              <input type="email" placeholder="Email" value={formData.email} onChange={e => updateField("email", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm" />
+              <input type="tel" placeholder="Téléphone" value={formData.telephone} onChange={e => updateField("telephone", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm" />
             </div>
 
             {/* Date de naissance */}
-            <Calendar
-              value={formData.dateNaissance}
-              onChange={(e) => updateField("dateNaissance", e.value)}
-              showIcon
-              dateFormat="dd/mm/yy"
-               placeholder="Date de naissance"
-
-              className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] text-sm"
-              
-            />
+            <Calendar value={formData.dateNaissance} onChange={e => updateField("dateNaissance", e.value)} showIcon dateFormat="dd/mm/yy" placeholder="Date de naissance" className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] text-sm" />
 
             {/* Mot de passe */}
             <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Mot de passe"
-                value={formData.password}
-                onChange={(e) => updateField("password", e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm pr-10"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-[#8f7e6b]"
-              >
+              <input type={showPassword ? "text" : "password"} placeholder="Mot de passe" value={formData.password} onChange={e => updateField("password", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm pr-10" />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-2 top-1/2 -translate-y-1/2 text-[#8f7e6b]">
                 {showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
               </button>
             </div>
 
-            <button
-              type="submit"
-              className="w-full py-2 rounded-lg bg-[#6b5a49] text-white font-medium text-sm hover:bg-[#5c4d3e]"
-            >
-              Créer mon compte
+            <button type="submit" className="w-full py-2 rounded-lg bg-[#6b5a49] text-white font-medium text-sm hover:bg-[#5c4d3e]">
+              {loading ? "Inscription..." : "Créer mon compte"}
             </button>
           </form>
 
           {/* Lien Se connecter */}
           <p className="text-center text-sm text-[#8f7e6b] mt-2">
-            Déjà un compte ?{" "}
-            <a href="/login" className="text-[#bfa98a] font-medium hover:underline">
-              Se connecter
-            </a>
+            Déjà un compte ? <a href="/login" className="text-[#bfa98a] font-medium hover:underline">Se connecter</a>
           </p>
         </div>
       </main>

@@ -12,7 +12,7 @@ import Paiement from "./pages/Paiement";
 import ForgotPassword from "./pages/ForgotPassword";
 import Profile from "./pages/Profile";
 import Support from "./pages/Support";
-
+import ResetPassword from "./pages/ResetPassword"
 import AppLayout from "./layouts/AppLayout";
 
 export default function App() {
@@ -22,7 +22,8 @@ try {
 const saved = localStorage.getItem("theme"); // "dark" or "light"
 if (saved === "dark") return true;
 if (saved === "light") return false;
-} catch (e) {}
+} 
+catch (e) {}
 // fallback to system preference
 if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
 return true;
@@ -55,6 +56,7 @@ return (
 <Route path="/signup" element={<Signup />} />
 <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
 <Route path="/forgot" element={<ForgotPassword />} />
+<Route path="/reset-password/:token" element={<ResetPassword />} />
 
 {/* protégées */}
 <Route
