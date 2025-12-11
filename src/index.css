@@ -61,28 +61,51 @@ animation: tinyPulse 2.6s ease-in-out infinite;
 /* Tailwind micro utility fallback for beige colors if you didn't add custom palette */
 .bg-beige-50 { background-color: #f8f1e7; }
 .text-beige-900 { color: #3f352c; }
-.text-beige-700 { color: #7b6f63; }
+.text-beige-700 { color: #725d47; }
 .bg-beige-100 { background-color: #fff6ee; }
 .border-beige-200 { border-color: #efe1d3; }
 .prose-beige :where(h1,h2,h3,h4,h5,h6){ color: #3f352c; }
 
 
 /* body {
+=======
+:root {
+  --gradient-beige-gold: linear-gradient(90deg, #d6c7b4, #bfa98a);
+  --gradient-beige-brown: linear-gradient(90deg, #e8dcc7, #c1a381);
+  --gradient-beige-rose: linear-gradient(90deg, #e7d8c7, #d4b8a5);
+  --gradient-beige-soft: linear-gradient(90deg, #f3e8d7, #dfcdb9);
+  --gradient-beige-sand: linear-gradient(90deg, #eadfcf, #d1bfa8);
+}
+
+
+
+/* body  bg-[#f7f3ee] text-[#6b5a49] */
+
+/* body {
+
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-color: linear-gradient(90deg, #fce9d1, #bfa98a);
   font-size: 15px;;
-  
-} */
+}  */
+
 /* couleur principale du body */
+
 body {
-  background-color: #f7f3ee; /* beige très clair, style crème */
-  color: #6b5a49; /* texte principal beige foncé */
-  font-family: 'Inter', sans-serif; /* moderne et lisible */
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333; /* gris foncé pour un style professionnel */
 }
-body {
-  @apply bg-[#f7f3ee] text-[#6b5a49];
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 500; /* titres un peu plus épais */
 }
+
+h1 {
+  color: #f8f6f4; /* couleur principale du texte */
+  text-shadow: 0  0 32px rgb(65, 48, 28);
+}
+
 
 
 
@@ -90,109 +113,94 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-/* ......................................LA PARTIE Transactions........................................... */
-
-.grid .bg-white:hover{
+/* ...................................... LA PARTIE Transactions ........................................... */
+  
+.section1 .cart:hover{
    transition: transform 0.8s;
    transform: scale(1.04);
 }
 
-.space-y-4 .bg-white:hover{
-  background-color: #eae8e8;
+.section3 .liste:hover{
+  background: var(--gradient-beige-gold);
   transition: all 0.3s ease-in-out; 
 }
-/* ......................................LA PARTIE PROFIL........................................... */
 
-/*........... Grille principale ..............*/
-.section1-grid{
-   display: grid;
-   grid-template-columns: 30% 70%;
-   gap: 10px;
-   
+
+/* ...................................... LA PARTIE PROFIL ................................................. */
+
+.infoPersonel{
+ border-radius: 8px;
+padding: 20px;
 }
-.info{
-  grid-row: span 5;
-  background-color: white;
-  box-shadow: 2px 0 12px rgb(172, 171, 171);
+
+.infoPersonel .photo{
+  background: var(--gradient-beige-gold);
+   height: 76px;
+   width: 18%;
+   margin: auto;
+   padding-top: 6%;
+   border-radius: 50%;
+   color: #6b5a49;
+   font-size: 19px;
+   font-weight: bold;
 }
 
 /* ........Tous Les Sections....... */
- .infoPerso, .securite, .notifications, .Apparence{
-  background-color: white;
+.securite, .notifications, .Apparence{
+ background: #e8dcc7;
   box-shadow: 2px 0 12px rgb(172, 171, 171);
   border-radius: 8px;
   padding: 20px;
+  margin-top: 20px;
+  font-weight: bold;
 } 
-/* la section info */
-.info ul{
-  list-style: none;
-}
 
-.info .photo{
-   background: var(--gradient-blue-purple);
-   height: 80px;
-   width: 28%;
-   margin: auto;
-   padding: 8%;
-   border-radius: 50%;
-   color: white;
-   font-size: 20px;
-}
+
+
 
 /* les bouton qui se trouve sur les section infoPerso et securite*/
-.infoPerso button, .securite button{
-   background-color:#dfdede;
+.securite button{
+   background: var(--gradient-beige-gold);
+   color: #6b5a49;
+   font-weight: bold;
+   cursor: pointer;
 }
 
-.infoPerso button:hover, .securite button:hover{
-   background-color: rgb(231, 229, 229);
+.securite button:hover{
+   background: #e8d8c7;
+    transition: transform 0.8s;
+   transform: scale(1.04);
 }
 
-/* les imput de la section infoPerso*/
-.infoPerso input{
-   background-color:#f7f7f7;
-   width: 100%;
-   border: none;
-   padding: 8px;
-   border-radius: 7px;
-   outline: none;
-}
-/* les labels de la section infoPerso */
-.infoPerso label{
-  font-weight: 500;
-  padding-bottom: 6px;
-}
+
 
 /* la section securité */
 .securite {
   margin-left: 2px;
   width: 99%;
+  margin-top: 10px;
 }
 
 /*les icone de la section securité */ 
 .securite .icone1{
     padding: 1%;
-    background-color:#2564eb25;
     border-radius: 50px;
-    color:#2563eb;
+    background: var(--gradient-beige-gold);
+   color: #6b5a49;
+   font-weight: bold;
 }
-.securite .icone2{
-    padding: 1%;
-    background-color:#9233ea29;
-    border-radius: 50px;
-    color:#9333ea;
-}
+
 .securite .icone3{
-    padding: 1%;
-    background-color:#ef44442f;
-    border-radius: 50px;
-    color:#ef4444;
+   background: var(--gradient-beige-gold);
+   color: #6b5a49;
+   font-weight: bold;
+   border-radius: 50px;
+   padding: 1%;
 }
 .securite i{
     font-size: 20px;
     font-weight: bold;
 }
-
 
 /* .............LES bouton de notif............ */
 /* Le fond du toggle */
@@ -305,16 +313,211 @@ code {
   border: 1px solid rgb(22, 22, 38) !important;
 }
 
-@media (min-width: 768px) {
-  .section1-grid {
-    grid-template-columns: 1fr 2fr;
+
+@media (max-width: 1024px) { /* tablette */
+  .infoPersonel .photo {
+    width: 25%;
+    height: 80px;
+    font-size: 17px;
   }
 }
-@media (min-width: 768px) {
-  .infoPerso .row {
-    flex-direction: row;
-    flex-wrap: wrap;
+
+
+@media (max-width: 768px) { /* mobile */
+  .infoPersonel .photo {
+    width: 20%;
+    height: 85px;
+    font-size: 16px;
   }
-  .infoPerso .col-lg-6 { flex: 0 0 50%; }
-  .infoPerso .col-lg-12 { flex: 0 0 100%; }
 }
+
+@media (max-width: 400px) { /* petit mobile */
+  .infoPersonel .photo {
+    width: 22%;
+    height: 66px;
+    font-size: 16px;
+    background: #22c55e;
+  }
+}
+
+
+
+
+
+/* ...............................Paiement................................... */
+
+.section1 .blocBouton{
+  box-shadow: 2px 0 12px rgb(172, 171, 171);
+  border-radius: 10px;
+  background-color: #e8dcc7;
+}
+.section1 .blocBouton:hover{
+  transition: transform 0.8s;
+   transform: scale(1.04);
+}
+
+.section1 .icone1{
+  background: var(--gradient-beige-gold);
+   color: #6b5a49;
+   font-weight: bold;
+  padding: 10px 20px 10px 20px;
+  border-radius: 12px;
+  width: 60%;
+  margin: auto;
+}
+
+.section1 .icone2{
+  background: var(--gradient-beige-gold);
+   color: #6b5a49;
+   font-weight: bold;
+  padding: 10px 20px 10px 20px;
+  border-radius: 12px;
+  width: 60%;
+  margin: auto;
+}
+
+.section1 .icone3{
+   background: var(--gradient-beige-gold);
+   color: #6b5a49;
+   font-weight: bold;
+  padding: 10px 1px 10px 1px;
+  border-radius: 12px;
+  width: 60%;
+  margin: auto;
+}
+
+.section1 .icone4{
+  background: var(--gradient-beige-gold);
+  padding: 10px 20px 10px 20px;
+  border-radius: 12px;
+  color: #6b5a49;
+  font-weight: bold;
+  width: 60%;
+  margin: auto;
+}
+
+.iconeMobile{
+  background: var(--gradient-beige-gold);
+   color: #6b5a49;
+   font-weight: bold;
+  padding-top: 12px;
+  border-radius: 7px;
+  width: 12%;
+  
+}
+
+.iconeInternet{
+  background: var(--gradient-beige-gold);
+   color: #6b5a49;
+  padding-top: 12px;
+  border-radius: 7px;
+  width: 12%;
+  font-weight: bold;
+}
+
+.iconeElectricite{
+  background: var(--gradient-beige-gold);
+   color: #6b5a49;
+  padding-top: 12px;
+  border-radius: 7px;
+  width: 12%;
+  font-weight: bold;
+}
+
+.iconeEau{
+  background: var(--gradient-beige-gold);
+  padding-top: 12px;
+  border-radius: 7px;
+  color: #6b5a49;
+  width: 12%;
+  font-weight: bold;
+}
+.form{
+  width: 60%;
+}
+
+.form input{
+    padding: 5px;
+    border-radius: 7px;
+    border: none;
+    background-color:#f7f7f7;
+    padding-left: 1%;
+}
+
+.formPrincipal input{
+  padding: 5px;
+    border-radius: 7px;
+    border: none;
+    background-color:#f7f7f7;
+    padding-left: 1%;
+}
+
+.formBeneficiaire .btn1{
+  background-color:#22c55e;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 20px; 
+  width: 100%
+}
+.formBeneficiaire input{
+  padding: 5px;
+    border-radius: 7px;
+    border: none;
+    background-color:#f7f7f7;
+    padding-left: 1%;
+}
+
+.bloc{
+  margin: 0 17px 0 17px;
+  padding: 10px 18px 7px 18px;
+  background-color: #f7f7f7;
+  border: none;
+  border-radius: 12px;
+}
+.bloc:hover{
+  background-color: white;
+   box-shadow: 2px 0 12px rgb(172, 171, 171);
+}
+.bloc .icone1{
+  background-color: #2563eb;
+  padding: 10px;
+  border-radius: 12px;
+  color: white;
+}
+.bloc .btn2{
+  background: var(--gradient-purple-pink);
+  border: none;
+
+}
+
+
+/* .............formPaiement............... */
+.formPaiement .barreMenu{
+  background-color: #e8dcc7;
+  padding-bottom: 10px;
+} 
+
+.formPaiement .cursor-pointer{
+   box-shadow: 2px 0 12px #e7d8c7;
+   padding: 5px 15px 5px 15px;
+   background: var(--gradient-beige-gold);
+   font-weight: bold;
+}
+
+.formPaiement .cursor-pointer:hover{
+  background: #e8dcc7;
+   transition: transform 0.8s;
+   transform: scale(1.04);
+}
+
+.formPaiement button{
+  background: var(--gradient-beige-gold);
+   font-weight: bold;
+   cursor: pointer;
+   color: #6b5a49;
+}
+.formPaiement button:hover{
+   background: #e8dcc7;
+}
+
