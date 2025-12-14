@@ -47,7 +47,7 @@ export default function SignupCompact() {
           name: formData.name,
           email: formData.email,
           telephone: formData.telephone,
-          dateDeNaissance: isoDate, // 
+          dateDeNaissance: isoDate, 
           password: formData.password
         })
       });
@@ -93,7 +93,7 @@ export default function SignupCompact() {
     // Redirection après 2 secondes
     setTimeout(() => {
       window.location.href = "/login";
-    }, 2000);
+    }, 1500);
   };
 
   return (
