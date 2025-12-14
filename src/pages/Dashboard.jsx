@@ -22,6 +22,7 @@ export default function Dashboard() {
   const [cardIndex, setCardIndex] = useState(0);
   const [activeCard, setActiveCard] = useState(null);
 // const [userCard, setUserCard] = useState(null); 
+const [user, setUser] = useState(null);
 
   const [dashboardData, setDashboardData] = useState({
     totalBalance: 0,
@@ -103,7 +104,7 @@ export default function Dashboard() {
 
       {/* Header Welcome */}
       <div className="p-6 bg-gradient-to-r from-[#f3e8d7] to-[#e8dcc7] rounded-xl shadow-md dark:from-[#2b2a28] dark:to-[#222]">
-        <h2 className="text-3xl font-semibold text-[#8f7e6b] dark:text-[#f1e8dc]">Bienvenue, Mouhamed</h2>
+        <h2 className="text-3xl font-semibold text-[#8f7e6b] dark:text-[#f1e8dc]"> Bienvenue{user?.prenom ? `, ${user.prenom}` : ""} </h2>
         <p className="text-sm text-[#6b5a49] dark:text-[#d6c5a9] mt-1">Voici un aperçu de votre situation financière</p>
       </div>
 
