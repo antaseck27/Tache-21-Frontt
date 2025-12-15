@@ -27,7 +27,7 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUser(null);
-    // navigate("/login");
+    navigate("/login");
   };
 
   const toggleDark = () => setDarkMode(prev => !prev);

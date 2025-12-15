@@ -13,10 +13,10 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // 🔗 BACKEND URL
+  
   const API = import.meta.env.VITE_API_URL;
 
-  // 🔐 Login classique
+  //  Login classique
   const loginUser = async () => {
     try {
       setLoading(true);
@@ -59,7 +59,7 @@ export default function Login() {
     navigate("/dashboard");
   };
 
-  // ✅ GOOGLE LOGIN (CORRIGÉ)
+  // GOOGLE LOGIN (CORRIGÉ)
   const handleGoogleLogin = () => {
     window.location.href = `${API}/api/auth/google`;
   };
