@@ -45,9 +45,16 @@ try { localStorage.setItem("theme", "light"); } catch (e) {}
 
 const [loggedIn, setLoggedIn] = useState(false);
 
+
 useEffect(() => {
 setLoggedIn(localStorage.getItem("token") ? true : false);
+  console.log("loggedIn =", loggedIn);
+
+
+
 }, []);
+
+
 
 return (
 <Routes>

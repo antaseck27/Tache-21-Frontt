@@ -36,9 +36,12 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
         });
         setUser(res.data);
       } catch (err) {
-        console.error("Erreur lors de la récupération du profil :", err);
-        localStorage.removeItem("token");
-        navigate("/login");
+        // console.error("Erreur lors de la récupération du profil :", err);
+        // localStorage.removeItem("token");
+        // navigate("/login");
+        "Erreur lors de la récupération du profil :",
+          err.response?.status,
+          err.response?.data
       }
     };
 
@@ -84,9 +87,29 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
 
         {/* Logo */}
         <Link to="/dashboard" className="flex items-center gap-3 flex-shrink-0">
-          <div className="sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
+          {/* <div className="sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
             <img src={logo} alt="logo" className="w-20 h-20 object-contain" />
+          </div> */}
+          <div
+            className="
+    w-9 h-9
+    sm:w-10 sm:h-10
+    md:w-11 md:h-11
+    lg:w-12 lg:h-12
+    xl:w-14 xl:h-14
+    rounded-lg
+    flex items-center justify-center
+    shadow-lg
+    overflow-hidden
+  "
+          >
+            <img
+              src={logo}
+              alt="logo"
+              className="w-full h-full object-contain"
+            />
           </div>
+
           <div className="hidden sm:flex flex-col leading-none">
             <p className="text-sm sm:text-lg font-semibold text-[#6b5a49] dark:text-[#f7f3ee]">BankRewmi</p>
             <p className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">Sa Karàngué Koppar</p>

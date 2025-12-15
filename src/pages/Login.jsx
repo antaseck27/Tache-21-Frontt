@@ -55,6 +55,8 @@ export default function LoginCard() {
     const result = await loginUser();
     if (!result) return;
 
+    // setLoggedIn(true);   
+
     navigate("/dashboard");
   };
 
