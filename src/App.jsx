@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
@@ -12,8 +13,9 @@ import Paiement from "./pages/Paiement";
 import ForgotPassword from "./pages/ForgotPassword";
 import Profile from "./pages/Profile";
 import Support from "./pages/Support";
-import ResetPassword from "./pages/ResetPassword"
+import ResetPassword from "./pages/ResetPassword";
 import AppLayout from "./layouts/AppLayout";
+// import GoogleCallback from "./pages/GoogleCallback";
 
 export default function App() {
 // true => dark, false => light

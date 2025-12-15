@@ -4,7 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 
-export default function LoginCard() {
+export default function Login() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -13,7 +13,7 @@ export default function LoginCard() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
- const API = import.meta.env.VITE_API_URL; 
+  const API = import.meta.env.VITE_API_URL;
 
   // Appel API login
   const loginUser = async () => {
@@ -35,6 +35,7 @@ export default function LoginCard() {
       }
 
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
       return data;
 
     } catch (err) {
@@ -60,11 +61,25 @@ export default function LoginCard() {
     navigate("/dashboard");
   };
 
-  const handleGoogleLogin = () => {
-    alert("Connexion Google (simulation)");
-    localStorage.setItem("token", "fake_token_123");
-    navigate("/dashboard");
+  //  Nouveau : Login Google
+  const handleGoogleLogin = async () => {
+    try {
+      // Récupérer l'URL d'authentification Google depuis le backend
+      const res = await fetch(`${API}/api/auth/google/config`);
+      const data = await res.json();
+
+      if (data.googleEnabled && data.url) {
+        // Redirection vers Google
+        window.location.href = data.url;
+      } else {
+        setError("Connexion Google non configurée.");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Impossible de se connecter via Google.");
+    }
   };
+
   return (
     <div className="min-h-screen flex">
       {/* LEFT PANEL */}
@@ -143,6 +158,7 @@ export default function LoginCard() {
               {loading ? "Connexion..." : "Se connecter"}
             </button>
 
+            {/*  Bouton Google */}
             <button
               type="button"
               onClick={handleGoogleLogin}

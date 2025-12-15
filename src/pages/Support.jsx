@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Input from "../components/input";
 import ChatBot from "../components/chatbot";
+import axios from "axios";
 
 export default function Support() {
 const [showChat, setShowChat] = useState(false);
@@ -57,12 +58,36 @@ const toggleFAQ = (index) => {
 setOpenIndex(openIndex === index ? null : index);
 };
 
-const handleSubmit = (e) => {
-e.preventDefault();
-setEmail("");
-setSubject("");
-setMessage("");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const token = localStorage.getItem("token");
+
+    await axios.post(
+      "http://localhost:5000/api/support",
+      {
+        subject,
+        message
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    alert("Votre message a été envoyé avec succès ");
+
+    setEmail("");
+    setSubject("");
+    setMessage("");
+  } catch (error) {
+    console.error(error);
+    alert("Erreur lors de l'envoi du message ");
+  }
 };
+
 
 return (
 <div className="p-4 sm:p-6 max-w-7xl mx-auto min-h-screen bg-[#f7f3ee] dark:bg-[#1a1a1a] transition-colors duration-300">
@@ -201,30 +226,39 @@ className="w-full bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] dark:from-[#6b5a4
 </div>
 
 {/* Ressources utiles */}
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6 rounded-xl bg-white dark:bg-[#2a2a2a] shadow-sm p-6 mt-6 transition-colors">
-<h3 className="text-xl font-semibold mb-4 col-span-2 text-[#3a2f24] dark:text-[#f1e8dc]">
-Ressources utiles
-</h3>
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 rounded-xl bg-white dark:bg-[#2a2a2a] shadow-sm p-4 sm:p-6 mt-6 transition-colors">
+  
+  {/* Titre */}
+  <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-4 col-span-1 sm:col-span-2 text-[#3a2f24] dark:text-[#f1e8dc] text-center sm:text-left">
+    Ressources utiles
+  </h3>
 
-<div className="flex items-start gap-3 rounded-xl bg-[#e8dcc7] dark:bg-[#262424] shadow-sm p-4 transition-colors">
-<i className="fa-regular fa-circle-question text-xl text-blue-500 p-2"></i>
-<div>
-<h2 className="font-semibold text-[#3a2f24] dark:text-[#f1e8dc]">Guide d'utilisation</h2>
-<p className="text-sm text-[#6b5a49] dark:text-[#bfb6a5]">
-Découvrez et utilisez toutes les fonctionnalités
-</p>
-</div>
-</div>
+  {/* Card 1 */}
+  <div className="flex items-start gap-3 sm:gap-4 rounded-xl bg-[#e8dcc7] dark:bg-[#262424] shadow-sm p-4 transition-colors">
+    <i className="fa-regular fa-circle-question text-lg sm:text-xl text-blue-500 p-2"></i>
+    <div>
+      <h2 className="font-semibold text-sm sm:text-base text-[#3a2f24] dark:text-[#f1e8dc]">
+        Guide d&apos;utilisation
+      </h2>
+      <p className="text-xs sm:text-sm text-[#6b5a49] dark:text-[#bfb6a5]">
+        Découvrez et utilisez toutes les fonctionnalités
+      </p>
+    </div>
+  </div>
 
-<div className="flex items-start gap-3 rounded-xl bg-[#e8dcc7] dark:bg-[#262424] shadow-sm p-4 transition-colors">
-<i className="fa-regular fa-circle-play text-xl text-purple-500 p-2"></i>
-<div>
-<h2 className="font-semibold text-[#3a2f24] dark:text-[#f1e8dc]">Tutoriels vidéo</h2>
-<p className="text-sm text-[#6b5a49] dark:text-[#bfb6a5]">
-Apprenez avec nos tutoriels pas à pas
-</p>
-</div>
-</div>
+  {/* Card 2 */}
+  <div className="flex items-start gap-3 sm:gap-4 rounded-xl bg-[#e8dcc7] dark:bg-[#262424] shadow-sm p-4 transition-colors">
+    <i className="fa-regular fa-circle-play text-lg sm:text-xl text-purple-500 p-2"></i>
+    <div>
+      <h2 className="font-semibold text-sm sm:text-base text-[#3a2f24] dark:text-[#f1e8dc]">
+        Tutoriels vidéo
+      </h2>
+      <p className="text-xs sm:text-sm text-[#6b5a49] dark:text-[#bfb6a5]">
+        Apprenez avec nos tutoriels pas à pas
+      </p>
+    </div>
+  </div>
+
 </div>
 
 {/* Chat Modal */}

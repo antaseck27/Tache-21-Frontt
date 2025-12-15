@@ -8,7 +8,7 @@ import {
 import { 
   FiEye, FiEyeOff, FiChevronLeft, FiChevronRight, FiCreditCard, FiSend, FiDownload, FiSave 
 } from "react-icons/fi";
-
+import { useAuth } from "../context/AuthContext.jsx";
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip, ArcElement, Legend);
 
 const Card = ({ children, className = "" }) => (
@@ -18,12 +18,11 @@ const Card = ({ children, className = "" }) => (
 );
 
 export default function Dashboard() {
+  const { user } = useAuth();
   const [showBalance, setShowBalance] = useState(true);
   const [cardIndex, setCardIndex] = useState(0);
   const [activeCard, setActiveCard] = useState(null);
 // const [userCard, setUserCard] = useState(null); 
-const [user, setUser] = useState(null);
-
   const [dashboardData, setDashboardData] = useState({
     totalBalance: 0,
     revenueThisMonth: 0,
@@ -34,11 +33,8 @@ const [user, setUser] = useState(null);
       { face: "verso", numero: "CVV •••", type: "Mastercard", color: ["#8f7e6b", "#6b5a49"] }
     ]
   });
-  
-
-  // --- Fetch data depuis backend (si disponible) ---
   useEffect(() => {
-    async function fetchDashboard() {
+    const fetchDashboard = async () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) return;
@@ -47,8 +43,6 @@ const [user, setUser] = useState(null);
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = res.data;
-
-        // Sécurisé: vérifier que les champs existent
         setDashboardData({
           totalBalance: data.totalBalance || 0,
           revenueThisMonth: data.revenueThisMonth || 0,
@@ -59,10 +53,10 @@ const [user, setUser] = useState(null);
       } catch (err) {
         console.error("Erreur fetch dashboard:", err);
       }
-    }
-
+    };
     fetchDashboard();
   }, []);
+
 
   const nextCard = () => setCardIndex(i => (i + 1) % dashboardData.cards.length);
   const prevCard = () => setCardIndex(i => (i - 1 + dashboardData.cards.length) % dashboardData.cards.length);
@@ -104,7 +98,7 @@ const [user, setUser] = useState(null);
 
       {/* Header Welcome */}
       <div className="p-6 bg-gradient-to-r from-[#f3e8d7] to-[#e8dcc7] rounded-xl shadow-md dark:from-[#2b2a28] dark:to-[#222]">
-        <h2 className="text-3xl font-semibold text-[#8f7e6b] dark:text-[#f1e8dc]"> Bienvenue{user?.prenom ? `, ${user.prenom}` : ""} </h2>
+        <h2 className="text-3xl font-semibold text-[#8f7e6b] dark:text-[#f1e8dc]">  Bienvenue{user?.prenom ? `, ${user.prenom}` : ""} </h2>
         <p className="text-sm text-[#6b5a49] dark:text-[#d6c5a9] mt-1">Voici un aperçu de votre situation financière</p>
       </div>
 

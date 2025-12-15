@@ -1,15 +1,15 @@
+// src/components/Header.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Bars3Icon, BellIcon, MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 import logo from "../assets/logo.png";
-import axios from "axios";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
   const navigate = useNavigate();
+  const { user, setUser } = useAuth();
   const [openProfile, setOpenProfile] = useState(false);
   const [openNotif, setOpenNotif] = useState(false);
-  const [user, setUser] = useState(null);
-
   const profileRef = useRef();
   const notifRef = useRef();
   const fileInputRef = useRef();
@@ -24,38 +24,14 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Récupérer le profil utilisateur
-  useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) return;
-
-      try {
-        const res = await axios.get("http://localhost:5000/api/settings/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setUser(res.data);
-      } catch (err) {
-        // console.error("Erreur lors de la récupération du profil :", err);
-        // localStorage.removeItem("token");
-        // navigate("/login");
-        "Erreur lors de la récupération du profil :",
-          err.response?.status,
-          err.response?.data
-      }
-    };
-
-    fetchUser();
-  }, [navigate]);
-
   const handleLogout = () => {
     localStorage.removeItem("token");
+    setUser(null);
     navigate("/login");
   };
 
   const toggleDark = () => setDarkMode(prev => !prev);
 
-  // Mettre à jour l'avatar
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -65,13 +41,13 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.put(
-        "http://localhost:5000/api/settings/update-avatar",
-        formData,
-        { headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" } }
-      );
-
-      setUser(prev => ({ ...prev, avatar: res.data.avatar }));
+      const res = await fetch("http://localhost:5000/api/settings/update-avatar", {
+        method: "PUT",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData
+      });
+      const data = await res.json();
+      setUser(prev => ({ ...prev, avatar: data.avatar }));
     } catch (err) {
       console.error("Erreur lors de la mise à jour de l'avatar :", err);
     }
@@ -80,6 +56,7 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a] border-b dark:border-gray-800 transition-colors duration-300">
       <div className="max-w-[1400px] mx-auto flex items-center h-20 px-3 sm:px-4 md:px-6 gap-3">
+
         {/* Menu mobile */}
         <button onClick={onOpenSidebar} className="p-2 rounded md:hidden hover:bg-gray-100 dark:hover:bg-gray-700 transition">
           <Bars3Icon className="w-9 h-9 text-gray-700 dark:text-gray-200" />
@@ -143,17 +120,15 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
           {/* Profil */}
           <div className="relative" ref={profileRef}>
             <button onClick={() => setOpenProfile(p => !p)} className="flex items-center gap-2 px-2 sm:px-3 py-1.5 text-sm font-medium rounded-full bg-[#e8dcc7] text-[#6b5a49] hover:bg-[#d6c5a9] dark:bg-[#b19b7a] dark:text-[#f1e8dc] dark:hover:bg-[#9c8b73] transition">
-              {/* Avatar */}
               <img
-                src={user?.avatar || ""}
+                src={user?.avatar || "/avatar.png"}
                 alt={`${user?.prenom || ""} ${user?.name || ""}`}
                 className="w-7 h-7 rounded-full object-cover cursor-pointer"
-                onClick={() => fileInputRef.current.click()} // clic sur avatar ouvre le file input
+                onClick={() => fileInputRef.current.click()}
               />
               <span className="hidden sm:inline">{user ? `${user.prenom} ${user.name}` : "Utilisateur"} ▾</span>
             </button>
 
-            {/* Input file caché */}
             <input
               type="file"
               accept="image/*"
@@ -170,7 +145,6 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
               </div>
             )}
           </div>
-
         </div>
       </div>
     </header>
