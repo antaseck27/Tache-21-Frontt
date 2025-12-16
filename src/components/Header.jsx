@@ -13,6 +13,9 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
   const profileRef = useRef();
   const notifRef = useRef();
   const fileInputRef = useRef();
+  const [notifications, setNotifications] = useState([]);
+const unreadCount = notifications.filter(n => !n.read).length;
+
 
   // Fermer les menus quand on clique ailleurs
   useEffect(() => {
@@ -52,6 +55,21 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
       console.error("Erreur lors de la mise à jour de l'avatar :", err);
     }
   };
+
+  useEffect(() => {
+  const fetchNotifications = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    try {
+      const data = await getNotifications(token);
+      setNotifications(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  fetchNotifications();
+}, []);
+
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a] border-b dark:border-gray-800 transition-colors duration-300">
@@ -106,13 +124,25 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
           <div className="relative" ref={notifRef}>
             <button onClick={() => setOpenNotif(p => !p)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition relative">
               <BellIcon className="w-5 h-5 text-gray-700 dark:text-gray-200" />
-              <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full px-1.5">2</span>
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full px-1.5">
+                  {unreadCount}
+                </span>
+              )}
             </button>
+
             {openNotif && (
-              <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md z-50">
-                <div className="p-3 text-sm text-gray-700 dark:text-gray-200">
-                  <p>Nouvelle transaction reçue</p>
-                </div>
+              <div className="absolute right-0 mt-2 w-64 max-h-80 overflow-y-auto bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md z-50">
+                {notifications.length === 0 ? (
+                  <p className="p-3 text-sm text-gray-700 dark:text-gray-200">Aucune notification</p>
+                ) : (
+                  notifications.map(n => (
+                    <div key={n._id} className={`p-3 text-sm border-b border-gray-200 dark:border-gray-700 cursor-pointer ${!n.read ? "bg-gray-100 dark:bg-gray-800" : ""}`} onClick={() => handleMarkAsRead(n._id)}>
+                      <p>{n.message}</p>
+                      <span className="text-xs text-gray-500">{new Date(n.createdAt).toLocaleString()}</span>
+                    </div>
+                  ))
+                )}
               </div>
             )}
           </div>

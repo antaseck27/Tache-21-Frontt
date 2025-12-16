@@ -25,7 +25,7 @@ answer:
 {
 question: "Quels sont les frais de transaction ?",
 answer:
-"Les transferts entre vos comptes BankApp sont gratuits et instantanés. Les virements SEPA vers d'autres banques européennes sont également gratuits. Les virements internationaux peuvent engendrer des frais selon la destination et le montant.",
+"Les transferts entre vos comptes BankRewmi sont gratuits et instantanés. Les virements SEPA vers d'autres banques européennes sont également gratuits. Les virements internationaux peuvent engendrer des frais selon la destination et le montant.",
 },
 {
 question: "Comment obtenir une nouvelle carte bancaire ?",
@@ -48,7 +48,7 @@ answer:
 "Accédez à la section 'Profil' et cliquez sur 'Modifier'. Vous pourrez mettre à jour vos informations (nom, email, téléphone, adresse). N'oubliez pas de cliquer sur 'Enregistrer' pour valider vos modifications.",
 },
 {
-question: "Puis-je utiliser BankApp à l'étranger ?",
+question: "Puis-je utiliser BankRewmi à l'étranger ?",
 answer:
 "En cas de suspicion de fraude, contactez immédiatement notre service client au 0800 XXX XXX (disponible 24/7). Nous bloquerons votre carte et ouvrirons une enquête. Vous pouvez également signaler une transaction directement depuis votre historique.",
 },
