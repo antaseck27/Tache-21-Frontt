@@ -56,7 +56,10 @@ export default function Login() {
     const result = await loginUser();
     if (!result) return;
 
-    navigate("/dashboard");
+     setTimeout(() => {
+      navigate("/dashboard");
+    }, 1000);
+    // navigate("/dashboard");
   };
 
   //  Nouveau : Login Google

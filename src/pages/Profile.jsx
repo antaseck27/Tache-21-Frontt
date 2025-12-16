@@ -143,7 +143,7 @@ export default function ProfilePage() {
             <label className="relative cursor-pointer">
               <img
                 src={previewAvatar || user.avatar || "/avatar.png"}
-                alt="avatar"
+                alt="Avatar utilisateur"
                 className="w-24 h-24 rounded-full object-cover"
               />
               <span className="absolute bottom-0 right-0 bg-[#6b5a49] text-white p-2 rounded-full">

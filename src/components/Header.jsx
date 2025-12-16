@@ -99,32 +99,41 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
 
           {/* Profil */}
           <div className="relative" ref={profileRef}>
-            <button onClick={() => setOpenProfile(p => !p)} className="flex items-center gap-2 px-2 sm:px-3 py-1.5 text-sm font-medium rounded-full bg-[#e8dcc7] text-[#6b5a49] hover:bg-[#d6c5a9] dark:bg-[#b19b7a] dark:text-[#f1e8dc] dark:hover:bg-[#9c8b73] transition">
-              <img
-                src={user?.avatar || "/avatar.png"}
-                alt={`${user?.prenom || ""} ${user?.name || ""}`}
-                className="w-7 h-7 rounded-full object-cover cursor-pointer"
-                onClick={() => fileInputRef.current.click()}
-              />
-              <span className="hidden sm:inline">{user ? `${user.prenom} ${user.name}` : "Utilisateur"} ▾</span>
-            </button>
+  <button
+    onClick={() => setOpenProfile(p => !p)}
+    className="flex items-center gap-2 px-2 sm:px-3 py-1.5 text-sm font-medium rounded-full bg-[#e8dcc7] text-[#6b5a49] hover:bg-[#d6c5a9] dark:bg-[#b19b7a] dark:text-[#f1e8dc] dark:hover:bg-[#9c8b73] transition"
+  >
+    <img
+      src={user?.avatar || "/avatar.png"}
+      alt="Avatar utilisateur"
+      className="w-7 h-7 rounded-full object-cover"
+    />
 
-            <input
-              type="file"
-              accept="image/*"
-              className="hidden"
-              ref={fileInputRef}
-              onChange={handleAvatarChange}
-            />
+    <span className="hidden sm:inline">
+      {user ? `${user.prenom} ${user.name}` : "Utilisateur"} ▾
+    </span>
+  </button>
 
-            {openProfile && (
-              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md overflow-hidden z-50">
-                <Link to="/account" className="block px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]" onClick={() => setOpenProfile(false)}>Mon compte</Link>
-                <Link to="/profile" className="block px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a] border-y border-gray-200 dark:border-gray-700" onClick={() => setOpenProfile(false)}>Profil</Link>
-                <button onClick={handleLogout} className="w-full text-left px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]">Déconnexion</button>
-              </div>
-            )}
-          </div>
+  {openProfile && (
+    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md overflow-hidden z-50">
+      <Link
+        to="/profile"
+        className="block px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]"
+        onClick={() => setOpenProfile(false)}
+      >
+        Profil
+      </Link>
+
+      <button
+        onClick={handleLogout}
+        className="w-full text-left px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]"
+      >
+        Déconnexion
+      </button>
+    </div>
+  )}
+</div>
+
         </div>
       </div>
     </header>
