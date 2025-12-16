@@ -1,222 +1,214 @@
 
-import React, { useState } from "react";
+
+
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function Transfer() {
-const [activeTab, setActiveTab] = useState("interne");
+  const [activeTab, setActiveTab] = useState("interne");
+  const [accounts, setAccounts] = useState([]);
+  const [contacts] = useState([
+    { name: "Mamadou Ndiaye", email: "mamadou.ndiaye@email.sn", icon: "fa-solid fa-user" },
+    { name: "Awa Diop", email: "awa.diop@email.sn", icon: "fa-solid fa-user" },
+    { name: "Cheikh Fall", email: "cheikh.fall@email.sn", icon: "fa-solid fa-user" },
+    { name: "Fatoumata Sow", email: "fatoumata.sow@email.sn", icon: "fa-solid fa-user" },
+  ]);
+  const [infos] = useState([
+    { icon: "fa-solid fa-user", title: "Les transferts internes sont instantanés.", subtitle: "Entre vos comptes BankApp" },
+    { icon: "fa-solid fa-wallet", title: "Gérez facilement vos portefeuilles.", subtitle: "Toutes vos cartes BankApp" },
+    { icon: "fa-solid fa-credit-card", title: "Vos paiements sécurisés.", subtitle: "Cartes BankApp protégées" },
+  ]);
 
-const contacts = [
-{ name: "Mamadou Ndiaye", email: "mamadou.ndiaye@email.sn", icon: "fa-solid fa-user" },
-{ name: "Awa Diop", email: "awa.diop@email.sn", icon: "fa-solid fa-user" },
-{ name: "Cheikh Fall", email: "cheikh.fall@email.sn", icon: "fa-solid fa-user" },
-{ name: "Fatoumata Sow", email: "fatoumata.sow@email.sn", icon: "fa-solid fa-user" },
-];
+  const [formData, setFormData] = useState({
+    sourceAccount: "",
+    destinationAccount: "",
+    beneficiaryIban: "",
+    amount: "",
+    description: ""
+  });
 
-const infos = [
-{ icon: "fa-solid fa-user", title: "Les transferts internes sont instantanés.", subtitle: "Entre vos comptes BankApp" },
-{ icon: "fa-solid fa-wallet", title: "Gérez facilement vos portefeuilles.", subtitle: "Toutes vos cartes BankApp" },
-{ icon: "fa-solid fa-credit-card", title: "Vos paiements sécurisés.", subtitle: "Cartes BankApp protégées" },
-];
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null);
 
-return (
-<div className="min-h-screen p-6 bg-[#f7f3ee] dark:bg-[#1a1a1a] text-[#6b5a49] dark:text-[#f1e8dc] transition-colors duration-300">
-{/* Header */}
-<div className="max-w-6xl mx-auto text-center mb-8">
-<h2 className="text-3xl font-bold mb-2 dark:text-[#f1e8dc]">Transfert d argent</h2>
-<p className="text-[#8f7e6b] dark:text-[#d6c5a9] text-lg">
-Envoyez de l argent à vos proches ou payez vos factures
-</p>
-</div>
+  const token = localStorage.getItem("token");
+  const API_BASE = "http://localhost:5000/api";
 
-<div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-{/* Formulaire */}
-<div className="md:col-span-2 bg-white dark:bg-[#2a2a2a] p-6 md:p-8 rounded-xl shadow-lg border border-[#e7ded5] dark:border-[#3a3a3a] transition-colors">
-{/* Onglets */}
-<div className="flex mb-6">
-<div className="w-full rounded-xl flex bg-[#e9e0d7] dark:bg-[#262424] border border-[#d6c7b8] dark:border-[#3a3a3a] p-1">
-<button
-onClick={() => setActiveTab("interne")}
-className={`px-4 py-2 rounded-lg text-sm font-medium w-1/2 transition
-${activeTab === "interne"
-? "bg-white dark:bg-[#2a2a2a] text-[#6b5a49] dark:text-[#f1e8dc]"
-: "text-[#8f7e6b] dark:text-[#d6c5a9]"}`}
->
-Transfert interne
-</button>
+  //  Récupération des comptes utilisateur
+  useEffect(() => {
+    const fetchAccounts = async () => {
+      if (!token) return;
+      try {
+        const res = await axios.get(`${API_BASE}/accounts`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setAccounts(res.data || []);
+      } catch (err) {
+        console.error("Erreur récupération comptes:", err);
+      }
+    };
+    fetchAccounts();
+  }, [token]);
 
-<button
-onClick={() => setActiveTab("externe")}
-className={`px-4 py-2 rounded-lg text-sm font-medium w-1/2 transition
-${activeTab === "externe"
-? "bg-white dark:bg-[#2a2a2a] text-[#6b5a49] dark:text-[#f1e8dc]"
-: "text-[#8f7e6b] dark:text-[#d6c5a9]"}`}
->
-Transfert externe
-</button>
-</div>
-</div>
+  const handleChange = (e) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
-{/* Formulaire interne */}
-{activeTab === "interne" && (
-<div>
-<h2 className="text-xl font-semibold mb-4 dark:text-[#f1e8dc]">
-Transfert entre vos comptes
-<p className="text-xs text-[#b9a896] dark:text-[#d6c5a9]">Transfert rapide et instantané</p>
-</h2>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage(null);
 
-<form className="space-y-4">
-{/* Compte source */}
-<div>
-<label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">Compte source</label>
-<select className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#1b1b1b] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition">
-<option>Compte Courant - 850 000 FCFA</option>
-<option>Compte Épargne - 2 430 000 FCFA</option>
-</select>
-</div>
+    // Vérifications frontend
+    if (!formData.sourceAccount || !formData.amount || (activeTab === "interne" && !formData.destinationAccount) || (activeTab === "externe" && !formData.beneficiaryIban)) {
+      setMessage({ type: "error", text: "Veuillez remplir tous les champs requis." });
+      setLoading(false);
+      return;
+    }
 
-{/* Compte destination */}
-<div>
-<label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">Compte destination</label>
-<select className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#1b1b1b] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition">
-<option>Sélectionnez un compte</option>
-<option>Compte Courant - 850 000 FCFA</option>
-</select>
-</div>
+    if (activeTab === "interne" && formData.sourceAccount === formData.destinationAccount) {
+      setMessage({ type: "error", text: "Le compte source et destination doivent être différents." });
+      setLoading(false);
+      return;
+    }
 
-{/* Montant */}
-<div>
-<label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">Montant (FCFA)</label>
-<input
-type="number"
-className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#111] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition"
-placeholder="0"
-min="0"
-/>
-</div>
+    try {
+      if (activeTab === "interne") {
+        const res = await axios.post(`${API_BASE}/transfer/internal`, {
+          sourceAccount: formData.sourceAccount,
+          destinationAccount: formData.destinationAccount,
+          amount: formData.amount,
+          description: formData.description
+        }, { headers: { Authorization: `Bearer ${token}` } });
+        setMessage({ type: "success", text: res.data.message });
+      } else {
+        const res = await axios.post(`${API_BASE}/transfer/external`, {
+          sourceAccount: formData.sourceAccount,
+          beneficiaryIban: formData.beneficiaryIban,
+          amount: formData.amount,
+          description: formData.description
+        }, { headers: { Authorization: `Bearer ${token}` } });
+        setMessage({ type: "success", text: res.data.message });
+      }
 
-{/* Description */}
-<div>
-<label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">Description (optionnel)</label>
-<input
-type="text"
-className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#111] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition"
-placeholder="Ex: Épargne mensuelle"
-/>
-</div>
+      // Reset form
+      setFormData({ sourceAccount: "", destinationAccount: "", beneficiaryIban: "", amount: "", description: "" });
+    } catch (err) {
+      setMessage({ type: "error", text: err.response?.data?.message || "Erreur serveur" });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-<button className="w-full bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] dark:from-[#6b5a49] dark:to-[#3b352c] text-[#f7f3ee] p-3 rounded-xl font-semibold hover:opacity-95 transition">
-Envoyer
-</button>
-</form>
-</div>
-)}
+  //  Comptes source et destination
+  const sourceAccounts = accounts; 
+  const destinationAccounts = activeTab === "interne"
+    ? accounts.filter(acc => acc._id !== formData.sourceAccount)
+    : [];
 
-{/* Formulaire externe */}
-{activeTab === "externe" && (
-<div>
-<h2 className="text-xl font-semibold mb-4 dark:text-[#f1e8dc]">
-Transfert externe
-<p className="text-xs text-[#b9a896] dark:text-[#d6c5a9]">Transférez vers un compte externe</p>
-</h2>
+  return (
+    <div className="min-h-screen p-6 bg-[#f7f3ee] dark:bg-[#1a1a1a] text-[#6b5a49] dark:text-[#f1e8dc] transition-colors duration-300">
+      <div className="max-w-6xl mx-auto text-center mb-8">
+        <h2 className="text-3xl font-bold mb-2 dark:text-[#f1e8dc]">Transfert d'argent</h2>
+        <p className="text-[#8f7e6b] dark:text-[#d6c5a9] text-lg">Envoyez de l'argent à vos proches ou payez vos factures</p>
+      </div>
 
-<form className="space-y-4">
-{/* Source */}
-<div>
-<label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">Compte source</label>
-<select className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#1b1b1b] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition">
-<option>Compte Courant - 850 000 FCFA</option>
-<option>Compte Épargne - 2 430 000 FCFA</option>
-</select>
-</div>
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Formulaire */}
+        <div className="md:col-span-2 bg-white dark:bg-[#2a2a2a] p-6 md:p-8 rounded-xl shadow-lg border border-[#e7ded5] dark:border-[#3a3a3a] transition-colors">
+          <div className="flex mb-6">
+            <div className="w-full rounded-xl flex bg-[#e9e0d7] dark:bg-[#262424] border border-[#d6c7b8] dark:border-[#3a3a3a] p-1">
+              <button onClick={() => setActiveTab("interne")} className={`px-4 py-2 rounded-lg text-sm font-medium w-1/2 transition ${activeTab==="interne" ? "bg-white dark:bg-[#2a2a2a] text-[#6b5a49] dark:text-[#f1e8dc]" : "text-[#8f7e6b] dark:text-[#d6c5a9]"}`}>Transfert interne</button>
+              <button onClick={() => setActiveTab("externe")} className={`px-4 py-2 rounded-lg text-sm font-medium w-1/2 transition ${activeTab==="externe" ? "bg-white dark:bg-[#2a2a2a] text-[#6b5a49] dark:text-[#f1e8dc]" : "text-[#8f7e6b] dark:text-[#d6c5a9]"}`}>Transfert externe</button>
+            </div>
+          </div>
 
-{/* Destinataire */}
-<div>
-<label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">Compte destination</label>
-<input
-type="text"
-className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#111] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition"
-placeholder="SN 76 XXXXXXXXXXXXXXXXXXXXXXXXX"
-/>
-</div>
+          {message && <div className={`mb-4 p-3 rounded ${message.type==="success"?"bg-green-100 text-green-700":"bg-red-100 text-red-700"}`}>{message.text}</div>}
 
-{/* IBAN */}
-<div>
-<label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">IBAN</label>
-<select className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#1b1b1b] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition">
-<option>Sélectionnez un compte</option>
-<option>Compte Courant - 850 000 FCFA</option>
-</select>
-</div>
+          {/* Formulaire interne */}
+          {activeTab==="interne" && (
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <div>
+                <label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">Compte source</label>
+                <select name="sourceAccount" value={formData.sourceAccount} onChange={handleChange} className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#1b1b1b] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition">
+                  <option value="">Sélectionnez un compte</option>
+                  {sourceAccounts.map(acc => (<option key={acc._id} value={acc._id}>{acc.name} ({acc.type}) - {acc.balance} FCFA</option>))}
+                </select>
+              </div>
 
-{/* Montant */}
-<div>
-<label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">Montant (FCFA)</label>
-<input
-type="number"
-className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#111] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition"
-placeholder="0"
-min="0"
-/>
-</div>
+              <div>
+                <label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">Compte destination</label>
+                <select name="destinationAccount" value={formData.destinationAccount} onChange={handleChange} className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#1b1b1b] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition">
+                  <option value="">Sélectionnez un compte</option>
+                  {destinationAccounts.map(acc => (<option key={acc._id} value={acc._id}>{acc.name} ({acc.type}) - {acc.balance} FCFA</option>))}
+                </select>
+              </div>
 
-{/* Description */}
-<div>
-<label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">Description (optionnel)</label>
-<input
-type="text"
-className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#111] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition"
-placeholder="Ex: Paiement facture SENELEC"
-/>
-</div>
+              <div>
+                <label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">Montant (FCFA)</label>
+                <input type="number" name="amount" value={formData.amount} onChange={handleChange} min="0" className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#111] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition" placeholder="0"/>
+              </div>
 
-<button className="w-full bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] dark:from-[#6b5a49] dark:to-[#3b352c] text-[#f7f3ee] p-3 rounded-xl font-semibold hover:opacity-95 transition">
-Envoyer
-</button>
-</form>
-</div>
-)}
-</div>
+              <div>
+                <label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">Description (optionnel)</label>
+                <input type="text" name="description" value={formData.description} onChange={handleChange} className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#111] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition" placeholder="Ex: Épargne mensuelle"/>
+              </div>
 
-{/* Sidebar */}
-<div className="space-y-6">
-{/* Contacts récents */}
-<div className="bg-white dark:bg-[#2a2a2a] p-5 rounded-xl shadow border border-[#e7ded5] dark:border-[#3a3a3a]">
-<h3 className="text-lg font-semibold mb-3 dark:text-[#f1e8dc]">Contacts récents</h3>
+              <button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] dark:from-[#6b5a49] dark:to-[#3b352c] text-[#f7f3ee] p-3 rounded-xl font-semibold hover:opacity-95 transition">{loading ? "En cours..." : "Envoyer"}</button>
+            </form>
+          )}
 
-<ul className="space-y-3">
-{contacts.map((c, i) => (
-<li key={i} className="flex items-center gap-3">
-{/* Fontawesome icon class stays but color adapted */}
-<i className={`${c.icon} text-[#8f7e6b] dark:text-[#d6c5a9] text-xl`} />
-<div>
-<p className="font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">{c.name}</p>
-<p className="text-sm text-[#8f7e6b] dark:text-[#d6c5a9]">{c.email}</p>
-</div>
-</li>
-))}
-</ul>
-</div>
+          {/* Formulaire externe */}
+          {activeTab==="externe" && (
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <div>
+                <label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">Compte source</label>
+                <select name="sourceAccount" value={formData.sourceAccount} onChange={handleChange} className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#1b1b1b] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition">
+                  <option value="">Sélectionnez un compte</option>
+                  {sourceAccounts.map(acc => (<option key={acc._id} value={acc._id}>{acc.name} ({acc.type}) - {acc.balance} FCFA</option>))}
+                </select>
+              </div>
 
-{/* Infos */}
-<div className="bg-white dark:bg-[#2a2a2a] p-5 rounded-xl shadow border border-[#e7ded5] dark:border-[#3a3a3a]">
-<h3 className="text-lg font-semibold mb-3 dark:text-[#f1e8dc]">Informations</h3>
+              <div>
+                <label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">IBAN du bénéficiaire</label>
+                <input type="text" name="beneficiaryIban" value={formData.beneficiaryIban} onChange={handleChange} className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#111] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition" placeholder="Ex: SN76XXXXXXXXXXXXXXX"/>
+              </div>
 
-<ul className="space-y-4">
-{infos.map((info, i) => (
-<li key={i} className="flex items-start gap-3">
-<i className={`${info.icon} text-[#8f7e6b] dark:text-[#d6c5a9] text-xl`} />
-<div>
-<p className="font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">{info.title}</p>
-<p className="text-sm text-[#8f7e6b] dark:text-[#d6c5a9]">{info.subtitle}</p>
-</div>
-</li>
-))}
-</ul>
-</div>
-</div>
-</div>
-</div>
-);
+              <div>
+                <label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">Montant (FCFA)</label>
+                <input type="number" name="amount" value={formData.amount} onChange={handleChange} min="0" className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#111] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition" placeholder="0"/>
+              </div>
+
+              <div>
+                <label className="block text-[#6b5a49] dark:text-[#f1e8dc] mb-1">Description (optionnel)</label>
+                <input type="text" name="description" value={formData.description} onChange={handleChange} className="w-full p-3 border border-[#d6c7b8] dark:border-[#4a4a4a] rounded-xl bg-white dark:bg-[#111] text-[#333] dark:text-[#f1e8dc] focus:ring-2 focus:ring-[#b9a896] transition" placeholder="Ex: Paiement facture SENELEC"/>
+              </div>
+
+              <button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] dark:from-[#6b5a49] dark:to-[#3b352c] text-[#f7f3ee] p-3 rounded-xl font-semibold hover:opacity-95 transition">{loading ? "En cours..." : "Envoyer"}</button>
+            </form>
+          )}
+        </div>
+
+        {/* Sidebar */}
+        <div className="space-y-6">
+          <div className="bg-white dark:bg-[#2a2a2a] p-5 rounded-xl shadow border border-[#e7ded5] dark:border-[#3a3a3a]">
+            <h3 className="text-lg font-semibold mb-3 dark:text-[#f1e8dc]">Contacts récents</h3>
+            <ul className="space-y-3">
+              {contacts.map((c,i)=>(<li key={i} className="flex items-center gap-3"><i className={`${c.icon} text-[#8f7e6b] dark:text-[#d6c5a9] text-xl`}/><div><p className="font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">{c.name}</p><p className="text-sm text-[#8f7e6b] dark:text-[#d6c5a9]">{c.email}</p></div></li>))}
+            </ul>
+          </div>
+
+          <div className="bg-white dark:bg-[#2a2a2a] p-5 rounded-xl shadow border border-[#e7ded5] dark:border-[#3a3a3a]">
+            <h3 className="text-lg font-semibold mb-3 dark:text-[#f1e8dc]">Informations</h3>
+            <ul className="space-y-4">
+              {infos.map((info,i)=>(<li key={i} className="flex items-start gap-3"><i className={`${info.icon} text-[#8f7e6b] dark:text-[#d6c5a9] text-xl`}/><div><p className="font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">{info.title}</p><p className="text-sm text-[#8f7e6b] dark:text-[#d6c5a9]">{info.subtitle}</p></div></li>))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  );
+  
 }
-
-
 
