@@ -25,7 +25,7 @@ export default function Transactions() {
           type: t.type === "income" ? "Revenu" : "Dépense",
           amount: t.type === "income" ? t.amount : -t.amount,
           date: new Date(t.date).toLocaleString("fr-FR"),
-          status: "Complété",
+          status: "Reussie",
         }));
 
         setTransactions(formatted);
