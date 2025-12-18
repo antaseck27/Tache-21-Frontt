@@ -61,6 +61,10 @@ export default function Login() {
     setTimeout(() => {
       navigate("/dashboard");
     }, 1000);
+     setTimeout(() => {
+      navigate("/dashboard");
+    }, 1000);
+    // navigate("/dashboard");
   };
 
   // Login Google
