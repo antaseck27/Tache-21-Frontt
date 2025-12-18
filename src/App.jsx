@@ -43,7 +43,7 @@ export default function App() {
       <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
       <Route path="/forgot" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
-         <Route path="/auth/callback" element={<GoogleCallback />} />
+         {/* <Route path="/auth/callback" element={<GoogleCallback />} /> */}
 
       {/* Protégé */}
       <Route
