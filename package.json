@@ -16,6 +16,7 @@
     "chart.js": "^4.5.1",
     "dayjs": "^1.11.19",
     "dome": "^0.2.1",
+    "firebase": "^12.7.0",
     "framer-motion": "^12.23.25",
     "jspdf": "^3.0.4",
     "lucide-react": "^0.555.0",

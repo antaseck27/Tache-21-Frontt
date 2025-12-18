@@ -3,6 +3,8 @@ import { EyeIcon, EyeSlashIcon, CheckCircleIcon } from "@heroicons/react/24/outl
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { auth, googleProvider } from "../firebase/firebase.js";
+import { signInWithPopup } from "firebase/auth";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -56,25 +58,26 @@ export default function Login() {
     const result = await loginUser();
     if (!result) return;
 
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 1000);
      setTimeout(() => {
       navigate("/dashboard");
     }, 1000);
     // navigate("/dashboard");
   };
 
-  //  Nouveau : Login Google
+  // Login Google
   const handleGoogleLogin = async () => {
     try {
-      // Récupérer l'URL d'authentification Google depuis le backend
-      const res = await fetch(`${API}/api/auth/google/config`);
-      const data = await res.json();
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
 
-      if (data.googleEnabled && data.url) {
-        // Redirection vers Google
-        window.location.href = data.url;
-      } else {
-        setError("Connexion Google non configurée.");
-      }
+      // Ici tu peux envoyer user.email ou user.uid à ton backend pour récupérer un token JWT
+      console.log("Utilisateur connecté :", user);
+
+      // Exemple : navigation après connexion
+      navigate("/dashboard");
     } catch (err) {
       console.error(err);
       setError("Impossible de se connecter via Google.");
