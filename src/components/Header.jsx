@@ -82,29 +82,9 @@ const unreadCount = notifications.filter(n => !n.read).length;
 
         {/* Logo */}
         <Link to="/dashboard" className="flex items-center gap-3 flex-shrink-0">
-          {/* <div className="sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
+          <div className="sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
             <img src={logo} alt="logo" className="w-20 h-20 object-contain" />
-          </div> */}
-          <div
-            className="
-    w-9 h-9
-    sm:w-10 sm:h-10
-    md:w-11 md:h-11
-    lg:w-12 lg:h-12
-    xl:w-14 xl:h-14
-    rounded-lg
-    flex items-center justify-center
-    shadow-lg
-    overflow-hidden
-  "
-          >
-            <img
-              src={logo}
-              alt="logo"
-              className="w-full h-full object-contain"
-            />
           </div>
-
           <div className="hidden sm:flex flex-col leading-none">
             <p className="text-sm sm:text-lg font-semibold text-[#6b5a49] dark:text-[#f7f3ee]">BankRewmi</p>
             <p className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">Sa Karàngué Koppar</p>
@@ -149,32 +129,41 @@ const unreadCount = notifications.filter(n => !n.read).length;
 
           {/* Profil */}
           <div className="relative" ref={profileRef}>
-            <button onClick={() => setOpenProfile(p => !p)} className="flex items-center gap-2 px-2 sm:px-3 py-1.5 text-sm font-medium rounded-full bg-[#e8dcc7] text-[#6b5a49] hover:bg-[#d6c5a9] dark:bg-[#b19b7a] dark:text-[#f1e8dc] dark:hover:bg-[#9c8b73] transition">
-              <img
-                src={user?.avatar || "/avatar.png"}
-                alt={`${user?.prenom || ""} ${user?.name || ""}`}
-                className="w-7 h-7 rounded-full object-cover cursor-pointer"
-                onClick={() => fileInputRef.current.click()}
-              />
-              <span className="hidden sm:inline">{user ? `${user.prenom} ${user.name}` : "Utilisateur"} ▾</span>
-            </button>
+  <button
+    onClick={() => setOpenProfile(p => !p)}
+    className="flex items-center gap-2 px-2 sm:px-3 py-1.5 text-sm font-medium rounded-full bg-[#e8dcc7] text-[#6b5a49] hover:bg-[#d6c5a9] dark:bg-[#b19b7a] dark:text-[#f1e8dc] dark:hover:bg-[#9c8b73] transition"
+  >
+    <img
+      src={user?.avatar || "/avatar.png"}
+      alt="Avatar utilisateur"
+      className="w-7 h-7 rounded-full object-cover"
+    />
 
-            <input
-              type="file"
-              accept="image/*"
-              className="hidden"
-              ref={fileInputRef}
-              onChange={handleAvatarChange}
-            />
+    <span className="hidden sm:inline">
+      {user ? `${user.prenom} ${user.name}` : "Utilisateur"} ▾
+    </span>
+  </button>
 
-            {openProfile && (
-              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md overflow-hidden z-50">
-                <Link to="/account" className="block px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]" onClick={() => setOpenProfile(false)}>Mon compte</Link>
-                <Link to="/profile" className="block px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a] border-y border-gray-200 dark:border-gray-700" onClick={() => setOpenProfile(false)}>Profil</Link>
-                <button onClick={handleLogout} className="w-full text-left px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]">Déconnexion</button>
-              </div>
-            )}
-          </div>
+  {openProfile && (
+    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md overflow-hidden z-50">
+      <Link
+        to="/profile"
+        className="block px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]"
+        onClick={() => setOpenProfile(false)}
+      >
+        Profil
+      </Link>
+
+      <button
+        onClick={handleLogout}
+        className="w-full text-left px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]"
+      >
+        Déconnexion
+      </button>
+    </div>
+  )}
+</div>
+
         </div>
       </div>
     </header>

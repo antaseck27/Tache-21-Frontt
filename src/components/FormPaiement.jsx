@@ -1,171 +1,246 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import api from "../services/apitransat";
 
 const FormPaiement = () => {
   const [activeForm, setActiveForm] = useState("paiement");
-
   const [historique, setHistorique] = useState([]);
-
-  const [beneficiaires, setBeneficiaires] = useState([
-    { nom: "EDF", type: "Mobile ****1111", icon: <i className="fa-solid fa-phone"></i> },
-    { nom: "Orange", type: "Mobile ****2222", icon: <i className="fa-solid fa-wifi"></i> },
-    { nom: "Free", type: "Mobile ****3333", icon: <i className="fa-solid fa-bolt"></i> },
-    { nom: "Veolia", type: "Mobile ****4444", icon: <i className="fa-solid fa-droplet"></i> },
-  ]);
-
+  const [beneficiaires, setBeneficiaires] = useState([]);
   const [beneficiaireInput, setBeneficiaireInput] = useState("");
   const [montant, setMontant] = useState("");
   const [reference, setReference] = useState("");
-
-  // ------ MODAL ------
   const [showModal, setShowModal] = useState(false);
   const [newNom, setNewNom] = useState("");
   const [newType, setNewType] = useState("");
 
-// ➤ Ajouter un paiement manuel
-  const handlePaiement = () => {
-    if (!beneficiaireInput || !montant)
-      return alert("Veuillez remplir les champs obligatoires.");
+  const accountId = localStorage.getItem("accountId");
 
-    const newEntry = {
-      title: beneficiaireInput,
-      montant: `-${montant}`,
-      date: new Date().toLocaleDateString(),
-      ref: reference || "Paiement",
+  // Charger les bénéficiaires depuis le backend
+  useEffect(() => {
+    if (!accountId) return;
+
+    const fetchBeneficiaires = async () => {
+      try {
+        const res = await api.get(`/beneficiaires/${accountId}`);
+        setBeneficiaires(res.data);
+      } catch (err) {
+        console.error("Erreur chargement bénéficiaires", err);
+      }
     };
 
-    setHistorique([newEntry, ...historique]);
+    fetchBeneficiaires();
+  }, [accountId]);
 
-    setBeneficiaireInput("");
-    setMontant("");
-    setReference("");
+  // Charger l'historique
+  useEffect(() => {
+    if (!accountId) return;
 
-    setActiveForm(null);
+    const fetchHistory = async () => {
+      try {
+        const res = await api.get(`/payments/${accountId}`);
+        setHistorique(res.data);
+      } catch (err) {
+        console.error("Erreur chargement historique", err);
+      }
+    };
+
+    fetchHistory();
+  }, [accountId]);
+
+  // Paiement manuel
+  const handlePaiement = async () => {
+    if (!beneficiaireInput || !montant) {
+      return alert("Veuillez remplir les champs obligatoires.");
+    }
+
+    try {
+      const res = await api.post("/payments", {
+        accountId,
+        amount: Number(montant),
+        service: beneficiaireInput,
+        reference,
+      });
+
+      setHistorique(res.data.history);
+      setBeneficiaireInput("");
+      setMontant("");
+      setReference("");
+      setActiveForm("historique");
+    } catch (err) {
+      alert(err.response?.data?.error || "Erreur paiement");
+    }
   };
 
-// ➤ Ajouter dans historique depuis bénéficiaire
-  const handleBeneficiairePay = (b) => {
-    setHistorique([
-      {
-        title: b.nom,
-        montant: "-???",
-        date: new Date().toLocaleDateString(),
-        ref: b.type,
-      },
-      ...historique,
-    ]);
+  // Paiement via bénéficiaire
+  const handleBeneficiairePay = async (b) => {
+    try {
+      const res = await api.post("/payments", {
+        accountId,
+        amount: 5000,
+        service: b.nom,
+      });
+
+      setHistorique(res.data.history);
+      setActiveForm("historique");
+    } catch (err) {
+      alert("Erreur paiement bénéficiaire");
+    }
   };
 
-// ➤ Ajouter un bénéficiaire via modal
-  const handleAddBeneficiaire = () => {
-    if (!newNom || !newType) return;
+  // Ajouter bénéficiaire
+  const handleAddBeneficiaire = async () => {
+    if (!newNom || !newType) {
+      return alert("Veuillez remplir tous les champs du nouveau bénéficiaire");
+    }
 
-    setBeneficiaires([{ nom: newNom, type: newType }, ...beneficiaires]);
+    try {
+      await api.post("/beneficiaires", {
+        accountId,
+        nom: newNom,
+        type: newType,
+      });
 
-    setNewNom("");
-    setNewType("");
+      // Recharger la liste depuis le backend
+      const res = await api.get(`/beneficiaires/${accountId}`);
+      setBeneficiaires(res.data);
 
-    setShowModal(false);
+      setNewNom("");
+      setNewType("");
+      setShowModal(false);
+    } catch (err) {
+      alert(err.response?.data?.error || "Erreur ajout bénéficiaire");
+    }
   };
 
-  
   return (
     <div className="container mx-auto p-4 formPaiement">
-
-{/*................ BARRE DE MENU ..............*/}
+      {/* MENU */}
       <div className="flex justify-center mt-5 pt-3 bg-white gap-5 barreMenu">
-          <p onClick={() => setActiveForm("paiement")} className="cursor-pointer">Paiement</p>
-          <p onClick={() => setActiveForm("beneficiaire")} className="cursor-pointer">Bénéficiaire</p>
-          <p onClick={() => setActiveForm("historique")} className="cursor-pointer">Historique</p>
+        <p onClick={() => setActiveForm("paiement")} className="cursor-pointer">Paiement</p>
+        <p onClick={() => setActiveForm("beneficiaire")} className="cursor-pointer">Services</p>
+        <p onClick={() => setActiveForm("historique")} className="cursor-pointer">Historique</p>
       </div>
 
-
-{/* ..................FORMULAIRE PAIEMENT ACTIVE ........................ */}
+      {/* FORM PAIEMENT */}
       {activeForm === "paiement" && (
-        <div className="bg-white mt-5 p-5 font-bold rounded-lg shadow" style={{color:"#6b5a49"}}>
-            <p className="text-lg font-semibold">Paiement manuel</p>
+        <div className="bg-white mt-5 p-5 font-bold rounded-lg shadow text-[#6b5a49]">
+          <p className="text-lg font-semibold">Paiement manuel</p>
 
-            <input type="text" className="border p-2 rounded mt-3 w-full" placeholder="Bénéficiaire" value={beneficiaireInput}
-                   onChange={(e) => setBeneficiaireInput(e.target.value)}  required/>
-            
-            <input type="text" className="border p-2 rounded mt-3 w-full" placeholder="Montant" value={montant}
-                   onChange={(e) => setMontant(e.target.value)}  required/>
-            
-            <input type="text" className="border p-2 rounded mt-3 w-full" placeholder="Référence" value={reference}
-                   onChange={(e) => setReference(e.target.value)}  required/>
-            
-            <button onClick={handlePaiement} className=" w-full py-2 rounded mt-4" >Effectuer le paiement</button>       
+          <input
+            className="border p-2 rounded mt-3 w-full"
+            placeholder="Bénéficiaire"
+            value={beneficiaireInput}
+            onChange={(e) => setBeneficiaireInput(e.target.value)}
+          />
+
+          <input
+            className="border p-2 rounded mt-3 w-full"
+            placeholder="Montant"
+            value={montant}
+            onChange={(e) => setMontant(e.target.value)}
+          />
+
+          <input
+            className="border p-2 rounded mt-3 w-full"
+            placeholder="Référence"
+            value={reference}
+            onChange={(e) => setReference(e.target.value)}
+          />
+
+          <button
+            onClick={handlePaiement}
+            className="w-full py-2 rounded mt-4 bg-green-600 text-white"
+          >
+            Effectuer le paiement
+          </button>
         </div>
       )}
 
-
-{/* ...................... FORMULAIRE BÉNÉFICIAIRES ........................... */}
+      {/* BÉNÉFICIAIRES */}
       {activeForm === "beneficiaire" && (
-        <div className="bg-white mt-5 p-5 font-bold rounded-lg shadow"  style={{color:"#6b5a49"}}>
-          <div className="flex justify-between items-center mb-5">
-              <div>
-                <p className="font-semibold">Mes bénéficiaires</p>
-                <p className="text-gray-500 text-sm">Gérez vos contacts favoris</p>
-              </div>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded" onClick={() => setShowModal(true)}>Nouveau Bénéficiaire</button>
+        <div className="bg-white mt-5 p-5 font-bold rounded-lg shadow text-[#6b5a49]">
+          <div className="flex justify-between mb-5">
+            <div>
+              <p className="font-semibold">Mes Services</p>
+              <p className="text-gray-500 text-sm">Gérez vos contacts favoris</p>
+            </div>
+            <button
+              className="bg-blue-600 text-white px-4 py-2 rounded"
+              onClick={() => setShowModal(true)}
+            >
+              Nouveau Service
+            </button>
           </div>
 
           {beneficiaires.map((b, i) => (
             <div key={i} className="flex justify-between items-center p-3 mb-3 border rounded">
-                <div className="flex gap-3 items-center">
-                  <p style={{background:"var(--gradient-beige-gold)", padding:"10px", borderRadius:"10px"}}> {b.icon} </p>
-                  <div>
-                    <p className="font-semibold">{b.nom}</p>
-                    <p className="text-gray-500 text-sm">{b.type}</p>
-                  </div>
+              <div className="flex gap-3 items-center">
+                <div className="p-3 rounded bg-gray-200">{b.icon || <i className="fa-solid fa-user"></i>}</div>
+                <div>
+                  <p className="font-semibold">{b.nom}</p>
+                  <p className="text-gray-500 text-sm">{b.type}</p>
                 </div>
-                <button onClick={() => handleBeneficiairePay(b)} className="bg-green-500 text-white px-4 py-1 rounded">Payé</button>
+              </div>
+              <button
+                onClick={() => handleBeneficiairePay(b)}
+                className="bg-green-500 text-white px-4 py-1 rounded"
+              >
+                Payé
+              </button>
             </div>
           ))}
         </div>
       )}
 
-
-{/* ................... HISTORIQUE ...................... */}
+      {/* HISTORIQUE */}
       {activeForm === "historique" && (
         <div className="bg-white mt-5 p-5 rounded-lg shadow">
           <p className="text-lg font-semibold mb-3">Historique</p>
-
           {historique.length === 0 && <p>Aucune transaction pour le moment.</p>}
 
           {historique.map((h, i) => (
             <div key={i} className="p-4 mb-3 shadow rounded">
               <div className="flex justify-between">
-                <p>{h.title}</p>
-                <p>{h.montant}</p>
+                <p>{h.service}</p>
+                <p>-{h.amount} FCFA</p>
               </div>
-              <p className="text-gray-500 text-sm">{h.date} • {h.ref}</p>
+              <p className="text-gray-500 text-sm">{new Date(h.date).toLocaleDateString()}</p>
             </div>
           ))}
         </div>
       )}
 
-
-{/* ................... MODAL AJOUTER UN BÉNÉFICIAIRE ...................*/}
+      {/* MODAL */}
       {showModal && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-80 animate-fade">
-            <h3 className="text-lg font-semibold mb-3">Nouveau bénéficiaire</h3>
+          <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+            <h3 className="text-lg font-semibold mb-3">Nouveau Service</h3>
 
-            <input type="text" placeholder="Nom du bénéficiaire" className="border p-2 rounded w-full mb-3" value={newNom}
-              onChange={(e) => setNewNom(e.target.value)}/>
-            
-            <input type="text" placeholder="Type (ex: Mobile ****7777)" className="border p-2 rounded w-full mb-3" value={newType}
-              onChange={(e) => setNewType(e.target.value)}/>
+            <input
+              className="border p-2 rounded w-full mb-3"
+              placeholder="Nom du bénéficiaire"
+              value={newNom}
+              onChange={(e) => setNewNom(e.target.value)}
+            />
 
-            <div className="flex justify-end gap-3 mt-4">
-              <button  className="px-4 py-1 bg-gray-300 rounded" onClick={() => setShowModal(false)}> Annuler </button>
-              <button className="px-4 py-1 bg-blue-600 text-white rounded" onClick={handleAddBeneficiaire}>Ajouter</button>
+            <input
+              className="border p-2 rounded w-full mb-3"
+              placeholder="Type"
+              value={newType}
+              onChange={(e) => setNewType(e.target.value)}
+            />
+
+            <div className="flex justify-end gap-3">
+              <button onClick={() => setShowModal(false)} className="bg-blue-600 text-white px-4 py-1 rounded">Annuler</button>
+              <button
+                onClick={handleAddBeneficiaire}
+                className="bg-blue-600 text-white px-4 py-1 rounded"
+              >
+                Ajouter
+              </button>
             </div>
           </div>
-
         </div>
       )}
-
     </div>
   );
 };
