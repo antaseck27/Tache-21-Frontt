@@ -73,7 +73,7 @@ export default function Transfer() {
 
     try {
       if (activeTab === "interne") {
-        const res = await axios.post(`${API_BASE}/transfers/internal`, {
+        const res = await axios.post(`${API_BASE}/transfer/internal`, {
               sourceAccount: formData.sourceAccount,
     destinationAccount: formData.destinationAccount,
     amount: Number(formData.amount)
@@ -81,7 +81,7 @@ export default function Transfer() {
         }, { headers: { Authorization: `Bearer ${token}` } });
         setMessage({ type: "success", text: res.data.message });
       } else {
-        const res = await axios.post(`${API_BASE}/transfers/external`, {
+        const res = await axios.post(`${API_BASE}/transfer/external`, {
           sourceAccount: formData.sourceAccount,
     beneficiaryIban: formData.beneficiaryIban,
     amount: Number(formData.amount)
