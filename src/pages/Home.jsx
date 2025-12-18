@@ -10,7 +10,7 @@ import {
   Clock,
   Headphones,
 } from "lucide-react";
-import { classNames } from "primereact/utils";
+// import { classNames } from "primereact/utils";
 
 export default function Home() {
   const heroImages = [
@@ -38,7 +38,9 @@ export default function Home() {
             key={i}
             src={img}
             alt={`Slide ${i + 1}`}
-            initial={{ opacity: 20, scale: 1.05 }}
+            // initial={{ opacity: 20, scale: 1.05 }}
+            initial={{ opacity: 0, scale: 1.05 }}
+
             animate={{
               opacity: i === currentHero ? 1 : 0,
               scale: i === currentHero ? 1 : 1.05,
