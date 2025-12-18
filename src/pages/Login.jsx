@@ -1,11 +1,14 @@
+// src/pages/Login.jsx
 import React, { useState } from "react";
 import { EyeIcon, EyeSlashIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 import logo from "../assets/logo.png";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,15 +18,13 @@ export default function Login() {
 
   const API = import.meta.env.VITE_API_URL;
 
-  // Appel API login
   const loginUser = async () => {
     try {
       setLoading(true);
-
       const res = await fetch(`${API}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
@@ -34,10 +35,12 @@ export default function Login() {
         return null;
       }
 
+      // 🔥 Stockage token + user + mise à jour du context
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-      return data;
+      setUser(data.user);
 
+      return data;
     } catch (err) {
       console.error(err);
       setLoading(false);
@@ -56,20 +59,15 @@ export default function Login() {
     const result = await loginUser();
     if (!result) return;
 
-    // setLoggedIn(true);   
-
-    navigate("/dashboard");
+    navigate("/dashboard", { replace: true });
   };
 
-  //  Nouveau : Login Google
   const handleGoogleLogin = async () => {
     try {
-      // Récupérer l'URL d'authentification Google depuis le backend
       const res = await fetch(`${API}/api/auth/google/config`);
       const data = await res.json();
 
       if (data.googleEnabled && data.url) {
-        // Redirection vers Google
         window.location.href = data.url;
       } else {
         setError("Connexion Google non configurée.");
@@ -96,16 +94,6 @@ export default function Login() {
           <p className="text-base text-[#6b5a49]/90 mb-4">
             Gérez vos finances simplement avec notre plateforme moderne.
           </p>
-          <ul className="space-y-3">
-            {["Sécurité maximale", "Transactions instantanées", "Support 24/7"].map((text, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm">
-                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                  <CheckCircleIcon className="w-5 h-5 text-[#6b5a49]" />
-                </div>
-                <span className="font-medium">{text}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       </aside>
 
@@ -115,9 +103,7 @@ export default function Login() {
           <h2 className="text-2xl font-semibold text-[#6b5a49]">Connexion</h2>
           <p className="text-sm text-[#8f7e6b]">Entrez vos identifiants pour accéder à votre compte</p>
 
-          {error && (
-            <div className="bg-red-100 text-red-600 px-2 py-1 rounded-lg text-sm">{error}</div>
-          )}
+          {error && <div className="bg-red-100 text-red-600 px-2 py-1 rounded-lg text-sm">{error}</div>}
 
           <form onSubmit={handleSubmit} className="space-y-2">
             <input
@@ -127,7 +113,6 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm"
             />
-
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -146,9 +131,7 @@ export default function Login() {
             </div>
 
             <div className="flex justify-end text-sm">
-              <a href="/forgot" className="text-[#bfa98a] font-medium hover:underline">
-                Mot de passe oublié ?
-              </a>
+              <a href="/forgot" className="text-[#bfa98a] font-medium hover:underline">Mot de passe oublié ?</a>
             </div>
 
             <button
@@ -158,7 +141,6 @@ export default function Login() {
               {loading ? "Connexion..." : "Se connecter"}
             </button>
 
-            {/*  Bouton Google */}
             <button
               type="button"
               onClick={handleGoogleLogin}
@@ -170,10 +152,7 @@ export default function Login() {
           </form>
 
           <p className="text-center text-sm text-[#8f7e6b] mt-2">
-            Pas de compte ?{" "}
-            <a href="/signup" className="text-[#bfa98a] font-medium hover:underline">
-              S’inscrire
-            </a>
+            Pas de compte ? <a href="/signup" className="text-[#bfa98a] font-medium hover:underline">S’inscrire</a>
           </p>
         </div>
       </main>
