@@ -348,7 +348,7 @@ padding: 20px;
 
 /* ...............................Paiement................................... */
 
-.section1 .blocBouton{
+/* .section1 .blocBouton{
   box-shadow: 2px 0 12px rgb(172, 171, 171);
   border-radius: 10px;
   background-color: #e8dcc7;
@@ -491,11 +491,12 @@ padding: 20px;
   background: var(--gradient-purple-pink);
   border: none;
 
-}
+}*/
+
 
 
 /* .............formPaiement............... */
-.formPaiement .barreMenu{
+/* .formPaiement .barreMenu{
   background-color: #e8dcc7;
   padding-bottom: 10px;
 } 
@@ -515,11 +516,11 @@ padding: 20px;
 
 .formPaiement button{
   background: var(--gradient-beige-gold);
-   font-weight: bold;
+   font-weight: bold; 
    cursor: pointer;
    color: #6b5a49;
 }
 .formPaiement button:hover{
    background: #e8dcc7;
-}
+} */
 
