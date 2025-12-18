@@ -15,7 +15,6 @@ import Profile from "./pages/Profile";
 import Support from "./pages/Support";
 import ResetPassword from "./pages/ResetPassword";
 import AppLayout from "./layouts/AppLayout";
-import GoogleCallback from "./pages/GoogleCallback";
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -43,7 +42,6 @@ export default function App() {
       <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
       <Route path="/forgot" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
-         <Route path="/auth/callback" element={<GoogleCallback />} />
 
       {/* Protégé */}
       <Route
