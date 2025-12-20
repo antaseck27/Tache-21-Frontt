@@ -90,10 +90,7 @@ export default function SignupCompact() {
       `Compte créé avec succès pour ${result.user.prenom} ${result.user.name}, né(e) le ${formattedDate}`
     );
 
-    // Redirection après 2 secondes
-    setTimeout(() => {
-      window.location.href = "/login";
-    }, 1500);
+   
   };
 
   return (
@@ -163,10 +160,16 @@ export default function SignupCompact() {
               </button>
             </div>
 
-            <button type="submit" className="w-full py-2 rounded-lg bg-[#6b5a49] text-white font-medium text-sm hover:bg-[#5c4d3e]">
-              {loading ? "Inscription..." : "Créer mon compte"}
-            </button>
-          </form>
+            
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-2 rounded-lg bg-[#6b5a49] text-white font-medium text-sm hover:bg-[#5c4d3e] disabled:opacity-60"
+>
+  {loading ? "Inscription..." : "Créer mon compte"}
+</button>
+
+            </form>
 
           {/* Lien Se connecter */}
           <p className="text-center text-sm text-[#8f7e6b] mt-2">
