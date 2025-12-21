@@ -301,6 +301,8 @@
 // }
 
 
+
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Line, Doughnut } from "react-chartjs-2";
@@ -340,7 +342,7 @@ ChartJS.register(
 
 const Card = ({ children, className = "" }) => (
   <div
-    className={`bg-white dark:bg-[#2a2a2a] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 ${className}`}
+    className={`bg-white dark:bg-[#2a2a2a] rounded-xl p-6 shadow-sm border border-beige-100 dark:border-beige-700 ${className}`}
   >
     {children}
   </div>
@@ -350,27 +352,77 @@ export default function Dashboard() {
   const { user } = useAuth();
   const [showBalance, setShowBalance] = useState(true);
   const [cardIndex, setCardIndex] = useState(0);
-  const [activeCard, setActiveCard] = useState(null);
+  // const [activeCard, setActiveCard] = useState(null);
+  const [activeCard, setActiveCard] = useState("solde");
+  const [showCardNumber, setShowCardNumber] = useState(true);
 
+
+
+  // const [dashboardData, setDashboardData] = useState({
+  //   totalBalance: 0,
+  //   revenueThisMonth: 0,
+  //   expenseThisMonth: 0,
+  //   expenseCategories: {},
+  //   transactions: [],
+  //   cards: [
+  //     {
+  //       numero: "•••• •••• •••• 4829",
+  //       type: "Mastercard",
+  //       color: ["#b9a896", "#8f7e6b"]
+  //     },
+  //     {
+  //       numero: "CVV •••",
+  //       type: "Mastercard",
+  //       color: ["#8f7e6b", "#6b5a49"]
+  //     }
+  //   ]
+
+  // });
   const [dashboardData, setDashboardData] = useState({
-    totalBalance: 0,
-    revenueThisMonth: 0,
-    expenseThisMonth: 0,
-    expenseCategories: {},
-    transactions: [],
-    cards: [
-      {
-        numero: "•••• •••• •••• 4829",
-        type: "Mastercard",
-        color: ["#b9a896", "#8f7e6b"]
-      },
-      {
-        numero: "CVV •••",
-        type: "Mastercard",
-        color: ["#8f7e6b", "#6b5a49"]
-      }
-    ]
-  });
+  totalBalance: 0,
+  revenueThisMonth: 0,
+  expenseThisMonth: 0,
+  expenseCategories: {},
+  transactions: [],
+  cards: [
+    {
+      numero: "•••• •••• •••• 4829",
+      type: "Mastercard",
+      color: ["#b9a896", "#8f7e6b"]
+    },
+    {
+      numero: "CVV •••",
+      type: "Mastercard",
+      color: ["#8f7e6b", "#6b5a49"]
+    }
+  ],
+
+  // ✅ NOUVELLE SECTION
+comptes: [
+  {
+    id: 1,
+    nom: "Compte Principal",
+    type: "Courant",
+    solde: 245000
+  },
+  {
+    id: 2,
+    nom: "Épargne",
+    type: "Épargne",
+    solde: 780000
+  },
+  {
+    id: 3,
+    nom: "Business",
+    type: "Professionnel",
+    solde: 120000
+  }
+]
+
+});
+
+
+  
 
   /* ================= FETCH DASHBOARD ================= */
   useEffect(() => {
@@ -449,11 +501,71 @@ export default function Dashboard() {
     plugins: { legend: { display: false } }
   };
 
+  const [visibleCount, setVisibleCount] = useState(3);
+
+  const fakeTransactions = [
+  {
+    label: "Achat Supermarché",
+    date: "2025-01-02",
+    direction: "expense",
+    amount: 12500
+  },
+  {
+    label: "Salaire Mensuel",
+    date: "2025-01-01",
+    direction: "income",
+    amount: 250000
+  },
+  {
+    label: "Restaurant",
+    date: "2024-12-30",
+    direction: "expense",
+    amount: 8500
+  },
+  {
+    label: "Virement reçu",
+    date: "2024-12-29",
+    direction: "income",
+    amount: 40000
+  },
+  {
+    label: "Transport",
+    date: "2024-12-28",
+    direction: "expense",
+    amount: 3000
+  },
+  {
+    label: "Abonnement Internet",
+    date: "2024-12-27",
+    direction: "expense",
+    amount: 15000
+  },
+  {
+    label: "Bonus",
+    date: "2024-12-26",
+    direction: "income",
+    amount: 50000
+  },
+  {
+    label: "Facture électricité",
+    date: "2024-12-25",
+    direction: "expense",
+    amount: 12000
+  }
+];
+const transactionsList =
+  dashboardData.transactions.length >= 5
+    ? dashboardData.transactions
+    : fakeTransactions;
+    
+
+
+
   return (
     <div className="space-y-6 p-4 sm:p-6">
 
       {/* HEADER */}
-      <div className="p-6 bg-gradient-to-r from-[#f3e8d7] to-[#e8dcc7] rounded-xl shadow-md">
+      <div className="p-6 bg-[#e8dcc7] rounded-xl shadow-lg"> 
         <h2 className="text-3xl font-semibold text-[#8f7e6b]">
           Bienvenue{user?.prenom ? `, ${user.prenom}` : ""}
         </h2>
@@ -462,54 +574,366 @@ export default function Dashboard() {
         </p>
       </div>
 
-      {/* TOP CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-        {/* SOLDE */}
-        <div
-          onClick={() => setActiveCard("solde")}
-          className="rounded-xl p-6 shadow-md cursor-pointer bg-gradient-to-br from-[#b9a896] to-[#8f7e6b]"
-        >
-          <div className="flex justify-between">
-            <div>
-              <div className="text-sm">Solde Total</div>
-              <div className="text-sm font-semibold mt-2">
-                {showBalance
-                  ? `${dashboardData.totalBalance.toLocaleString()} FCFA`
-                  : "•••• ••••"}
-              </div>
-            </div>
-            <button
-              onClick={e => {
-                e.stopPropagation();
-                setShowBalance(s => !s);
-              }}
-            >
-              {showBalance ? <FiEye /> : <FiEyeOff />}
-            </button>
-          </div>
+
+      
+
+      {/*-------------------------------------- TOP CARDS  -------------------------------------------------*/}
+     
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+  {/* SOLDE */}
+  <div
+    onClick={() => setActiveCard("solde")}
+    className={`rounded-xl p-12 shadow-lg cursor-pointer transition-all duration-300
+      ${activeCard === "solde"
+        ? "bg-[#6b5a49] text-white"
+        : "bg-white text-[#6b5a49]"}
+    `}
+  >
+    <div className="flex justify-between items-start">
+      <div>
+        <div className="text-sm">Solde Total</div>
+        <div className="text-sm font-semibold mt-2">
+          {showBalance
+            ? `${dashboardData.totalBalance.toLocaleString()} FCFA`
+            : "•••• ••••"}
         </div>
-
-        {/* REVENUS */}
-        <div className="rounded-xl p-6 shadow-md bg-white">
-          <div className="text-sm font-semibold">Revenus ce mois</div>
-          <div className="text-sm font-semibold mt-2 text-green-500">
-            {dashboardData.revenueThisMonth.toLocaleString()} FCFA
-          </div>
-        </div>
-
-        {/* DEPENSES */}
-        <div className="rounded-xl p-6 shadow-md bg-white">
-          <div className="text-sm font-semibold">Dépenses ce mois</div>
-          <div className="text-sm font-semibold mt-2 text-red-500">
-            {dashboardData.expenseThisMonth.toLocaleString()} FCFA
-          </div>
-        </div>
-
       </div>
 
+      <button
+        onClick={e => {
+          e.stopPropagation();
+          setShowBalance(s => !s);
+        }}
+      >
+        {showBalance ? <FiEye /> : <FiEyeOff />}
+      </button>
+    </div>
+  </div>
+
+  {/* REVENUS */}
+  <div
+    onClick={() => setActiveCard("revenu")}
+    className={`rounded-xl p-12 shadow-lg cursor-pointer transition-all duration-300
+      ${activeCard === "revenu"
+        ? "bg-[#6b5a49] text-white"
+        : "bg-white text-[#6b5a49]"}
+    `}
+  >
+    <div className="text-sm font-semibold">Revenus ce mois</div>
+    <div className="text-sm font-semibold mt-2 text-green-500">
+      {dashboardData.revenueThisMonth.toLocaleString()} FCFA
+    </div>
+  </div>
+
+  {/* DEPENSES */}
+  <div
+    onClick={() => setActiveCard("depense")}
+    className={`rounded-xl p-12 shadow-lg cursor-pointer transition-all duration-300
+      ${activeCard === "depense"
+        ? "bg-[#6b5a49] text-white"
+        : "bg-white text-[#6b5a49]"}
+    `}
+  >
+    <div className="text-sm font-semibold">Dépenses ce mois</div>
+    <div className="text-sm font-semibold mt-2 text-red-500">
+      {dashboardData.expenseThisMonth.toLocaleString()} FCFA
+    </div>
+  </div>
+
+</div>
+
+{/* ================= CARD MES COMPTES ================= */}
+{/* ================= CARD MES COMPTES ================= */}
+<section className="mt-20 mb-20 flex justify-center">
+  <div className="w-full max-w-8xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] dark:from-[#2b2a28] dark:via-[#222] dark:to-[#2b2a28] rounded-3xl shadow-2xl p-10 relative">
+    
+    {/* Titre */}
+    <h3 className="text-3xl font-bold text-center text-[#6b5a49] mb-12">
+      Mes Comptes
+    </h3>
+
+    {/* Timeline */}
+    <div className="relative">
+      {/* Ligne centrale */}
+      <div className="absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-[#d8cbb4] via-[#cbbba3] to-transparent -translate-x-1/2 shadow-md"></div>
+
+      <div className="space-y-16">
+        {dashboardData.comptes.map((compte, index) => (
+          <div
+            key={compte.id}
+            className={`relative flex items-center w-full ${
+              index % 2 === 0
+                ? "justify-start pl-[calc(50%+20px)]"
+                : "justify-end pr-[calc(50%+20px)]"
+            }`}
+          >
+            {/* Point sur la ligne avec glow */}
+            <span className="absolute left-1/2 w-6 h-6 bg-gradient-to-tr from-[#cbb99a] via-[#d4b8a5] to-[#cbb99a] rounded-full shadow-lg -translate-x-1/2 flex items-center justify-center text-white font-bold animate-glow">
+              {index + 1}
+            </span>
+
+            {/* Card interne */}
+            <div
+              style={{ animationDelay: `${index * 150}ms` }}
+              className="w-full max-w-[400px] p-6 rounded-2xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] dark:from-[#3a3a3a]/80 dark:via-[#2b2b2b]/80 dark:to-[#3a3a3a]/80 shadow-lg animate-fadeUp transition-transform duration-500 hover:-translate-y-3 hover:shadow-2xl relative overflow-hidden"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-[#6b5a49]/70">
+                    {compte.type}
+                  </p>
+                  <h4 className="text-xl font-bold text-[#6b5a49] mt-1">
+                    {compte.nom}
+                  </h4>
+                </div>
+                <div className="w-12 h-12 rounded-full bg-[#cbb99a]/30 flex items-center justify-center text-[#6b5a49] shadow-inner">
+                  {index % 2 === 0 ? (
+                    <i className="fas fa-wallet text-lg"></i>
+                  ) : (
+                    <i className="fas fa-university text-lg"></i>
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-4">
+                <p className="text-2xl font-extrabold text-[#6b5a49]">
+                  {compte.solde.toLocaleString()} FCFA
+                </p>
+                <p className="text-xs text-[#6b5a49]/60">Solde disponible</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Slogan */}
+    <p className="mt-12 text-center text-[#8f7e6b] italic font-medium text-lg">
+      "Gérez vos comptes, simplifiez votre vie financière"
+    </p>
+  </div>
+</section>
+
+{/* ================= ANIMATIONS CSS ================= */}
+<style jsx>{`
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 5px #f3e8d7, 0 0 10px #cbb99a, 0 0 15px #d4b8a5;
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 10px #f3e8d7, 0 0 20px #cbb99a, 0 0 30px #d4b8a5;
+      transform: scale(1.2);
+    }
+  }
+
+  .animate-glow {
+    animation: glow 2s infinite ease-in-out;
+  }
+
+  @keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fadeUp {
+    animation: fadeUp 0.5s forwards;
+  }
+`}</style>
+
+
+{/* ================= ANIMATIONS CSS ================= */}
+<style jsx>{`
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 5px #f3e8d7, 0 0 10px #cbb99a, 0 0 15px #d4b8a5;
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 10px #f3e8d7, 0 0 20px #cbb99a, 0 0 30px #d4b8a5;
+      transform: scale(1.2);
+    }
+  }
+
+  .animate-glow {
+    animation: glow 2s infinite ease-in-out;
+  }
+
+  @keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fadeUp {
+    animation: fadeUp 0.5s forwards;
+  }
+`}</style>
+
+
+
+
       {/* CHARTS */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+{/* CHARTS */}
+<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+  {/* ---------------------------LINE CHART - Évolution prix par semaine ------------------------------*/}
+  <div className="lg:col-span-3">
+    <Card>
+      <div style={{ height: 300 }}>
+        <Line
+          data={{
+            labels: ["Semaine 1", "Semaine 2", "Semaine 3", "Semaine 4"],
+            datasets: [
+              {
+                label: "Prix FCFA",
+                data: [120000, 150000, 100000, 180000], // valeurs statiques pour test
+                fill: true,
+                backgroundColor: "rgba(203,185,154,0.2)", // beige pailleté clair
+                borderColor: "#cbb99a", // ligne beige foncé
+                tension: 0.3,
+                pointBackgroundColor: "#cbb99a",
+                pointRadius: 4,
+                pointHoverRadius: 6
+              }
+            ]
+          }}
+          options={{
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    return context.dataset.label + ": " + context.parsed.y.toLocaleString() + " FCFA";
+                  }
+                }
+              }
+            },
+            scales: {
+              x: { grid: { display: false }, ticks: { color: "#6b5a49" } },
+              y: {
+                grid: { color: "rgba(203,185,154,0.1)" },
+                ticks: {
+                  color: "#6b5a49",
+                  callback: function(value) { return value.toLocaleString() + " FCFA"; }
+                }
+              }
+            }
+          }}
+        />
+      </div>
+    </Card>
+  </div>
+
+</div>
+
+  {/* ---------------------------LINE CHART - Évolution prix par semaine ------------------------------*/}
+  {/* <div className="lg:col-span-2 ">
+    <Card>
+      <div style={{ height: 300 }}>
+        <Line
+          data={{
+            labels: ["Semaine 1", "Semaine 2", "Semaine 3", "Semaine 4"],
+            datasets: [
+              {
+                label: "Prix FCFA",
+                data: [120000, 150000, 100000, 180000], 
+                fill: true,
+                backgroundColor: "rgba(203,185,154,0.2)", 
+                borderColor: "#cbb99a", 
+                tension: 0.3,
+                pointBackgroundColor: "#cbb99a",
+                pointRadius: 4,
+                pointHoverRadius: 6
+              }
+            ]
+          }}
+          options={{
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    return context.dataset.label + ": " + context.parsed.y.toLocaleString() + " FCFA";
+                  }
+                }
+              }
+            },
+            scales: {
+              x: { grid: { display: false }, ticks: { color: "#6b5a49" } },
+              y: {
+                grid: { color: "rgba(203,185,154,0.1)" },
+                ticks: {
+                  color: "#6b5a49",
+                  callback: function(value) { return value.toLocaleString() + " FCFA"; }
+                }
+              }
+            }
+          }}
+        />
+      </div>
+    </Card>
+  </div> */}
+
+
+
+
+  
+
+  {/* ---------------------------DONUT CHART - Catégories de dépenses----------------------------------------- */}
+  {/* <Card className="flex flex-col items-center">
+    <div className="w-37 h-37">
+      <Doughnut
+        data={{
+          labels: ["Transport", "Nourriture", "Loisirs", "Abonnement", "Autres"],
+          datasets: [
+            {
+              data: [15000, 30000, 8000, 12000, 5000], 
+              backgroundColor: [
+                "#d6c7b4",
+                "#bfa98a",
+                "#d4b8a5",
+                "#dfcdb9",
+                "#cbb99a"
+              ],
+              hoverOffset: 10
+            }
+          ]
+        }}
+        options={{
+          responsive: true,
+          plugins: { legend: { display: false } }
+        }}
+      />
+    </div>
+
+    <ul className="text-sm mt-4 w-full max-w-xs space-y-2">
+      {[
+        { cat: "Transport", value: 15000 },
+        { cat: "Nourriture", value: 30000 },
+        { cat: "Loisirs", value: 8000 },
+        { cat: "Abonnement", value: 12000 },
+        { cat: "Autres", value: 5000 }
+      ].map((item, i) => (
+        <li key={i} className="flex justify-between">
+          <span>{item.cat}</span>
+          <span>{item.value.toLocaleString()} FCFA</span>
+        </li>
+      ))}
+    </ul>
+  </Card> */}
+{/* </div> */}
+
+
+
+
+
+      {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <Card>
             <div style={{ height: 300 }}>
@@ -534,12 +958,50 @@ export default function Dashboard() {
             )}
           </ul>
         </Card>
+      </div> */}
+
+      {/*--------------------------------------CARTE BANCAIRE + TRANSACTIONS------------------------------------------------------------*/}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+     
+
+  <Card className="flex items-center justify-center relative">
+    <div
+      className="w-64 h-36 rounded-xl p-4 text-white relative"
+      style={{
+        background: `linear-gradient(135deg,
+          ${dashboardData.cards[cardIndex].color[0]},
+          ${dashboardData.cards[cardIndex].color[1]})`
+      }}
+    >
+      <div className="text-xs">{dashboardData.cards[cardIndex].type}</div>
+
+      <div className="text-lg mt-4">
+        {showCardNumber
+          ? dashboardData.cards[cardIndex].numero
+          : "•••• •••• •••• ••••"}
       </div>
 
-      {/* CARTE BANCAIRE + TRANSACTIONS */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* BOUTON VOIR / MASQUER */}
+      <button
+        onClick={() => setShowCardNumber(s => !s)}
+        className="absolute top-2 right-2 text-white p-1 rounded hover:bg-black/20"
+      >
+        {showCardNumber ? <FiEyeOff /> : <FiEye />}
+      </button>
+    </div>
 
-        <Card className="flex items-center justify-center relative">
+    <button onClick={prevCard} className="absolute left-2">
+      <FiChevronLeft />
+    </button>
+    <button onClick={nextCard} className="absolute right-2">
+      <FiChevronRight />
+    </button>
+  </Card>
+
+
+
+
+        {/* <Card className="flex items-center justify-center relative">
           <div
             className="w-64 h-36 rounded-xl p-4 text-white"
             style={{
@@ -560,9 +1022,13 @@ export default function Dashboard() {
           <button onClick={nextCard} className="absolute right-2">
             <FiChevronRight />
           </button>
-        </Card>
+        </Card> */}
 
-        <div className="lg:col-span-2">
+
+
+        {/* ------------------------------Transaction ---------------------------------------*/}
+
+        {/* <div className="lg:col-span-2">
           <Card>
             <h3 className="text-lg mb-4">Transactions récentes</h3>
 
@@ -593,17 +1059,111 @@ export default function Dashboard() {
               ))}
             </ul>
           </Card>
-        </div>
+        </div> */}
+     <div className="lg:col-span-2">
+  <Card>
+    <h3 className="text-lg mb-4">Transactions récentes</h3>
+
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="text-left border-b">
+            <th className="pb-2">Type</th>
+            <th className="pb-2">Date</th>
+            <th className="pb-2 text-right">Montant</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {transactionsList
+            .slice(0, visibleCount)
+            .map((t, i) => (
+              <tr key={i} className="border-b last:border-none">
+                <td className="py-3 flex items-center gap-2">
+                  <FiCreditCard />
+                  {t.label || t.merchant || "Transaction"}
+                </td>
+
+                <td className="py-3 text-xs">
+                  {new Date(t.date).toLocaleDateString()}
+                </td>
+
+                <td
+                  className={`py-3 text-right font-semibold ${
+                    t.direction === "income"
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }`}
+                >
+                  {t.direction === "expense" ? "-" : "+"}
+                  {t.amount.toLocaleString()} FCFA
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    </div>
+
+    {/*------------------------- VOIR PLUS / VOIR MOINS------------------------------------ */}
+    {transactionsList.length > 3 && (
+      <div className="mt-4 text-center">
+        {visibleCount < transactionsList.length ? (
+          <button
+            onClick={() => setVisibleCount(c => c + 3)}
+            className="text-sm text-[#6b5a49] hover:underline"
+          >
+            Voir plus
+          </button>
+        ) : (
+          <button
+            onClick={() => setVisibleCount(3)}
+            className="text-sm text-[#6b5a49] hover:underline"
+          >
+            Voir moins
+          </button>
+        )}
+      </div>
+    )}
+  </Card>
+</div>
+
+
+
+
+
       </div>
 
       {/* ACTIONS */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        {[FiSend, FiDownload, FiCreditCard, FiSave].map((Icon, i) => (
-          <div key={i} className="bg-white rounded-xl p-4 flex flex-col items-center">
-            <Icon />
-          </div>
-        ))}
+     
+{/* <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+  {[
+    { icon: FiSend, label: "Envoyer" },
+    { icon: FiDownload, label: "Télécharger" },
+    { icon: FiCreditCard, label: "Carte" },
+    { icon: FiSave, label: "Enregistrer" }
+  ].map((item, i) => {
+    const Icon = item.icon;
+    return (
+      <div
+        key={i}
+        className="bg-white rounded-xl p-4 flex flex-col items-center cursor-pointer hover:shadow-md transition"
+      >
+        <Icon className="text-xl mb-2" />
+        <span className="text-sm text-[#6b5a49]">{item.label}</span>
       </div>
+    );
+  })}
+
+
+
+</div> */}
+
+{/* ================= TIMELINE MES COMPTES PREMIUM ================= */}
+
+
+
+
+
 
     </div>
   );
