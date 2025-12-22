@@ -68,21 +68,45 @@ export default function Login() {
   };
 
   // Login Google
-  const handleGoogleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
+  // Login Google
+const handleGoogleLogin = async () => {
+  try {
+    // Ouvre la popup Google
+    const result = await signInWithPopup(auth, googleProvider);
 
-      // Ici tu peux envoyer user.email ou user.uid à ton backend pour récupérer un token JWT
-      console.log("Utilisateur connecté :", user);
+    // Récupère l'utilisateur et son ID token
+    const user = result.user;
+    const idToken = await user.getIdToken();
 
-      // Exemple : navigation après connexion
-      navigate("/dashboard");
-    } catch (err) {
-      console.error(err);
-      setError("Impossible de se connecter via Google.");
+    console.log("Firebase ID token :", idToken);
+
+    // Envoie le token au backend pour créer/valider l'utilisateur et générer un JWT
+    const res = await fetch(`${API}/auth/google`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idToken }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.message || "Erreur lors de la connexion via Google.");
+      return;
     }
-  };
+
+    // Stocke le JWT côté front
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    // Navigation après connexion
+    navigate("/dashboard");
+
+  } catch (err) {
+    console.error("Erreur Google Login :", err);
+    setError("Impossible de se connecter via Google.");
+  }
+};
+
 
   return (
     <div className="min-h-screen flex">

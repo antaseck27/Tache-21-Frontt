@@ -14,7 +14,7 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
   const notifRef = useRef();
   const fileInputRef = useRef();
   const [notifications, setNotifications] = useState([]);
-const unreadCount = notifications.filter(n => !n.read).length;
+  const unreadCount = notifications.filter(n => !n.read).length;
 
 
   // Fermer les menus quand on clique ailleurs
@@ -56,20 +56,50 @@ const unreadCount = notifications.filter(n => !n.read).length;
     }
   };
 
-  useEffect(() => {
-  const fetchNotifications = async () => {
+ 
+
+  // NOTIFICATION
+  const getNotifications = async (token) => {
+    const res = await fetch("http://localhost:5000/api/notifications", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) throw new Error("Erreur lors de la récupération des notifications");
+    return await res.json();
+  };
+
+  //  une notification comme lue
+  const handleMarkAsRead = async (id) => {
     const token = localStorage.getItem("token");
-    if (!token) return;
     try {
-      const data = await getNotifications(token);
-      setNotifications(data);
+      await fetch(`http://localhost:5000/api/notifications/${id}/read`, {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setNotifications(prev =>
+        prev.map(n => n._id === id ? { ...n, read: true } : n)
+      );
     } catch (err) {
       console.error(err);
     }
   };
-  fetchNotifications();
-}, []);
 
+  // les notifications toutes les 5 secondes
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      try {
+        const data = await getNotifications(token);
+        setNotifications(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchNotifications();
+    const interval = setInterval(fetchNotifications, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a] border-b dark:border-gray-800 transition-colors duration-300">
