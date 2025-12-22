@@ -305,6 +305,9 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext.jsx";
+import CardUI from "../components/CardUI.jsx";
+import { getMyCards } from "../services/cardService.js";
 import { Line, Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -327,7 +330,6 @@ import {
   FiDownload,
   FiSave
 } from "react-icons/fi";
-import { useAuth } from "../context/AuthContext.jsx";
 
 ChartJS.register(
   CategoryScale,
@@ -424,6 +426,36 @@ comptes: [
 
   
 
+
+  /* ================= FETCH CARTES ================= */
+ useEffect(() => {
+  const token = user?.token || localStorage.getItem("token");
+  if (!token) {
+    setLoadingCards(false);
+    return;
+  }
+
+  const fetchCards = async () => {
+    try {
+      const data = await getMyCards(token);
+      console.log("CARTES API:", data);
+      setCards(data);
+    } catch (err) {
+      console.error("Erreur chargement cartes", err);
+    } finally {
+      setLoadingCards(false);
+    }
+  };
+
+  fetchCards();
+}, [user]);
+
+
+  const nextCard = () =>
+    setCardIndex(i => (i + 1) % cards.length);
+
+  const prevCard = () =>
+    setCardIndex(i => (i - 1 + cards.length) % cards.length);
   /* ================= FETCH DASHBOARD ================= */
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -448,10 +480,10 @@ comptes: [
     fetchDashboard();
   }, []);
 
-  const nextCard = () =>
-    setCardIndex(i => (i + 1) % dashboardData.cards.length);
-  const prevCard = () =>
-    setCardIndex(i => (i - 1 + dashboardData.cards.length) % dashboardData.cards.length);
+  // const nextCard = () =>
+  //   setCardIndex(i => (i + 1) % dashboardData.cards.length);
+  // const prevCard = () =>
+  //   setCardIndex(i => (i - 1 + dashboardData.cards.length) % dashboardData.cards.length);
 
   /* ================= GRAPHIQUES ================= */
 
