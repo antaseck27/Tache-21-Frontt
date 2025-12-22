@@ -303,6 +303,9 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext.jsx";
+import CardUI from "../components/CardUI.jsx";
+import { getMyCards } from "../services/cardService.js";
 import { Line, Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -325,7 +328,6 @@ import {
   FiDownload,
   FiSave
 } from "react-icons/fi";
-import { useAuth } from "../context/AuthContext.jsx";
 
 ChartJS.register(
   CategoryScale,
@@ -347,31 +349,52 @@ const Card = ({ children, className = "" }) => (
 );
 
 export default function Dashboard() {
-  const { user } = useAuth();
-  const [showBalance, setShowBalance] = useState(true);
-  const [cardIndex, setCardIndex] = useState(0);
-  const [activeCard, setActiveCard] = useState(null);
 
+  const [showBalance, setShowBalance] = useState(true);
+  const [activeCard, setActiveCard] = useState(null);
+    const { user } = useAuth();
+  const [cards, setCards] = useState([]);
+  const [cardIndex, setCardIndex] = useState(0);
+  const [loadingCards, setLoadingCards] = useState(true);
   const [dashboardData, setDashboardData] = useState({
     totalBalance: 0,
     revenueThisMonth: 0,
     expenseThisMonth: 0,
     expenseCategories: {},
     transactions: [],
-    cards: [
-      {
-        numero: "•••• •••• •••• 4829",
-        type: "Mastercard",
-        color: ["#b9a896", "#8f7e6b"]
-      },
-      {
-        numero: "CVV •••",
-        type: "Mastercard",
-        color: ["#8f7e6b", "#6b5a49"]
-      }
-    ]
+   
   });
 
+
+  /* ================= FETCH CARTES ================= */
+ useEffect(() => {
+  const token = user?.token || localStorage.getItem("token");
+  if (!token) {
+    setLoadingCards(false);
+    return;
+  }
+
+  const fetchCards = async () => {
+    try {
+      const data = await getMyCards(token);
+      console.log("CARTES API:", data);
+      setCards(data);
+    } catch (err) {
+      console.error("Erreur chargement cartes", err);
+    } finally {
+      setLoadingCards(false);
+    }
+  };
+
+  fetchCards();
+}, [user]);
+
+
+  const nextCard = () =>
+    setCardIndex(i => (i + 1) % cards.length);
+
+  const prevCard = () =>
+    setCardIndex(i => (i - 1 + cards.length) % cards.length);
   /* ================= FETCH DASHBOARD ================= */
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -396,10 +419,10 @@ export default function Dashboard() {
     fetchDashboard();
   }, []);
 
-  const nextCard = () =>
-    setCardIndex(i => (i + 1) % dashboardData.cards.length);
-  const prevCard = () =>
-    setCardIndex(i => (i - 1 + dashboardData.cards.length) % dashboardData.cards.length);
+  // const nextCard = () =>
+  //   setCardIndex(i => (i + 1) % dashboardData.cards.length);
+  // const prevCard = () =>
+  //   setCardIndex(i => (i - 1 + dashboardData.cards.length) % dashboardData.cards.length);
 
   /* ================= GRAPHIQUES ================= */
 
@@ -539,27 +562,19 @@ export default function Dashboard() {
       {/* CARTE BANCAIRE + TRANSACTIONS */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-        <Card className="flex items-center justify-center relative">
-          <div
-            className="w-64 h-36 rounded-xl p-4 text-white"
-            style={{
-              background: `linear-gradient(135deg,
-                ${dashboardData.cards[cardIndex].color[0]},
-                ${dashboardData.cards[cardIndex].color[1]})`
-            }}
-          >
-            <div className="text-xs">{dashboardData.cards[cardIndex].type}</div>
-            <div className="text-lg mt-4">
-              {dashboardData.cards[cardIndex].numero}
-            </div>
-          </div>
-
-          <button onClick={prevCard} className="absolute left-2">
-            <FiChevronLeft />
-          </button>
-          <button onClick={nextCard} className="absolute right-2">
-            <FiChevronRight />
-          </button>
+       {/* CARTE */}
+        <Card className="flex justify-center">
+          {loadingCards ? (
+            <p>Chargement carte...</p>
+          ) : cards.length === 0 ? (
+            <p>Aucune carte</p>
+          ) : (
+            <CardUI
+              card={cards[cardIndex]}
+              nextCard={nextCard}
+              prevCard={prevCard}
+            />
+          )}
         </Card>
 
         <div className="lg:col-span-2">

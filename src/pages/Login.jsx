@@ -377,7 +377,7 @@ export default function Login() {
                 <p className="text-sm mb-1">Un code a été envoyé à votre email</p>
                 <input
                   type="text"
-                  placeholder="Code 2FA"
+                  placeholder="Code validation"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
                   className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm"
