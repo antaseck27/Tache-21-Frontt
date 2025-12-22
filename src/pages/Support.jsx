@@ -25,7 +25,7 @@ answer:
 {
 question: "Quels sont les frais de transaction ?",
 answer:
-"Les transferts entre vos comptes BankApp sont gratuits et instantanés. Les virements SEPA vers d'autres banques européennes sont également gratuits. Les virements internationaux peuvent engendrer des frais selon la destination et le montant.",
+"Les transferts entre vos comptes BankRewmi sont gratuits et instantanés. Les virements SEPA vers d'autres banques européennes sont également gratuits. Les virements internationaux peuvent engendrer des frais selon la destination et le montant.",
 },
 {
 question: "Comment obtenir une nouvelle carte bancaire ?",
@@ -48,7 +48,7 @@ answer:
 "Accédez à la section 'Profil' et cliquez sur 'Modifier'. Vous pourrez mettre à jour vos informations (nom, email, téléphone, adresse). N'oubliez pas de cliquer sur 'Enregistrer' pour valider vos modifications.",
 },
 {
-question: "Puis-je utiliser BankApp à l'étranger ?",
+question: "Puis-je utiliser BankRewmi à l'étranger ?",
 answer:
 "En cas de suspicion de fraude, contactez immédiatement notre service client au 0800 XXX XXX (disponible 24/7). Nous bloquerons votre carte et ouvrirons une enquête. Vous pouvez également signaler une transaction directement depuis votre historique.",
 },
@@ -96,7 +96,7 @@ return (
 <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">
 Support & Aide
 </h2>
-<p className="text-gray-600 dark:text-[#d6c5a9] animate-wiggle text-sm md:text-base">
+<p className="text-beig-600 dark:text-[#d6c5a9] animate-wiggle text-sm md:text-base">
 Nous sommes là pour vous aider 24/7
 </p>
 </div>
@@ -108,8 +108,8 @@ Nous sommes là pour vous aider 24/7
 <i className="bi bi-telephone"></i>
 </div>
 <p className="text-lg font-semibold text-[#3a2f24] dark:text-[#f1e8dc]">Par téléphone</p>
-<p className="text-sm text-gray-500 dark:text-[#bfb6a5] mb-2">Disponible 24h/24, 7j/7</p>
-<p className="text-blue-600 font-medium">0800 XXX XXX</p>
+<p className="text-sm text-beig-300 dark:text-[#bfb6a5] mb-2">Disponible 24h/24, 7j/7</p>
+<p className="text-beig-1900 font-medium">0800 XXX XXX</p>
 </div>
 
 <div className="rounded-xl p-6 shadow-sm bg-white dark:bg-[#2a2a2a] text-center flex flex-col items-center transition-colors">
@@ -117,11 +117,11 @@ Nous sommes là pour vous aider 24/7
 <i className="bi bi-chat-dots"></i>
 </div>
 <p className="text-lg font-semibold text-[#3a2f24] dark:text-[#f1e8dc]">Chat en direct</p>
-<p className="text-sm text-gray-500 dark:text-[#bfb6a5] mb-2">Réponse en moins de 2 min</p>
+<p className="text-sm text-beig-300 dark:text-[#bfb6a5] mb-2">Réponse en moins de 2 min</p>
 
 <button
 onClick={() => setShowChat(true)}
-className="text-purple-600 font-medium underline"
+className="text-beig-1900 font-medium underline"
 >
 Démarrer le chat
 </button>
@@ -132,8 +132,8 @@ Démarrer le chat
 <i className="bi bi-envelope"></i>
 </div>
 <p className="text-lg font-semibold text-[#3a2f24] dark:text-[#f1e8dc]">Par email</p>
-<p className="text-sm text-gray-500 dark:text-[#bfb6a5] mb-2">Réponse sous 24h</p>
-<p className="text-green-600 font-medium">bankrewmi@gmail.com</p>
+<p className="text-sm text-beig-300 dark:text-[#bfb6a5] mb-2">Réponse sous 24h</p>
+<p className="text-beig-1900 font-medium">bankrewmi@gmail.com</p>
 </div>
 </div>
 
@@ -142,7 +142,7 @@ Démarrer le chat
 {/* FAQ */}
 <div className="lg:col-span-2 rounded-xl bg-white dark:bg-[#2a2a2a] shadow-sm p-6 transition-colors">
 <h2 className="text-lg font-semibold mb-1 text-[#3a2f24] dark:text-[#f1e8dc]">Questions fréquentes</h2>
-<p className="text-sm text-gray-500 dark:text-[#bfb6a5] mb-4">
+<p className="text-sm text-beig-500 dark:text-[#bfb6a5] mb-4">
 Trouvez rapidement des réponses à vos questions
 </p>
 
@@ -153,14 +153,14 @@ key={index}
 className="py-3 cursor-pointer"
 onClick={() => toggleFAQ(index)}
 >
-<div className="flex justify-between items-center">
+<div className="flex justify-between items-center hover:bg-[#f5e8d7]">
 <span className="text-sm sm:text-base text-[#3a2f24] dark:text-[#f1e8dc]">{faq.question}</span>
 <i
-className={`bi bi-chevron-down transition-transform ${openIndex === index ? "rotate-180" : ""} text-gray-600 dark:text-[#d6c5a9]`}
+className={`bi bi-chevron-down transition-transform ${openIndex === index ? "rotate-180" : ""} text-beig-2900 dark:text-[#d6c5a9]`}
 />
 </div>
 <div
-className={`mt-2 text-sm text-gray-600 dark:text-[#bfb6a5] ${openIndex === index ? "block" : "hidden"}`}
+className={`mt-2 text-sm text-beig-600 dark:text-[#bfb6a5] ${openIndex === index ? "block" : "hidden"}`}
 >
 {faq.answer}
 </div>
