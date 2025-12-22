@@ -466,8 +466,8 @@ export default function Paiement() {
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-neutral-800 rounded-2xl p-6 w-full max-w-md sm:max-w-lg">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-[#6b5a49] text-white flex items-center justify-center">{activeService.icon}</div>
-              <h3 className="font-semibold text-[#6b4f2c] dark:text-white">Paiement {activeService.label}</h3>
+              <div className="w-10 h-10 rounded-full bg-[#6b5a49] flex items-center justify-center">{activeService.icon}</div>
+              <h3 className="font-semibold  text-[#6b5a49] dark:text-white">Paiement {activeService.label}</h3>
             </div>
             <input
               placeholder="Montant"
