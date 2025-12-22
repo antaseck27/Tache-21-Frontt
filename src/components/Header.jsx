@@ -126,8 +126,8 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
         {/* Zone droite */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Dark/Light */}
-          <button onClick={toggleDark} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-            {darkMode ? <SunIcon className="w-5 h-5 text-yellow-400" /> : <MoonIcon className="w-5 h-5 text-gray-700 dark:text-gray-200" />}
+          <button onClick={toggleDark} className="p-2 rounded-full hover:bg-beig-100 dark:hover:bg-beig-700 transition">
+            {darkMode ? <SunIcon className="w-5 h-5 text-yellow-400" /> : <MoonIcon className="w-5 h-5 text-beig-700 dark:text-beig-200" />}
           </button>
 
           {/* Notification */}

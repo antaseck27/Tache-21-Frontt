@@ -227,7 +227,7 @@ isActive
 //       : "text-[#6b5a49] hover:bg-[#d6c5a9]/30 dark:text-[#f1e8dc] dark:hover:bg-[#3a3a3a]" // normal: texte brun, hover beige clair, dark mode texte clair
 //   }`;
    
-      ? "bg-[#cbb99a] text-[#f4efe6]" 
+      ? "bg-[#8f7e6b] text-[#f4efe6]" 
       : "text-[#6b5a49] hover:bg-[#d6c5a9]/30 dark:text-[#f1e8dc] dark:hover:bg-[#3a3a3a]"
   }`
 
@@ -247,14 +247,14 @@ aria-hidden={!open}
 >
 <div className="flex items-center justify-between mb-6">
 <div className="flex items-center gap-3">
-<div className="w-10 h-10 rounded-lg bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] flex items-center justify-center text-white font-semibold shadow-sm">B</div>
+<div className="w-10 h-10 rounded-lg bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] flex items-center justify-center text-white font-semibold shadow-sm ">B</div>
 <div>
 <div className="text-lg font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">BankApp</div>
 <div className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">Gestion bancaire</div>
 </div>
 </div>
-<button onClick={() => { setOpen(false); if (onClose) onClose(); }} className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Fermer le menu">
-<XMarkIcon className="w-5 h-5 text-gray-600 dark:text-gray-200" />
+<button onClick={() => { setOpen(false); if (onClose) onClose(); }} className="p-2 rounded hover:bg-beig-100 dark:hover:bg-beig-700" aria-label="Fermer le menu">
+<XMarkIcon className="w-5 h-5 text-beig-600 dark:text-beig-200" />
 </button>
 </div>
 
@@ -296,7 +296,7 @@ onClick={() => {
 localStorage.removeItem("token");
 window.location.href = "/login";
 }}
-className="flex items-center gap-2 px-4 py-2 rounded-md text-[#6b5a49] hover:bg-gray-100 dark:text-[#f1e8dc] dark:hover:bg-[#3a3a3a] w-full"
+className="flex items-center gap-2 px-4 py-2 rounded-md text-[#6b5a49] hover:bg-beig-100 dark:text-[#f1e8dc] dark:hover:bg-[#3a3a3a] w-full"
 >
 <ArrowRightOnRectangleIcon className="w-5 h-5" />
 Déconnexion

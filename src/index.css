@@ -13,6 +13,47 @@
   scrollbar-width: none;
 }
 
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideIn {
+  animation: slideIn 0.4s ease forwards;
+}
+
+.bg-glitter {
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.35), transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.25), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(255,255,255,0.2), transparent 40%),
+    linear-gradient(135deg, #f3e8d7, #e8dcc7, #d8cbb4);
+}
+
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+
 /* :root {
   --gradient-blue-purple: linear-gradient(90deg, #2563eb, #9333ea);
   --gradient-blue-cyan: linear-gradient(90deg, #3b82f6, #06b6d4);
@@ -348,7 +389,7 @@ padding: 20px;
 
 /* ...............................Paiement................................... */
 
-.section1 .blocBouton{
+/* .section1 .blocBouton{
   box-shadow: 2px 0 12px rgb(172, 171, 171);
   border-radius: 10px;
   background-color: #e8dcc7;
@@ -491,11 +532,12 @@ padding: 20px;
   background: var(--gradient-purple-pink);
   border: none;
 
-}
+}*/
+
 
 
 /* .............formPaiement............... */
-.formPaiement .barreMenu{
+/* .formPaiement .barreMenu{
   background-color: #e8dcc7;
   padding-bottom: 10px;
 } 
@@ -515,11 +557,11 @@ padding: 20px;
 
 .formPaiement button{
   background: var(--gradient-beige-gold);
-   font-weight: bold;
+   font-weight: bold; 
    cursor: pointer;
    color: #6b5a49;
 }
 .formPaiement button:hover{
    background: #e8dcc7;
-}
+} */
 
