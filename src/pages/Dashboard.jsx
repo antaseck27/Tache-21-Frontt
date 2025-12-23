@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext.jsx";
+import CardUI from "../components/CardUI.jsx";
+import { getMyCards } from "../services/cardService.js";
 import { Line, Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -22,7 +25,6 @@ import {
   FiDownload,
   FiSave
 } from "react-icons/fi";
-import { useAuth } from "../context/AuthContext.jsx";
 
 ChartJS.register(
   CategoryScale,
@@ -45,10 +47,14 @@ const Card = ({ children, className = "" }) => (
 
 export default function Dashboard() {
   const { user } = useAuth();
+
   const [showBalance, setShowBalance] = useState(true);
-  const [cardIndex, setCardIndex] = useState(0);
   const [activeCard, setActiveCard] = useState("solde");
   const [showCardNumber, setShowCardNumber] = useState(true);
+
+  const [cards, setCards] = useState([]);
+  const [loadingCards, setLoadingCards] = useState(true);
+  const [cardIndex, setCardIndex] = useState(0);
 
   const [dashboardData, setDashboardData] = useState({
     totalBalance: 0,
@@ -75,6 +81,40 @@ export default function Dashboard() {
     ]
   });
 
+  /* ================= FETCH CARTES ================= */
+  useEffect(() => {
+    const token = user?.token || localStorage.getItem("token");
+    if (!token) {
+      setLoadingCards(false);
+      return;
+    }
+
+    const fetchCards = async () => {
+      try {
+        const data = await getMyCards(token);
+        console.log("CARTES API:", data);
+        setCards(data);
+      } catch (err) {
+        console.error("Erreur chargement cartes", err);
+      } finally {
+        setLoadingCards(false);
+      }
+    };
+
+    fetchCards();
+  }, [user]);
+
+  const nextCard = () => {
+    if (cards.length === 0) return;
+    setCardIndex(i => (i + 1) % cards.length);
+  };
+
+  const prevCard = () => {
+    if (cards.length === 0) return;
+    setCardIndex(i => (i - 1 + cards.length) % cards.length);
+  };
+
+  /* ================= FETCH DASHBOARD ================= */
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
@@ -84,6 +124,7 @@ export default function Dashboard() {
           "http://localhost:5000/api/dashboard/summary",
           { headers: { Authorization: `Bearer ${token}` } }
         );
+
         setDashboardData(prev => ({
           ...prev,
           ...res.data
@@ -94,11 +135,6 @@ export default function Dashboard() {
     };
     fetchDashboard();
   }, []);
-
-  const nextCard = () =>
-    setCardIndex(i => (i + 1) % dashboardData.cards.length);
-  const prevCard = () =>
-    setCardIndex(i => (i - 1 + dashboardData.cards.length) % dashboardData.cards.length);
 
   /* ================= GRAPHIQUES ================= */
   const lineData = {
@@ -147,7 +183,7 @@ export default function Dashboard() {
   return (
     <div className="space-y-6 p-4 sm:p-6">
       {/* HEADER */}
-      <div className="p-6 bg-[#e8dcc7] rounded-xl shadow-lg">
+      <div className="p-6 bg-gradient-to-r from-[#f3e8d7] to-[#e8dcc7] rounded-xl shadow-md">
         <h2 className="text-3xl font-semibold text-[#8f7e6b]">
           Bienvenue{user?.prenom ? `, ${user.prenom}` : ""}
         </h2>
@@ -201,57 +237,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-
-      {/* MES COMPTES */}
-      <section className="mt-20 mb-20 flex justify-center">
-        <div className="w-full max-w-8xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] dark:from-[#2b2a28] dark:via-[#222] dark:to-[#2b2a28] rounded-3xl shadow-2xl p-10 relative">
-          <h3 className="text-3xl font-bold text-center text-[#6b5a49] mb-12">Mes Comptes</h3>
-          <div className="relative">
-            <div className="absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-[#d8cbb4] via-[#cbbba3] to-transparent -translate-x-1/2 shadow-md"></div>
-            <div className="space-y-16">
-              {dashboardData.comptes.map((compte, index) => (
-                <div
-                  key={compte.id}
-                  className={`relative flex items-center w-full ${
-                    index % 2 === 0 ? "justify-start pl-[calc(50%+20px)]" : "justify-end pr-[calc(50%+20px)]"
-                  }`}
-                >
-                  <span className="absolute left-1/2 w-6 h-6 bg-gradient-to-tr from-[#cbb99a] via-[#d4b8a5] to-[#cbb99a] rounded-full shadow-lg -translate-x-1/2 flex items-center justify-center text-white font-bold animate-glow">
-                    {index + 1}
-                  </span>
-                  <div
-                    style={{ animationDelay: `${index * 150}ms` }}
-                    className="w-full max-w-[400px] p-6 rounded-2xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] dark:from-[#3a3a3a]/80 dark:via-[#2b2b2b]/80 dark:to-[#3a3a3a]/80 shadow-lg animate-fadeUp transition-transform duration-500 hover:-translate-y-3 hover:shadow-2xl relative overflow-hidden"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-xs uppercase tracking-widest text-[#6b5a49]/70">{compte.type}</p>
-                        <h4 className="text-xl font-bold text-[#6b5a49] mt-1">{compte.nom}</h4>
-                      </div>
-                      <div className="w-12 h-12 rounded-full bg-[#cbb99a]/30 flex items-center justify-center text-[#6b5a49] shadow-inner">
-                        {index % 2 === 0 ? <i className="fas fa-wallet text-lg"></i> : <i className="fas fa-university text-lg"></i>}
-                      </div>
-                    </div>
-                    <div className="mt-4">
-                      <p className="text-2xl font-extrabold text-[#6b5a49]">{compte.solde.toLocaleString()} FCFA</p>
-                      <p className="text-xs text-[#6b5a49]/60">Solde disponible</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <p className="mt-12 text-center text-[#8f7e6b] italic font-medium text-lg">"Gérez vos comptes, simplifiez votre vie financière"</p>
-        </div>
-      </section>
-
-      {/* ANIMATIONS CSS */}
-      <style jsx>{`
-        @keyframes glow {0%,100%{box-shadow:0 0 5px #f3e8d7,0 0 10px #cbb99a,0 0 15px #d4b8a5;transform:scale(1);}50%{box-shadow:0 0 10px #f3e8d7,0 0 20px #cbb99a,0 0 30px #d4b8a5;transform:scale(1.2);}}
-        .animate-glow {animation: glow 2s infinite ease-in-out;}
-        @keyframes fadeUp {0%{opacity:0;transform:translateY(20px);}100%{opacity:1;transform:translateY(0);}}
-        .animate-fadeUp {animation: fadeUp 0.5s forwards;}
-      `}</style>
 
       {/* CHARTS */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -311,6 +296,15 @@ export default function Dashboard() {
             </ul>
           </Card>
         </div>
+      </div>
+
+      {/* ACTIONS */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {[FiSend, FiDownload, FiCreditCard, FiSave].map((Icon, i) => (
+          <div key={i} className="bg-white rounded-xl p-4 flex flex-col items-center">
+            <Icon />
+          </div>
+        ))}
       </div>
     </div>
   );
