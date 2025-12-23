@@ -145,7 +145,7 @@ export default function SignupCompact() {
 
             {/* Email + Téléphone */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-              <input type="email" placeholder="Email" value={formData.email} onChange={e => zupdateField("email", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm" />
+              <input type="email" placeholder="Email" value={formData.email} onChange={e => updateField("email", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm" />
               <input type="tel" placeholder="Téléphone" value={formData.telephone} onChange={e => updateField("telephone", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm" />
             </div>
 
