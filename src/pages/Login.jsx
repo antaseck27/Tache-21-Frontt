@@ -49,39 +49,29 @@ export default function Login() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+  e.preventDefault();
+  setError("");
 
-    if (!email.trim()) return setError("Veuillez saisir votre email.");
-    if (!password || password.length < 4) return setError("Mot de passe invalide.");
+  if (!email.trim()) return setError("Veuillez saisir votre email.");
+  if (!password || password.length < 4)
+    return setError("Mot de passe invalide.");
 
-    const result = await loginUser();
-    if (!result) return;
+  const result = await loginUser();
+  if (!result) return;
 
-    setTimeout(() => {
-      navigate("/dashboard");
-    }, 1000);
-     setTimeout(() => {
-      navigate("/dashboard");
-    }, 1000);
-    // navigate("/dashboard");
-  };
+  navigate("/dashboard");
+};
 
-  // Login Google
+
   // Login Google
 const handleGoogleLogin = async () => {
   try {
-    // Ouvre la popup Google
     const result = await signInWithPopup(auth, googleProvider);
-
-    // Récupère l'utilisateur et son ID token
     const user = result.user;
+
     const idToken = await user.getIdToken();
 
-    console.log("Firebase ID token :", idToken);
-
-    // Envoie le token au backend pour créer/valider l'utilisateur et générer un JWT
-    const res = await fetch(`${API}/auth/google`, {
+    const res = await fetch(`${API}/api/auth/google`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idToken }),
@@ -94,18 +84,16 @@ const handleGoogleLogin = async () => {
       return;
     }
 
-    // Stocke le JWT côté front
     localStorage.setItem("token", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
 
-    // Navigation après connexion
     navigate("/dashboard");
-
   } catch (err) {
     console.error("Erreur Google Login :", err);
     setError("Impossible de se connecter via Google.");
   }
 };
+
 
 
   return (
