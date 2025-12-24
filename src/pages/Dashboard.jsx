@@ -1,9 +1,8 @@
+// src/pages/Dashboard.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext.jsx";
-import CardUI from "../components/CardUI.jsx";
-import { getMyCards } from "../services/cardService.js";
-import { Line, Doughnut } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -18,14 +17,13 @@ import {
 import {
   FiEye,
   FiEyeOff,
-  FiChevronLeft,
-  FiChevronRight,
-  FiCreditCard,
   FiSend,
   FiDownload,
+  FiCreditCard,
   FiSave
 } from "react-icons/fi";
 
+// Enregistrement des composants pour ChartJS
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -37,6 +35,7 @@ ChartJS.register(
   Legend
 );
 
+// Composant Card réutilisable
 const Card = ({ children, className = "" }) => (
   <div
     className={`bg-white dark:bg-[#2a2a2a] rounded-xl p-6 shadow-sm border border-beige-100 dark:border-beige-700 ${className}`}
@@ -47,11 +46,10 @@ const Card = ({ children, className = "" }) => (
 
 export default function Dashboard() {
   const { user } = useAuth();
-  const [showBalance, setShowBalance] = useState(true);
-  const [cardIndex, setCardIndex] = useState(0);
-  const [activeCard, setActiveCard] = useState("solde");
-  const [showCardNumber, setShowCardNumber] = useState(true);
 
+  // ----------------------- STATES -----------------------
+  const [showBalance, setShowBalance] = useState(true);
+  const [activeCard, setActiveCard] = useState("solde");
   const [dashboardData, setDashboardData] = useState({
     totalBalance: 0,
     revenueThisMonth: 0,
@@ -69,51 +67,31 @@ export default function Dashboard() {
     ]
   });
 
-  // ================= FETCH DASHBOARD =================
-  const fetchDashboard = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) return;
-
-      const res = await axios.get("http://localhost:5000/api/dashboard/summary", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      setDashboardData(prev => ({
-        ...prev,
-        comptes: res.data.comptes || prev.comptes,
-        transactions: res.data.transactions || prev.transactions,
-        totalBalance: res.data.totalBalance ?? prev.totalBalance,
-        revenueThisMonth: res.data.revenueThisMonth ?? prev.revenueThisMonth,
-        expenseThisMonth: res.data.expenseThisMonth ?? prev.expenseThisMonth,
-        expenseCategories: res.data.expenseCategories || prev.expenseCategories,
-        cards: res.data.cards || prev.cards
-      }));
-    } catch (err) {
-      console.error("Erreur fetch dashboard:", err);
-    }
-  };
-
+  // ----------------------- FETCH DASHBOARD -----------------------
   useEffect(() => {
+    const fetchDashboard = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        const res = await axios.get(
+          "http://localhost:5000/api/dashboard/summary",
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        setDashboardData(prev => ({
+          ...prev,
+          ...res.data
+        }));
+      } catch (err) {
+        console.error("Erreur fetch dashboard:", err);
+      }
+    };
+
     fetchDashboard();
   }, []);
 
-  const handleTransfer = async (transferData) => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.post("http://localhost:5000/api/transfer/internal", transferData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      await fetchDashboard();
-    } catch (err) {
-      console.error("Erreur lors du transfert:", err);
-    }
-  };
-
-  const nextCard = () => setCardIndex(i => (i + 1) % (dashboardData.cards?.length || 1));
-  const prevCard = () => setCardIndex(i => (i - 1 + (dashboardData.cards?.length || 1)) % (dashboardData.cards?.length || 1));
-
-  // ================= GRAPHIQUES =================
+  // ----------------------- GRAPHIQUES -----------------------
   const lineData = {
     labels: ["Revenus", "Dépenses"],
     datasets: [
@@ -129,25 +107,18 @@ export default function Dashboard() {
     ]
   };
 
-  const lineOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
-
-  const donutData = {
-    labels: Object.keys(dashboardData.expenseCategories || {}),
-    datasets: [
-      {
-        data: Object.values(dashboardData.expenseCategories || {}),
-        backgroundColor: ["#d6c7b4", "#bfa98a", "#d4b8a5", "#dfcdb9", "#cbb99a"],
-        hoverOffset: 10
-      }
-    ]
+  const lineOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } }
   };
 
-  const donutOptions = { responsive: true, plugins: { legend: { display: false } } };
-
+  // ----------------------- RENDER -----------------------
   return (
     <div className="space-y-6 p-4 sm:p-6">
-      {/* HEADER */}
-      <div className="p-6 bg-[#e8dcc7] rounded-xl shadow-lg">
+
+      {/* ----------------- HEADER ----------------- */}
+      <div className="p-6 bg-[#e8dcc7] rounded-xl shadow-lg"> 
         <h2 className="text-3xl font-semibold text-[#8f7e6b]">
           Bienvenue{user?.prenom ? `, ${user.prenom}` : ""}
         </h2>
@@ -156,9 +127,9 @@ export default function Dashboard() {
         </p>
       </div>
 
-      {/* TOP CARDS */}
+      {/* ----------------- TOP CARDS ----------------- */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* SOLDE */}
+        {/* Solde Total */}
         <div
           onClick={() => setActiveCard("solde")}
           className={`rounded-xl p-12 shadow-lg cursor-pointer transition-all duration-300 ${activeCard === "solde" ? "bg-[#6b5a49] text-white" : "bg-white text-[#6b5a49]"}`}
@@ -170,14 +141,13 @@ export default function Dashboard() {
                 {showBalance ? `${dashboardData.totalBalance.toLocaleString()} FCFA` : "•••• ••••"}
               </div>
             </div>
-
             <button onClick={e => { e.stopPropagation(); setShowBalance(s => !s); }}>
               {showBalance ? <FiEye /> : <FiEyeOff />}
             </button>
           </div>
         </div>
 
-        {/* REVENUS */}
+        {/* Revenus */}
         <div
           onClick={() => setActiveCard("revenu")}
           className={`rounded-xl p-12 shadow-lg cursor-pointer transition-all duration-300 ${activeCard === "revenu" ? "bg-[#6b5a49] text-white" : "bg-white text-[#6b5a49]"}`}
@@ -188,7 +158,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* DEPENSES */}
+        {/* Dépenses */}
         <div
           onClick={() => setActiveCard("depense")}
           className={`rounded-xl p-12 shadow-lg cursor-pointer transition-all duration-300 ${activeCard === "depense" ? "bg-[#6b5a49] text-white" : "bg-white text-[#6b5a49]"}`}
@@ -200,9 +170,9 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* MES COMPTES */}
+      {/* ----------------- MES COMPTES ----------------- */}
       <section className="mt-20 mb-20 flex justify-center">
-        <div className="w-full max-w-8xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] dark:from-[#2b2a28] dark:via-[#222] dark:to-[#2b2a28] rounded-3xl shadow-2xl p-10 relative">
+        <div className="w-full max-w-8xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] rounded-3xl shadow-2xl p-10 relative">
           <h3 className="text-3xl font-bold text-center text-[#6b5a49] mb-12">Mes Comptes</h3>
           <div className="relative">
             <div className="absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-[#d8cbb4] via-[#cbbba3] to-transparent -translate-x-1/2 shadow-md"></div>
@@ -214,7 +184,7 @@ export default function Dashboard() {
                   </span>
                   <div
                     style={{ animationDelay: `${index * 150}ms` }}
-                    className="w-full max-w-[400px] p-6 rounded-2xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] dark:from-[#3a3a3a]/80 dark:via-[#2b2b2b]/80 dark:to-[#3a3a3a]/80 shadow-lg animate-fadeUp transition-transform duration-500 hover:-translate-y-3 hover:shadow-2xl relative overflow-hidden"
+                    className="w-full max-w-[400px] p-6 rounded-2xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] shadow-lg animate-fadeUp transition-transform duration-500 hover:-translate-y-3 hover:shadow-2xl relative overflow-hidden"
                   >
                     <div className="flex items-center justify-between">
                       <div>
@@ -240,7 +210,7 @@ export default function Dashboard() {
         </div>
       </section>
 
-      {/* CHARTS */}
+      {/* ----------------- CHARTS ----------------- */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 shadow-2xl">
         <div className="lg:col-span-3">
           <Card>
@@ -251,65 +221,52 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* CARTE BANCAIRE + TRANSACTIONS */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 shadow-2xl">
-        <Card className="flex items-center justify-center relative">
-          <div
-            className="w-64 h-36 rounded-xl p-4 text-white relative"
-            style={{
-              background: dashboardData.cards?.[cardIndex]
-                ? `linear-gradient(135deg, ${dashboardData.cards[cardIndex].color[0]}, ${dashboardData.cards[cardIndex].color[1]})`
-                : "#ccc"
-            }}
-          >
-            <div className="text-xs">{dashboardData.cards?.[cardIndex]?.type || ""}</div>
-            <div className="text-lg mt-4">{showCardNumber ? dashboardData.cards?.[cardIndex]?.numero || "" : "•••• •••• •••• ••••"}</div>
-            <button onClick={() => setShowCardNumber(s => !s)} className="absolute top-2 right-2 text-white p-1 rounded hover:bg-black/20">
-              {showCardNumber ? <FiEyeOff /> : <FiEye />}
-            </button>
-          </div>
-          <button onClick={prevCard} className="absolute left-2"><FiChevronLeft /></button>
-          <button onClick={nextCard} className="absolute right-2"><FiChevronRight /></button>
-        </Card>
-
-        <div className="lg:col-span-2">
-          <Card>
-            <h3 className="text-lg mb-4">Transactions récentes</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="text-left border-b">
-                    <th className="pb-2">Type</th>
-                    <th className="pb-2">Date</th>
-                    <th className="pb-2 text-right">Montant</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(dashboardData.transactions || []).map((t, i) => (
-                    <tr key={i} className="border-b last:border-none">
-                      <td className="py-3 flex items-center gap-2">
-                        <FiCreditCard />
-                        {t.label || t.merchant || "Transaction"}
-                      </td>
-                      <td className="py-3 text-xs">{t.date ? new Date(t.date).toLocaleDateString() : ""}</td>
-                      <td className={`py-3 text-right font-semibold ${t.direction === "income" ? "text-green-500" : "text-red-500"}`}>
-                        {(t.direction === "expense" ? "-" : "+") + (t.amount?.toLocaleString() || "0")} FCFA
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+      {/* ----------------- ACTIONS ----------------- */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
+        {[
+          { icon: FiSend, label: "Envoyer" },
+          { icon: FiDownload, label: "Télécharger" },
+          { icon: FiCreditCard, label: "Carte" },
+          { icon: FiSave, label: "Enregistrer" }
+        ].map((item, i) => {
+          const Icon = item.icon;
+          return (
+            <div
+              key={i}
+              className="bg-white rounded-xl p-4 flex flex-col items-center cursor-pointer hover:shadow-md transition"
+            >
+              <Icon className="text-xl mb-2" />
+              <span className="text-sm text-[#6b5a49]">{item.label}</span>
             </div>
-          </Card>
-        </div>
+          );
+        })}
       </div>
 
-      {/* ANIMATIONS CSS */}
+      {/* ----------------- ANIMATIONS CSS ----------------- */}
       <style jsx>{`
-        @keyframes glow { 0%,100%{box-shadow:0 0 5px #f3e8d7,0 0 10px #cbb99a,0 0 15px #d4b8a5;transform:scale(1);} 50%{box-shadow:0 0 10px #f3e8d7,0 0 20px #cbb99a,0 0 30px #d4b8a5;transform:scale(1.2);} }
-        .animate-glow { animation: glow 2s infinite ease-in-out; }
-        @keyframes fadeUp {0%{opacity:0;transform:translateY(20px);} 100%{opacity:1;transform:translateY(0);} }
-        .animate-fadeUp { animation: fadeUp 0.5s forwards; }
+        @keyframes glow {
+          0%, 100% {
+            box-shadow: 0 0 5px #f3e8d7, 0 0 10px #cbb99a, 0 0 15px #d4b8a5;
+            transform: scale(1);
+          }
+          50% {
+            box-shadow: 0 0 10px #f3e8d7, 0 0 20px #cbb99a, 0 0 30px #d4b8a5;
+            transform: scale(1.2);
+          }
+        }
+
+        .animate-glow {
+          animation: glow 2s infinite ease-in-out;
+        }
+
+        @keyframes fadeUp {
+          0% { opacity: 0; transform: translateY(20px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadeUp {
+          animation: fadeUp 0.5s forwards;
+        }
       `}</style>
     </div>
   );

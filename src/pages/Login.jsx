@@ -9,6 +9,7 @@ import { signInWithPopup } from "firebase/auth";
 export default function Login() {
   const navigate = useNavigate();
 
+  // ---------------- STATES ----------------
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -17,7 +18,7 @@ export default function Login() {
 
   const API = import.meta.env.VITE_API_URL;
 
-  // Appel API login
+  // ---------------- LOGIN UTILISATEUR ----------------
   const loginUser = async () => {
     try {
       setLoading(true);
@@ -46,7 +47,39 @@ export default function Login() {
     }
   };
 
-  // Soumission du formulaire
+  // ---------------- LOGIN GOOGLE ----------------
+  const handleGoogleLogin = async () => {
+    try {
+      setLoading(true);
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      const idToken = await user.getIdToken();
+
+      const res = await fetch(`${API}/api/auth/google`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken }),
+      });
+
+      const data = await res.json();
+      setLoading(false);
+
+      if (!res.ok) {
+        setError(data.message || "Erreur lors de la connexion via Google.");
+        return;
+      }
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      navigate("/dashboard");
+    } catch (err) {
+      console.error("Erreur Google Login :", err);
+      setLoading(false);
+      setError("Impossible de se connecter via Google.");
+    }
+  };
+
+  // ---------------- SUBMIT FORMULAIRE ----------------
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -60,34 +93,7 @@ export default function Login() {
     navigate("/dashboard");
   };
 
-  // Login Google
-  const handleGoogleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-      const idToken = await user.getIdToken();
-
-      const res = await fetch(`${API}/api/auth/google`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ idToken }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.message || "Erreur lors de la connexion via Google.");
-        return;
-      }
-
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      navigate("/dashboard");
-    } catch (err) {
-      console.error("Erreur Google Login :", err);
-      setError("Impossible de se connecter via Google.");
-    }
-  };
-
+  // ---------------- RENDER ----------------
   return (
     <div className="min-h-screen flex">
       {/* LEFT PANEL */}
@@ -123,9 +129,7 @@ export default function Login() {
           <h2 className="text-2xl font-semibold text-[#6b5a49]">Connexion</h2>
           <p className="text-sm text-[#8f7e6b]">Entrez vos identifiants pour accéder à votre compte</p>
 
-          {error && (
-            <div className="bg-red-100 text-red-600 px-2 py-1 rounded-lg text-sm">{error}</div>
-          )}
+          {error && <div className="bg-red-100 text-red-600 px-2 py-1 rounded-lg text-sm">{error}</div>}
 
           <form onSubmit={handleSubmit} className="space-y-2">
             <input
