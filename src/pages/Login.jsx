@@ -205,77 +205,81 @@ export default function Login() {
 
   // ---------------- LOGIN ----------------
   const loginUser = async () => {
-    setLoading(true);
-    setError("");
+  setLoading(true);
+  setError("");
 
-    try {
-      const res = await fetch(`${API}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+  try {
+    const res = await fetch(`${API}/api/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-      const data = await res.json();
-      setLoading(false);
+    const data = await res.json();
+    console.log("LOGIN RESPONSE:", data);
+    setLoading(false);
 
-      if (!res.ok) {
-        setError(data.message || "Erreur lors de la connexion.");
-        return null;
-      }
-
-      // 2FA requis
-      if (data.twoFactorRequired) {
-        setStep("2fa");
-        setUserId(data.userId);
-        return null;
-      }
-
-      // Pas de 2FA
-      localStorage.setItem("token", data.token);
-      navigate("/dashboard");
-      return data;
-
-    } catch (err) {
-      console.error(err);
-      setLoading(false);
-      setError("Erreur réseau. Réessayez.");
-      return null;
+    if (!res.ok) {
+      setError(data.message || "Erreur lors de la connexion.");
+      return;
     }
-  };
+
+    //  2FA requis
+    if (data.twoFactorRequired) {
+      setStep("2fa");
+      setUserId(data.userId);
+      return;
+    }
+
+    //  LOGIN OK
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    navigate("/dashboard");
+
+  } catch (err) {
+    console.error(err);
+    setLoading(false);
+    setError("Erreur réseau. Réessayez.");
+  }
+};
+
 
   // ---------------- VERIFICATION 2FA ----------------
-  const verify2FA = async () => {
-    if (!code.trim()) return setError("Veuillez saisir le code.");
+const verify2FA = async () => {
+  if (!code.trim()) return setError("Veuillez saisir le code.");
 
-    setLoading(true);
-    setError("");
+  setLoading(true);
+  setError("");
 
-    try {
-      const res = await fetch(`${API}/api/auth/verify-email-2fa`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, code }),
-      });
+  try {
+    const res = await fetch(`${API}/api/auth/verify-email-2fa`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, code }),
+    });
 
-      const data = await res.json();
-      setLoading(false);
+    const data = await res.json();
+    setLoading(false);
 
-      if (!res.ok) {
-        setError(data.message || "Code invalide.");
-        return null;
-      }
-
-      localStorage.setItem("token", data.token);
-      navigate("/dashboard");
-      return data;
-
-    } catch (err) {
-      console.error(err);
-      setLoading(false);
-      setError("Erreur réseau. Réessayez.");
-      return null;
+    if (!res.ok) {
+      setError(data.message || "Code invalide.");
+      return;
     }
-  };
+
+    //  STOCKAGE COMPLET
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    navigate("/dashboard");
+
+  } catch (err) {
+    console.error(err);
+    setLoading(false);
+    setError("Erreur réseau. Réessayez.");
+  }
+};
+
 
   // ---------------- HANDLE SUBMIT ----------------
   const handleSubmit = async (e) => {
