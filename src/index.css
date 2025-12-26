@@ -270,13 +270,13 @@ padding: 20px;
 }
 /* bouton actif */
 .toggle.active {
-  background-color: #080808;
+  background-color: #080808 !important;
 }
 
 /* Couleurs de font */
 .dark-mode {
-  background-color: #1e1e1e;
-  color: #f5f5f5;
+  background-color: #1e1e1e !important;
+  color: #f5f5f5 !important;
 }
 
 /* La boule blanche */
@@ -295,24 +295,24 @@ padding: 20px;
 
 /* .......Mode sombre global..... */
 .dark-mode {
-  background: rgb(53, 37, 3);
+  background: rgb(53, 37, 3) !important;
   color: #ffffff !important;
 }
 
 .dark-mode button{
-  background-color: rgb(3, 25, 53);
+  background-color: rgb(3, 25, 53) !important;
   color: #ffffff;
 }
 .dark-mode button:hover{
-  background-color: rgb(40, 40, 41);
-  color: #ffffff;
+  background-color: rgb(40, 40, 41) !important;
+  color: #ffffff !important;
 }
 
 .dark-mode .toggle{
-  background-color: rgb(228, 228, 229); /* couleur foncée */
+  background-color: rgb(228, 228, 229) !important; /* couleur foncée */
 }
 .dark-mode .toggle .circle{
-  background: black;
+  background: black !important;
 }
 
 
@@ -324,7 +324,7 @@ padding: 20px;
 .dark-mode .Apparence {
   background-color: rgb(0, 0, 29) !important;
   color: white !important;
-  box-shadow: 0 0 0 1px  rgb(70, 70, 70);
+  box-shadow: 0 0 0 1px  rgb(70, 70, 70) !important;
 }
 
 /* Tous les span en mode sombre */
@@ -340,7 +340,7 @@ padding: 20px;
 .dark-mode .securite .icone1, 
 .dark-mode .securite .icone2,
 .dark-mode .securite .icone3{
-    padding: 2%;
+    padding: 2% !;
 
 }
 

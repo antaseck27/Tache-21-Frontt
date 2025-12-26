@@ -1,10 +1,54 @@
-// src/context/AuthContext.jsx
+// // src/context/AuthContext.jsx
+// import { createContext, useContext, useEffect, useState } from "react";
+// import axios from "axios";
+
+// const AuthContext = createContext();
+
+// const API_URL = "http://localhost:5000/api";
+
+// export const AuthProvider = ({ children }) => {
+//   const [user, setUser] = useState(null);
+//   const [loadingUser, setLoadingUser] = useState(true);
+
+//   const fetchUser = async () => {
+//     const token = localStorage.getItem("token");
+//     if (!token) {
+//       setLoadingUser(false);
+//       return;
+//     }
+
+//     try {
+//       const res = await axios.get(`${API_URL}/settings/me`, {
+//         headers: { Authorization: `Bearer ${token}` },
+//       });
+//       setUser(res.data);
+//     } catch {
+//       localStorage.removeItem("token");
+//       setUser(null);
+//     } finally {
+//       setLoadingUser(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchUser();
+//   }, []);
+
+//   return (
+//     <AuthContext.Provider value={{ user, setUser, fetchUser, loadingUser }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };
+
+// export const useAuth = () => useContext(AuthContext);
+
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
 
-const API_URL = "http://localhost:5000/api";
+const API = import.meta.env.VITE_API_URL;
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -12,17 +56,23 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
+
     if (!token) {
+      setUser(null);
       setLoadingUser(false);
       return;
     }
 
     try {
-      const res = await axios.get(`${API_URL}/settings/me`, {
-        headers: { Authorization: `Bearer ${token}` },
+      const res = await axios.get(`${API}/api/settings/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+
       setUser(res.data);
-    } catch {
+    } catch (err) {
+      console.error("Auth error:", err.message);
       localStorage.removeItem("token");
       setUser(null);
     } finally {
@@ -30,15 +80,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  //  Charger user au démarrage
   useEffect(() => {
     fetchUser();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, fetchUser, loadingUser }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        fetchUser,
+        loadingUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => useContext(AuthContext);
+

@@ -2,21 +2,20 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
-// Tes infos Firebase (à remplacer par les tiennes)
+// Config Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyBuy2iUZsjZngsY9vRpxm7VLgdqc8DRLbs",
-  authDomain: "bankrewmi-b087a.firebaseapp.com",
-  projectId: "bankrewmi-b087a",
-  storageBucket: "bankrewmi-b087a.firebasestorage.app",
-  messagingSenderId: "977446773638",
-  appId: "1:977446773638:web:88e42a1fd9fba5abe58207",
-  measurementId: "G-EB33B05NT8"
+  apiKey: "AIzaSyBeg3Ac7nEFAQ_nsYC5fo0aLjdHY-uQ2uE",
+  authDomain: "banquerewmi.firebaseapp.com",
+  projectId: "banquerewmi",
+  storageBucket: "banquerewmi.appspot.com", // ⚡ Correct
+  messagingSenderId: "9207360200",
+  appId: "1:9207360200:web:40d2446d8834cdc68f53fd"
 };
 
-// Initialiser Firebase
+// Initialisation Firebase
 const app = initializeApp(firebaseConfig);
 
-// Authentification Firebase
+// Auth Firebase
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 

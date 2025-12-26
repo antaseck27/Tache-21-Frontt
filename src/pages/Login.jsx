@@ -1,26 +1,38 @@
 
 import React, { useState } from "react";
-import { EyeIcon, EyeSlashIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
+import {
+  EyeIcon,
+  EyeSlashIcon,
+  CheckCircleIcon,
+} from "@heroicons/react/24/outline";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { auth, googleProvider } from "../firebase/firebase";
+import { signInWithPopup } from "firebase/auth";
 
 export default function Login() {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
+  // ---------------- STATES ----------------
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [code, setCode] = useState(""); 
-  const [step, setStep] = useState("login"); 
+  const [code, setCode] = useState("");
+  const [step, setStep] = useState("login");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [userId, setUserId] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   const API = import.meta.env.VITE_API_URL;
 
-  // ---------------- LOGIN ----------------
+  // ---------------- LOGIN UTILISATEUR ----------------
   const loginUser = async () => {
+    if (!email || !password) {
+      setError("Veuillez remplir tous les champs.");
+      return;
+    }
+
     setLoading(true);
     setError("");
 
@@ -32,49 +44,41 @@ export default function Login() {
       });
 
       const data = await res.json();
-      setLoading(false);
-      console.log("LOGIN RESPONSE:", data);
 
       if (!res.ok) {
         setError(data.message || "Erreur lors de la connexion.");
         return;
       }
 
-      //  2FA requis
       if (data.twoFactorRequired) {
         setStep("2fa");
         setUserId(data.userId);
-        localStorage.setItem("tempUserId", data.userId); // sauvegarde temporaire pour 2FA
+        localStorage.setItem("tempUserId", data.userId);
         return;
       }
 
-      //  LOGIN OK (sans 2FA)
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-
       navigate("/dashboard");
-
-    } catch (err) {
-      console.error(err);
+    } catch {
+      setError("Erreur réseau.");
+    } finally {
       setLoading(false);
-      setError("Erreur réseau. Réessayez.");
     }
   };
 
   // ---------------- VERIFICATION 2FA ----------------
   const verify2FA = async () => {
-    if (!code.trim()) return setError("Veuillez saisir le code.");
+    if (!code.trim()) {
+      setError("Veuillez saisir le code.");
+      return;
+    }
 
     setLoading(true);
     setError("");
 
     try {
-      // Récupération du userId depuis state ou localStorage temporaire
       const id = userId || localStorage.getItem("tempUserId");
-      if (!id) {
-        setLoading(false);
-        return setError("Utilisateur introuvable pour la vérification 2FA.");
-      }
 
       const res = await fetch(`${API}/api/auth/verify-email-2fa`, {
         method: "POST",
@@ -83,54 +87,70 @@ export default function Login() {
       });
 
       const data = await res.json();
-      setLoading(false);
 
       if (!res.ok) {
         setError(data.message || "Code invalide.");
         return;
       }
 
-      //  STOCKAGE COMPLET
+      localStorage.removeItem("tempUserId");
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.removeItem("tempUserId"); // ✅ nettoyage
-
       navigate("/dashboard");
-
-    } catch (err) {
-      console.error(err);
+    } catch {
+      setError("Erreur réseau.");
+    } finally {
       setLoading(false);
-      setError("Erreur réseau. Réessayez.");
-    }
-  };
-
-  // ---------------- HANDLE SUBMIT ----------------
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (step === "login") {
-      await loginUser();
-    } else if (step === "2fa") {
-      await verify2FA();
     }
   };
 
   // ---------------- LOGIN GOOGLE ----------------
   const handleGoogleLogin = async () => {
+    setLoading(true);
+    setError("");
+
     try {
-      const res = await fetch(`${API}/api/auth/google/config`);
+      const result = await signInWithPopup(auth, googleProvider);
+      const idToken = await result.user.getIdToken();
+
+      const res = await fetch(`${API}/api/auth/google/google`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken }),
+      });
+
       const data = await res.json();
 
-      if (data.googleEnabled && data.url) {
-        window.location.href = data.url;
-      } else {
-        setError("Connexion Google non configurée.");
+      if (!res.ok) {
+        setError(data.message || "Erreur Google.");
+        return;
       }
-    } catch (err) {
-      console.error(err);
-      setError("Impossible de se connecter via Google.");
+
+      if (data.twoFactorRequired) {
+        setStep("2fa");
+        setUserId(data.userId);
+        localStorage.setItem("tempUserId", data.userId);
+        return;
+      }
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      navigate("/dashboard");
+    } catch {
+      setError("Connexion Google impossible.");
+    } finally {
+      setLoading(false);
     }
   };
 
+  // ---------------- HANDLE SUBMIT ----------------
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (loading) return;
+    step === "login" ? loginUser() : verify2FA();
+  };
+
+  // ---------------- RENDER ----------------
   return (
     <div className="min-h-screen flex">
       {/* LEFT PANEL */}
@@ -148,14 +168,16 @@ export default function Login() {
             Gérez vos finances simplement avec notre plateforme moderne.
           </p>
           <ul className="space-y-3">
-            {["Sécurité maximale", "Transactions instantanées", "Support 24/7"].map((text, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm">
-                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                  <CheckCircleIcon className="w-5 h-5 text-[#6b5a49]" />
-                </div>
-                <span className="font-medium">{text}</span>
-              </li>
-            ))}
+            {["Sécurité maximale", "Transactions instantanées", "Support 24/7"].map(
+              (text, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm">
+                  <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                    <CheckCircleIcon className="w-5 h-5 text-[#6b5a49]" />
+                  </div>
+                  <span className="font-medium">{text}</span>
+                </li>
+              )
+            )}
           </ul>
         </div>
       </aside>
@@ -247,3 +269,34 @@ export default function Login() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

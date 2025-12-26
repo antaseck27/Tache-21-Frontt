@@ -1,108 +1,359 @@
-// src/components/Header.jsx
+// // src/components/Header.jsx
+// import React, { useState, useRef, useEffect } from "react";
+// import { Link, useNavigate } from "react-router-dom";
+// import { Bars3Icon, BellIcon, MoonIcon, SunIcon } from "@heroicons/react/24/outline";
+// import logo from "../assets/logo.png";
+// import { useAuth } from "../context/AuthContext.jsx";
+
+// export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
+//   const navigate = useNavigate();
+//   const { user, setUser } = useAuth();
+//   const [openProfile, setOpenProfile] = useState(false);
+//   const [openNotif, setOpenNotif] = useState(false);
+//   const profileRef = useRef();
+//   const notifRef = useRef();
+//   const fileInputRef = useRef();
+//   const [notifications, setNotifications] = useState([]);
+//   const unreadCount = notifications.filter(n => !n.read).length;
+// const token = localStorage.getItem("token");
+
+// useEffect(() => {
+//   if (!token) {
+//     navigate("/login");
+//   }
+// }, [token, navigate]);
+
+
+//   // Fermer les menus quand on clique ailleurs
+//   useEffect(() => {
+//     const handleClickOutside = (e) => {
+//       if (profileRef.current && !profileRef.current.contains(e.target)) setOpenProfile(false);
+//       if (notifRef.current && !notifRef.current.contains(e.target)) setOpenNotif(false);
+//     };
+//     document.addEventListener("mousedown", handleClickOutside);
+//     return () => document.removeEventListener("mousedown", handleClickOutside);
+//   }, []);
+
+//   const handleLogout = () => {
+//     localStorage.removeItem("token");
+//     setUser(null);
+//     navigate("/login");
+//   };
+
+//   const toggleDark = () => setDarkMode(prev => !prev);
+
+//   const handleAvatarChange = async (e) => {
+//     const file = e.target.files[0];
+//     if (!file) return;
+
+//     const formData = new FormData();
+//     formData.append("avatar", file);
+
+//     try {
+//       const token = localStorage.getItem("token");
+//       const res = await fetch("http://localhost:5000/api/settings/update-avatar", {
+//         method: "PUT",
+//         headers: { Authorization: `Bearer ${token}` },
+//         body: formData
+//       });
+//       const data = await res.json();
+//       setUser(prev => ({ ...prev, avatar: data.avatar }));
+//     } catch (err) {
+//       console.error("Erreur lors de la mise à jour de l'avatar :", err);
+//     }
+//   };
+
+ 
+
+//   // NOTIFICATION
+//   const getNotifications = async (token) => {
+//     const res = await fetch("http://localhost:5000/api/notifications", {
+//       headers: { Authorization: `Bearer ${token}` },
+//     });
+//     if (!res.ok) throw new Error("Erreur lors de la récupération des notifications");
+//     return await res.json();
+//   };
+
+//   //  une notification comme lue
+//   const handleMarkAsRead = async (id) => {
+//     const token = localStorage.getItem("token");
+//     try {
+//       await fetch(`http://localhost:5000/api/notifications/${id}/read`, {
+//         method: "PATCH",
+//         headers: { Authorization: `Bearer ${token}` },
+//       });
+//       setNotifications(prev =>
+//         prev.map(n => n._id === id ? { ...n, read: true } : n)
+//       );
+//     } catch (err) {
+//       console.error(err);
+//     }
+//   };
+
+//   // les notifications toutes les 5 secondes
+//   useEffect(() => {
+//     const fetchNotifications = async () => {
+//       const token = localStorage.getItem("token");
+//       if (!token) return;
+//       try {
+//         const data = await getNotifications(token);
+//         setNotifications(data);
+//       } catch (err) {
+//         console.error(err);
+//       }
+//     };
+
+//     fetchNotifications();
+//     const interval = setInterval(fetchNotifications, 5000);
+//     return () => clearInterval(interval);
+//   }, []);
+
+//   return (
+//     <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a] border-b dark:border-gray-800 transition-colors duration-300">
+//       <div className="max-w-[1400px] mx-auto flex items-center h-20 px-3 sm:px-4 md:px-6 gap-3">
+
+//         {/* Menu mobile */}
+//         <button onClick={onOpenSidebar} className="p-2 rounded md:hidden hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+//           <Bars3Icon className="w-9 h-9 text-gray-700 dark:text-gray-200" />
+//         </button>
+
+//         {/* Logo */}
+//         <Link to="/dashboard" className="flex items-center gap-3 flex-shrink-0">
+//           <div className="sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
+//             <img src={logo} alt="logo" className="w-20 h-20 object-contain" />
+//           </div>
+//           <div className="hidden sm:flex flex-col leading-none">
+//             <p className="text-sm sm:text-lg font-semibold text-[#6b5a49] dark:text-[#f7f3ee]">BankRewmi</p>
+//             <p className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">Sa Karàngué Koppar</p>
+//           </div>
+//         </Link>
+
+//         <div className="flex-1" />
+
+//         {/* Zone droite */}
+//         <div className="flex items-center gap-2 sm:gap-3">
+//           {/* Dark/Light */}
+//           <button onClick={toggleDark} className="p-2 rounded-full hover:bg-beig-100 dark:hover:bg-beig-700 transition">
+//             {darkMode ? <SunIcon className="w-5 h-5 text-yellow-400" /> : <MoonIcon className="w-5 h-5 text-beig-700 dark:text-beig-200" />}
+//           </button>
+
+//           {/* Notification */}
+//           <div className="relative" ref={notifRef}>
+//             <button onClick={() => setOpenNotif(p => !p)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition relative">
+//               <BellIcon className="w-5 h-5 text-gray-700 dark:text-gray-200" />
+//               {unreadCount > 0 && (
+//                 <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full px-1.5">
+//                   {unreadCount}
+//                 </span>
+//               )}
+//             </button>
+
+//             {openNotif && (
+//               <div className="absolute right-0 mt-2 w-64 max-h-80 overflow-y-auto bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md z-50">
+//                 {notifications.length === 0 ? (
+//                   <p className="p-3 text-sm text-gray-700 dark:text-gray-200">Aucune notification</p>
+//                 ) : (
+//                   notifications.map(n => (
+//                     <div key={n._id} className={`p-3 text-sm border-b border-gray-200 dark:border-gray-700 cursor-pointer ${!n.read ? "bg-gray-100 dark:bg-gray-800" : ""}`} onClick={() => handleMarkAsRead(n._id)}>
+//                       <p>{n.message}</p>
+//                       <span className="text-xs text-gray-500">{new Date(n.createdAt).toLocaleString()}</span>
+//                     </div>
+//                   ))
+//                 )}
+//               </div>
+//             )}
+//           </div>
+
+//           {/* Profil */}
+//           <div className="relative" ref={profileRef}>
+//   <button
+//     onClick={() => setOpenProfile(p => !p)}
+//     className="flex items-center gap-2 px-2 sm:px-3 py-1.5 text-sm font-medium rounded-full bg-[#e8dcc7] text-[#6b5a49] hover:bg-[#d6c5a9] dark:bg-[#b19b7a] dark:text-[#f1e8dc] dark:hover:bg-[#9c8b73] transition"
+//   >
+//     <img
+//       src={user?.avatar || "/avatar.png"}
+//       alt="Avatar utilisateur"
+//       className="w-7 h-7 rounded-full object-cover"
+//     />
+
+//     <span className="hidden sm:inline">
+//       {user ? `${user.prenom} ${user.name}` : "Utilisateur"} ▾
+//     </span>
+//   </button>
+
+//   {openProfile && (
+//     <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md overflow-hidden z-50">
+//       <Link
+//         to="/profile"
+//         className="block px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]"
+//         onClick={() => setOpenProfile(false)}
+//       >
+//         Profil
+//       </Link>
+
+//       <button
+//         onClick={handleLogout}
+//         className="w-full text-left px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]"
+//       >
+//         Déconnexion
+//       </button>
+//     </div>
+//   )}
+// </div>
+
+//         </div>
+//       </div>
+//     </header>
+//   );
+// }
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Bars3Icon, BellIcon, MoonIcon, SunIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  BellIcon,
+  MoonIcon,
+  SunIcon,
+} from "@heroicons/react/24/outline";
 import logo from "../assets/logo.png";
 import { useAuth } from "../context/AuthContext.jsx";
 
 export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
   const navigate = useNavigate();
-  const { user, setUser } = useAuth();
+  const { user, setUser, loadingUser } = useAuth();
+
   const [openProfile, setOpenProfile] = useState(false);
   const [openNotif, setOpenNotif] = useState(false);
-  const profileRef = useRef();
-  const notifRef = useRef();
-  const fileInputRef = useRef();
   const [notifications, setNotifications] = useState([]);
-const unreadCount = notifications.filter(n => !n.read).length;
 
+  const profileRef = useRef(null);
+  const notifRef = useRef(null);
 
-  // Fermer les menus quand on clique ailleurs
+  const API = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem("token");
+
+  const unreadCount = notifications.filter((n) => !n.read).length;
+
+  //  Redirection si non connecté
+ useEffect(() => {
+  if (!loadingUser && !user) {
+    navigate("/login");
+  }
+}, [loadingUser, user, navigate]);
+
+  //  Fermer menus au clic extérieur
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (profileRef.current && !profileRef.current.contains(e.target)) setOpenProfile(false);
-      if (notifRef.current && !notifRef.current.contains(e.target)) setOpenNotif(false);
+      if (profileRef.current && !profileRef.current.contains(e.target))
+        setOpenProfile(false);
+      if (notifRef.current && !notifRef.current.contains(e.target))
+        setOpenNotif(false);
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  //  Récupérer notifications
+  const fetchNotifications = async () => {
+    if (!token) return;
+    try {
+      const res = await fetch(`${API}/api/notifications`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) throw new Error("Erreur notifications");
+      const data = await res.json();
+      setNotifications(data);
+    } catch (err) {
+      console.error("Erreur notifications :", err.message);
+    }
+  };
+
+  //  Charger au montage + refresh toutes les 5s
+  useEffect(() => {
+    fetchNotifications();
+    const interval = setInterval(fetchNotifications, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  //  Marquer notification comme lue
+  const handleMarkAsRead = async (id) => {
+    try {
+      await fetch(`${API}/api/notifications/${id}/read`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setNotifications((prev) =>
+        prev.map((n) =>
+          n._id === id ? { ...n, read: true } : n
+        )
+      );
+    } catch (err) {
+      console.error("Erreur markAsRead :", err);
+    }
+  };
+
+  //  Logout
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUser(null);
     navigate("/login");
   };
 
-  const toggleDark = () => setDarkMode(prev => !prev);
-
-  const handleAvatarChange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append("avatar", file);
-
-    try {
-      const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/settings/update-avatar", {
-        method: "PUT",
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData
-      });
-      const data = await res.json();
-      setUser(prev => ({ ...prev, avatar: data.avatar }));
-    } catch (err) {
-      console.error("Erreur lors de la mise à jour de l'avatar :", err);
-    }
-  };
-
-  useEffect(() => {
-  const fetchNotifications = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-    try {
-      const data = await getNotifications(token);
-      setNotifications(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  fetchNotifications();
-}, []);
-
+  const toggleDark = () => setDarkMode((prev) => !prev);
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a] border-b dark:border-gray-800 transition-colors duration-300">
       <div className="max-w-[1400px] mx-auto flex items-center h-20 px-3 sm:px-4 md:px-6 gap-3">
 
         {/* Menu mobile */}
-        <button onClick={onOpenSidebar} className="p-2 rounded md:hidden hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+        <button
+          onClick={onOpenSidebar}
+          className="p-2 rounded md:hidden hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+        >
           <Bars3Icon className="w-9 h-9 text-gray-700 dark:text-gray-200" />
         </button>
 
         {/* Logo */}
-        <Link to="/dashboard" className="flex items-center gap-3 flex-shrink-0">
-          <div className="sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
+        <Link to="/dashboard" className="flex items-center gap-3">
+          <div className="sm:w-10 sm:h-10 rounded-lg shadow-lg overflow-hidden">
             <img src={logo} alt="logo" className="w-20 h-20 object-contain" />
           </div>
-          <div className="hidden sm:flex flex-col leading-none">
-            <p className="text-sm sm:text-lg font-semibold text-[#6b5a49] dark:text-[#f7f3ee]">BankRewmi</p>
-            <p className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">Sa Karàngué Koppar</p>
+          <div className="hidden sm:flex flex-col">
+            <p className="text-lg font-semibold text-[#6b5a49] dark:text-[#f7f3ee]">
+              BankRewmi
+            </p>
+            <p className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">
+              Sa Karàngué Koppar
+            </p>
           </div>
         </Link>
 
         <div className="flex-1" />
 
         {/* Zone droite */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Dark/Light */}
-          <button onClick={toggleDark} className="p-2 rounded-full hover:bg-beig-100 dark:hover:bg-beig-700 transition">
-            {darkMode ? <SunIcon className="w-5 h-5 text-yellow-400" /> : <MoonIcon className="w-5 h-5 text-beig-700 dark:text-beig-200" />}
+        <div className="flex items-center gap-3">
+
+          {/* Dark mode */}
+          <button onClick={toggleDark} className="p-2 rounded-full">
+            {darkMode ? (
+              <SunIcon className="w-5 h-5 text-yellow-400" />
+            ) : (
+              <MoonIcon className="w-5 h-5 text-gray-700 dark:text-gray-200" />
+            )}
           </button>
 
-          {/* Notification */}
+          {/* Notifications */}
           <div className="relative" ref={notifRef}>
-            <button onClick={() => setOpenNotif(p => !p)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition relative">
+            <button
+              onClick={() => setOpenNotif((p) => !p)}
+              className="p-2 rounded-full relative"
+            >
               <BellIcon className="w-5 h-5 text-gray-700 dark:text-gray-200" />
               {unreadCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full px-1.5">
@@ -112,14 +363,22 @@ const unreadCount = notifications.filter(n => !n.read).length;
             </button>
 
             {openNotif && (
-              <div className="absolute right-0 mt-2 w-64 max-h-80 overflow-y-auto bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md z-50">
+              <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-[#222] border rounded shadow z-50">
                 {notifications.length === 0 ? (
-                  <p className="p-3 text-sm text-gray-700 dark:text-gray-200">Aucune notification</p>
+                  <p className="p-3 text-sm">Aucune notification</p>
                 ) : (
-                  notifications.map(n => (
-                    <div key={n._id} className={`p-3 text-sm border-b border-gray-200 dark:border-gray-700 cursor-pointer ${!n.read ? "bg-gray-100 dark:bg-gray-800" : ""}`} onClick={() => handleMarkAsRead(n._id)}>
+                  notifications.map((n) => (
+                    <div
+                      key={n._id}
+                      onClick={() => handleMarkAsRead(n._id)}
+                      className={`p-3 text-sm border-b cursor-pointer ${
+                        !n.read ? "bg-gray-100 dark:bg-gray-800" : ""
+                      }`}
+                    >
                       <p>{n.message}</p>
-                      <span className="text-xs text-gray-500">{new Date(n.createdAt).toLocaleString()}</span>
+                      <span className="text-xs text-gray-500">
+                        {new Date(n.createdAt).toLocaleString()}
+                      </span>
                     </div>
                   ))
                 )}
@@ -129,41 +388,33 @@ const unreadCount = notifications.filter(n => !n.read).length;
 
           {/* Profil */}
           <div className="relative" ref={profileRef}>
-  <button
-    onClick={() => setOpenProfile(p => !p)}
-    className="flex items-center gap-2 px-2 sm:px-3 py-1.5 text-sm font-medium rounded-full bg-[#e8dcc7] text-[#6b5a49] hover:bg-[#d6c5a9] dark:bg-[#b19b7a] dark:text-[#f1e8dc] dark:hover:bg-[#9c8b73] transition"
-  >
-    <img
-      src={user?.avatar || "/avatar.png"}
-      alt="Avatar utilisateur"
-      className="w-7 h-7 rounded-full object-cover"
-    />
+            <button
+              onClick={() => setOpenProfile((p) => !p)}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#e8dcc7]"
+            >
+              <img
+                src={user?.avatar || "/avatar.png"}
+                className="w-7 h-7 rounded-full object-cover"
+              />
+              <span className="hidden sm:inline text-sm">
+                {user ? `${user.prenom} ${user.name}` : "Utilisateur"} ▾
+              </span>
+            </button>
 
-    <span className="hidden sm:inline">
-      {user ? `${user.prenom} ${user.name}` : "Utilisateur"} ▾
-    </span>
-  </button>
-
-  {openProfile && (
-    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md overflow-hidden z-50">
-      <Link
-        to="/profile"
-        className="block px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]"
-        onClick={() => setOpenProfile(false)}
-      >
-        Profil
-      </Link>
-
-      <button
-        onClick={handleLogout}
-        className="w-full text-left px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]"
-      >
-        Déconnexion
-      </button>
-    </div>
-  )}
-</div>
-
+            {openProfile && (
+              <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow z-50">
+                <Link to="/profile" className="block px-4 py-3 text-sm">
+                  Profil
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-3 text-sm"
+                >
+                  Déconnexion
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>
