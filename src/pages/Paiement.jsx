@@ -7,6 +7,8 @@ import {
   FaUsers,
   FaHistory,
 } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 /* ================= SERVICES ================= */
 const services = [
@@ -21,10 +23,11 @@ export default function Paiement() {
   const [activeService, setActiveService] = useState(null);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showNewBenefModal, setShowNewBenefModal] = useState(false);
-
   const [beneficiaires, setBeneficiaires] = useState([]);
   const [historique, setHistorique] = useState([]);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 5;
   const [paymentForm, setPaymentForm] = useState({
     montant: "",
     reference: "",
@@ -38,26 +41,25 @@ export default function Paiement() {
 
   // ------------------- Historique réel -------------------
   useEffect(() => {
-    fetchHistorique();
-  }, []);
+    fetchHistorique(currentPage);
+  }, [currentPage]);
 
-const fetchHistorique = async () => {
+const fetchHistorique = async (page = 1) => {
   try {
-    const res = await fetch("http://localhost:5000/api/payments", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    const res = await fetch(
+      `http://localhost:5000/api/payments?page=${page}&limit=${limit}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
 
     const data = await res.json();
-
-    if (!res.ok) {
-      console.error("Erreur historique paiement:", data.message);
-      return;
-    }
+    if (!res.ok) return;
 
     setHistorique(
-      data.map((p) => ({
+      data.payments.map((p) => ({
         id: p._id,
         service: p.category,
         montant: `${p.amount} FCFA`,
@@ -65,21 +67,50 @@ const fetchHistorique = async () => {
         statut: "Payé",
       }))
     );
+
+    setCurrentPage(data.currentPage);
+    setTotalPages(data.totalPages);
   } catch (err) {
-    console.error("Erreur historique paiement frontend:", err);
+    console.error(err);
+  }
+};
+// const accountId = localStorage.getItem("accountId");
+
+   // -------------------  bénéficiaire -------------------
+useEffect(() => {
+  fetchBeneficiaires();
+}, []);
+
+const fetchBeneficiaires = async () => {
+  try {
+    const res = await fetch("http://localhost:5000/api/beneficiaires", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    if (!res.ok) throw new Error("Erreur récupération bénéficiaires");
+
+    const data = await res.json();
+    setBeneficiaires(data);
+  } catch (err) {
+    console.error(err);
+    toast.error("Impossible de récupérer les bénéficiaires");
   }
 };
 
 
-  // ------------------- Ouvrir paiement depuis bénéficiaire -------------------
   const openPaymentFromBenef = (benef) => {
     const service = services.find((s) => s.id === benef.service);
+    if (!service) return;
+
     setActiveService(service);
     setShowPaymentModal(true);
   };
 
+
   // ------------------- Confirmer paiement -------------------
- const confirmPayment = async () => {
+const confirmPayment = async () => {
   if (!paymentForm.montant || !activeService) return;
 
   try {
@@ -91,38 +122,73 @@ const fetchHistorique = async () => {
       },
       body: JSON.stringify({
         amount: Number(paymentForm.montant),
-        service: activeService.label, // ✔ compatible backend
+        service: activeService.label,
       }),
     });
 
     const data = await res.json();
 
     if (!res.ok) {
-      alert(data.message || "Erreur paiement");
+      toast.error(data.message || "Erreur paiement ");
       return;
     }
 
+    toast.success(" Paiement réussi !");
+    
     await fetchHistorique();
-    setShowPaymentModal(false);
+
+   // Réinitialiser le formulaire
     setPaymentForm({ montant: "", reference: "" });
+    setActiveService(null);
+    setShowPaymentModal(false);;
 
   } catch (err) {
-    console.error("Erreur paiement frontend:", err);
-    alert("Erreur paiement, réessayez.");
+    console.error(err);
+    toast.error("Erreur paiement, réessayez ");
   }
 };
 
 
-  // ------------------- Ajouter bénéficiaire -------------------
-  const addNewBeneficiaire = () => {
-    if (!newBenefForm.nom || !newBenefForm.type || !newBenefForm.service) return;
-    setBeneficiaires((prev) => [
-      { id: Date.now(), ...newBenefForm },
-      ...prev,
-    ]);
+
+  
+  /* ================= AJOUT BENEFICIAIRE ================= */
+const addNewBeneficiaire = async () => {
+  if (!newBenefForm.nom || !newBenefForm.service) {
+    toast.error("Veuillez remplir tous les champs");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5000/api/beneficiaires", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        nom: newBenefForm.nom,
+        service: newBenefForm.service,
+        reference: newBenefForm.reference,
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      toast.error(data.error || "Erreur ajout bénéficiaire");
+      return;
+    }
+
+    setBeneficiaires((prev) => [data, ...prev]);
+    toast.success("Bénéficiaire ajouté");
+
+    // Réinitialiser le formulaire
+    setNewBenefForm({ nom: "", reference: "", service: "" });
     setShowNewBenefModal(false);
-    setNewBenefForm({ nom: "", type: "", service: "" });
-  };
+  } catch (err) {
+    console.error(err);
+    toast.error("Erreur serveur");
+  }
+};
 
   // ------------------- Render -------------------
   return (
@@ -192,7 +258,7 @@ const fetchHistorique = async () => {
               {beneficiaires.map((b) => {
                 const service = services.find((s) => s.id === b.service);
                 return (
-                  <div key={b.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-[#faf7f2] dark:bg-neutral-700 p-4 rounded-xl mb-3 gap-3">
+                  <div key={b._id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-[#faf7f2] dark:bg-neutral-700 p-4 rounded-xl mb-3 gap-3">
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-full bg-[#6b4f2c] text-white flex items-center justify-center">{service.icon}</div>
                       <div>
@@ -237,8 +303,31 @@ const fetchHistorique = async () => {
                   ))}
                 </tbody>
               </table>
-            </div>
+             <div className="flex justify-center items-center gap-3 mt-6">
+          <button
+    disabled={currentPage === 1}
+    onClick={() => setCurrentPage((p) => p - 1)}
+    className="px-4 py-2 rounded-lg bg-gray-200 disabled:opacity-50"
+  >
+    Précédent
+          </button>
+
+  <span className="text-sm text-gray-600">
+    Page {currentPage} / {totalPages}
+  </span>
+
+  <button
+    disabled={currentPage === totalPages}
+    onClick={() => setCurrentPage((p) => p + 1)}
+    className="px-4 py-2 rounded-lg bg-gray-200 disabled:opacity-50"
+  >
+    Suivant
+  </button>
+          </div>    
+              </div>
           )}
+         
+
         </div>
       </div>
 
@@ -306,6 +395,13 @@ const fetchHistorique = async () => {
           </div>
         </div>
       )}
+      <ToastContainer
+  position="top-right"
+  autoClose={3000}
+  hideProgressBar={false}
+  pauseOnHover
+/>
+
     </div>
   );
 }
