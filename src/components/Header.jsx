@@ -1,13 +1,13 @@
-// src/components/Header.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Bars3Icon, BellIcon, MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 import logo from "../assets/logo.png";
-import { useAuth } from "../context/AuthContext.jsx";
+import { useAuth } from "../context/AuthContext";
 
 export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
   const navigate = useNavigate();
-  const { user, setUser } = useAuth();
+  const { user, setUser, logout } = useAuth(); 
+
   const [openProfile, setOpenProfile] = useState(false);
   const [openNotif, setOpenNotif] = useState(false);
   const profileRef = useRef();
@@ -24,23 +24,26 @@ useEffect(() => {
 }, [token, navigate]);
 
 
-  // Fermer les menus quand on clique ailleurs
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (profileRef.current && !profileRef.current.contains(e.target)) setOpenProfile(false);
-      if (notifRef.current && !notifRef.current.contains(e.target)) setOpenNotif(false);
+      if (profileRef.current && !profileRef.current.contains(e.target))
+        setOpenProfile(false);
+      if (notifRef.current && !notifRef.current.contains(e.target))
+        setOpenNotif(false);
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  //  Déconnexion propre avec suppression du token et empêche retour arrière
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
-    navigate("/login");
+    logout(); // supprime le token et met user à null
+    setOpenProfile(false);
+    navigate("/login", { replace: true }); // empêche retour arrière
   };
 
-  const toggleDark = () => setDarkMode(prev => !prev);
+  const toggleDark = () => setDarkMode((prev) => !prev);
 
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
@@ -51,15 +54,18 @@ useEffect(() => {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/settings/update-avatar", {
-        method: "PUT",
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData
-      });
+      const res = await fetch(
+        "http://localhost:5000/api/settings/update-avatar",
+        {
+          method: "PUT",
+          headers: { Authorization: `Bearer ${token}` },
+          body: formData,
+        }
+      );
       const data = await res.json();
-      setUser(prev => ({ ...prev, avatar: data.avatar }));
+      setUser((prev) => ({ ...prev, avatar: data.avatar }));
     } catch (err) {
-      console.error("Erreur lors de la mise à jour de l'avatar :", err);
+      console.error("Erreur avatar :", err);
     }
   };
 
@@ -109,12 +115,13 @@ useEffect(() => {
   }, [token]);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a] border-b dark:border-gray-800 transition-colors duration-300">
-      <div className="max-w-[1400px] mx-auto flex items-center h-20 px-3 sm:px-4 md:px-6 gap-3">
-
-        {/* Menu mobile */}
-        <button onClick={onOpenSidebar} className="p-2 rounded md:hidden hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-          <Bars3Icon className="w-9 h-9 text-gray-700 dark:text-gray-200" />
+    <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a] border-b dark:border-gray-800">
+      <div className="max-w-[1400px] mx-auto flex items-center h-20 px-4 gap-3">
+        <button
+          onClick={onOpenSidebar}
+          className="p-2 rounded md:hidden hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <Bars3Icon className="w-8 h-8" />
         </button>
 
         {/* Logo */}

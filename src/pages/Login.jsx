@@ -7,12 +7,14 @@ import {
 } from "@heroicons/react/24/outline";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 import logo from "../assets/logo.png";
 import { auth, googleProvider } from "../firebase/firebase";
 import { signInWithPopup } from "firebase/auth";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   // ---------------- STATES ----------------
   const [email, setEmail] = useState("");
@@ -26,17 +28,9 @@ export default function Login() {
 
   const API = import.meta.env.VITE_API_URL;
 
-  // ---------------- LOGIN UTILISATEUR ----------------
   const loginUser = async () => {
-    if (!email || !password) {
-      setError("Veuillez remplir tous les champs.");
-      return;
-    }
-
-    setLoading(true);
-    setError("");
-
     try {
+      setLoading(true);
       const res = await fetch(`${API}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -57,9 +51,11 @@ export default function Login() {
         return;
       }
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      navigate("/dashboard");
+     localStorage.setItem("token", data.token);
+localStorage.setItem("user", JSON.stringify(data.user));
+setUser(data.user);
+navigate("/dashboard");
+
     } catch {
       setError("Erreur réseau.");
     } finally {
@@ -93,10 +89,14 @@ export default function Login() {
         return;
       }
 
-      localStorage.removeItem("tempUserId");
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      navigate("/dashboard");
+     localStorage.removeItem("tempUserId");
+
+localStorage.setItem("token", data.token);
+localStorage.setItem("user", JSON.stringify(data.user));
+setUser(data.user); 
+
+navigate("/dashboard");
+
     } catch {
       setError("Erreur réseau.");
     } finally {
@@ -188,9 +188,7 @@ export default function Login() {
           <h2 className="text-2xl font-semibold text-[#6b5a49]">Connexion</h2>
           <p className="text-sm text-[#8f7e6b]">Entrez vos identifiants pour accéder à votre compte</p>
 
-          {error && (
-            <div className="bg-red-100 text-red-600 px-2 py-1 rounded-lg text-sm">{error}</div>
-          )}
+          {error && <div className="bg-red-100 text-red-600 px-2 py-1 rounded-lg text-sm">{error}</div>}
 
           <form onSubmit={handleSubmit} className="space-y-2">
             {step === "login" && (
@@ -235,9 +233,7 @@ export default function Login() {
             )}
 
             <div className="flex justify-end text-sm">
-              <a href="/forgot" className="text-[#bfa98a] font-medium hover:underline">
-                Mot de passe oublié ?
-              </a>
+              <a href="/forgot" className="text-[#bfa98a] font-medium hover:underline">Mot de passe oublié ?</a>
             </div>
 
             <button
@@ -259,10 +255,7 @@ export default function Login() {
           </form>
 
           <p className="text-center text-sm text-[#8f7e6b] mt-2">
-            Pas de compte ?{" "}
-            <a href="/signup" className="text-[#bfa98a] font-medium hover:underline">
-              S’inscrire
-            </a>
+            Pas de compte ? <a href="/signup" className="text-[#bfa98a] font-medium hover:underline">S’inscrire</a>
           </p>
         </div>
       </main>

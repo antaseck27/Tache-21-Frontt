@@ -1,3 +1,4 @@
+
 // // src/context/AuthContext.jsx
 // import { createContext, useContext, useEffect, useState } from "react";
 // import axios from "axios";
@@ -50,8 +51,18 @@ const AuthContext = createContext();
 
 const API = import.meta.env.VITE_API_URL;
 
+
+
+
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  // Initialisation depuis localStorage
+  const [user, setUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("user"));
+    } catch {
+      return null;
+    }
+  });
   const [loadingUser, setLoadingUser] = useState(true);
 
   const fetchUser = async () => {
@@ -74,6 +85,7 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       console.error("Auth error:", err.message);
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
       setUser(null);
     } finally {
       setLoadingUser(false);
@@ -81,18 +93,20 @@ export const AuthProvider = ({ children }) => {
   };
 
   //  Charger user au démarrage
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+  };
+
   useEffect(() => {
     fetchUser();
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{
-        user,
-        setUser,
-        fetchUser,
-        loadingUser,
-      }}
+      value={{ user, setUser, fetchUser, loadingUser, logout }}
     >
       {children}
     </AuthContext.Provider>
