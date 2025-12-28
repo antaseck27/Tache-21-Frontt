@@ -18,7 +18,7 @@ export default function Sidebar({ open: openProp, onClose }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (typeof openProp === "boolean") setOpen(openProp);
+    if (typeof openProp === "boolean") setOpen(openProp); 
   }, [openProp]);
 
   const handleLogout = () => {

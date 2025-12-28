@@ -373,6 +373,15 @@ const addNewBeneficiaire = async () => {
               onChange={(e) => setNewBenefForm({ ...newBenefForm, nom: e.target.value })}
             />
             <input
+  placeholder="Référence / Numéro client"
+  className="w-full mb-3 p-3 rounded-xl border"
+  value={newBenefForm.reference}
+  onChange={(e) =>
+    setNewBenefForm({ ...newBenefForm, reference: e.target.value })
+  }
+/>
+
+            <input
               placeholder="Type (ex: Mobile ••••1234)"
               className="w-full mb-3 p-3 rounded-xl border"
               value={newBenefForm.type}
