@@ -294,6 +294,50 @@ padding: 20px;
 }
 
 /* .......Mode sombre global..... */
+/* dark-mode.css */
+.dark {
+  --bg-main: #121212;
+  --text-main: #f5f5f5;
+  --card-bg: #2a2a2a;
+  --card-border: #8f7e6b;
+  --gradient-start: #222;
+  --gradient-end: #333;
+}
+
+/* Corps principal */
+.dark body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* Cartes */
+.dark .card, .dark .dashboard-header, .dark .account-card {
+  background-color: var(--card-bg);
+  border-color: var(--card-border);
+  color: var(--text-main);
+}
+
+/* Boutons / hover */
+.dark button {
+  color: var(--text-main);
+}
+
+.dark button:hover {
+  opacity: 0.8;
+}
+
+/* Textes spécifiques */
+.dark h2, .dark h3, .dark h4, .dark p {
+  color: var(--text-main);
+}
+
+/* Charts Chart.js (optionnel pour dark mode) */
+.dark canvas {
+  background-color: var(--card-bg);
+}
+
+
+
 .dark-mode {
   background: rgb(53, 37, 3);
   color: #ffffff !important;
