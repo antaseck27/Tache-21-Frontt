@@ -109,7 +109,7 @@ Nous sommes là pour vous aider 24/7
 </div>
 <p className="text-lg font-semibold text-[#3a2f24] dark:text-[#f1e8dc]">Par téléphone</p>
 <p className="text-sm text-beig-300 dark:text-[#bfb6a5] mb-2">Disponible 24h/24, 7j/7</p>
-<p className="text-beig-1900 font-medium">0800 XXX XXX</p>
+<p className="text-beig-1900 font-medium">+221 771033851</p>
 </div>
 
 <div className="rounded-xl p-6 shadow-sm bg-white dark:bg-[#2a2a2a] text-center flex flex-col items-center transition-colors">
@@ -133,7 +133,7 @@ Démarrer le chat
 </div>
 <p className="text-lg font-semibold text-[#3a2f24] dark:text-[#f1e8dc]">Par email</p>
 <p className="text-sm text-beig-300 dark:text-[#bfb6a5] mb-2">Réponse sous 24h</p>
-<p className="text-beig-1900 font-medium">bankrewmi@gmail.com</p>
+<a href="https://mail.google.com/mail/?view=cm&fs=1&to=bankrewmi@gmail.com" target="_blank" rel="noopener noreferrer" className="text-beig-1900 font-medium hover:underline">bankrewmi@gmail.com</a>
 </div>
 </div>
 
