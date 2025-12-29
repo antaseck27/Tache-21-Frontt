@@ -65,7 +65,7 @@ const handleSubmit = async (e) => {
     const token = localStorage.getItem("token");
 
     await axios.post(
-      "http://localhost:5000/api/support",
+      "https://banking-backend-rtsx.onrender.com/api/support",
       {
         subject,
         message

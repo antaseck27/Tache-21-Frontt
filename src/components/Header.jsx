@@ -23,6 +23,7 @@ useEffect(() => {
   }
 }, [token, navigate]);
 
+const API = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -54,9 +55,7 @@ useEffect(() => {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(
-        "http://localhost:5000/api/settings/update-avatar",
-        {
+      const res = await fetch(`${API}/api/settings/update-avatar`, {
           method: "PUT",
           headers: { Authorization: `Bearer ${token}` },
           body: formData,
@@ -73,7 +72,7 @@ useEffect(() => {
 
   // NOTIFICATION
   const getNotifications = async (token) => {
-    const res = await fetch("http://localhost:5000/api/notifications", {
+    const res = await fetch(`${API}/api/notifications`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (!res.ok) throw new Error("Erreur lors de la récupération des notifications");
@@ -84,7 +83,7 @@ useEffect(() => {
   const handleMarkAsRead = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      await fetch(`http://localhost:5000/api/notifications/${id}/read`, {
+      await fetch(`${API}/api/notifications/${id}/read`, {
         method: "PATCH",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -115,7 +114,7 @@ useEffect(() => {
   }, [token]);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a]  dark:border-gray-800">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a] border-b dark:border-gray-800">
       <div className="max-w-[1400px] mx-auto flex items-center h-20 px-4 gap-3">
         <button
           onClick={onOpenSidebar}

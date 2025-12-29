@@ -1,6 +1,7 @@
 // src/pages/Dashboard.jsx
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../services/apiTransat.jsx";
+
 import { useAuth } from "../context/AuthContext.jsx";
 import { Line } from "react-chartjs-2";
 import {
@@ -62,10 +63,14 @@ export default function Dashboard() {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const res = await axios.get(
-        "http://localhost:5000/api/dashboard/summary",
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await api.get("/dashboard/summary");
+
+setDashboardData(prev => ({
+  ...prev,
+  ...res.data,
+  loading: false,
+}));
+
 
       setDashboardData(prev => ({
         ...prev,
@@ -78,19 +83,16 @@ export default function Dashboard() {
 
   const fetchComptes = async () => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) return;
+     const res = await api.get("/accounts");
 
-      const res = await axios.get("http://localhost:5000/api/accounts", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+setDashboardData(prev => ({
+  ...prev,
+  comptes: res.data,
+  loading: false,
+  error: null,
+}));
 
-      setDashboardData(prev => ({
-        ...prev,
-        comptes: res.data,
-        loading: false,
-        error: null,
-      }));
+
     } catch (err) {
       console.error(err);
       setDashboardData(prev => ({

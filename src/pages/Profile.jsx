@@ -3,7 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext.jsx";
 
-const API = "http://localhost:5000/api";
+
+  const API = import.meta.env.VITE_API_URL;
 
 /* ===================== UI HELPERS ===================== */
 const InfoInput = ({ icon, label, value }) => (

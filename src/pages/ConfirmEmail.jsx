@@ -10,7 +10,7 @@ export default function ConfirmEmail() {
   useEffect(() => {
     const confirmAccount = async () => {
       try {
-        const res = await fetch(`${API}/api/auth/confirm-email/${token}`);
+        const res = await fetch(`${API}/auth/confirm-email/${token}`);
         const data = await res.json();
 
         if (!res.ok) {
