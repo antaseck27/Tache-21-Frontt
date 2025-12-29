@@ -1,86 +1,156 @@
+
 import React, { useState } from "react";
-import { EyeIcon, EyeSlashIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
+import {
+  EyeIcon,
+  EyeSlashIcon,
+  CheckCircleIcon,
+} from "@heroicons/react/24/outline";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 import logo from "../assets/logo.png";
+import { auth, googleProvider } from "../firebase/firebase";
+import { signInWithPopup } from "firebase/auth";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
+  // ---------------- STATES ----------------
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [code, setCode] = useState("");
+  const [step, setStep] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   const API = import.meta.env.VITE_API_URL;
 
-  // Appel API login
   const loginUser = async () => {
     try {
       setLoading(true);
-
       const res = await fetch(`${API}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
-      setLoading(false);
 
       if (!res.ok) {
         setError(data.message || "Erreur lors de la connexion.");
-        return null;
+        return;
+      }
+
+      if (data.twoFactorRequired) {
+        setStep("2fa");
+        setUserId(data.userId);
+        localStorage.setItem("tempUserId", data.userId);
+        return;
+      }
+
+     localStorage.setItem("token", data.token);
+localStorage.setItem("user", JSON.stringify(data.user));
+setUser(data.user);
+navigate("/dashboard");
+
+    } catch {
+      setError("Erreur réseau.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ---------------- VERIFICATION 2FA ----------------
+  const verify2FA = async () => {
+    if (!code.trim()) {
+      setError("Veuillez saisir le code.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const id = userId || localStorage.getItem("tempUserId");
+
+      const res = await fetch(`${API}/api/auth/verify-email-2fa`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: id, code }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message || "Code invalide.");
+        return;
+      }
+
+     localStorage.removeItem("tempUserId");
+
+localStorage.setItem("token", data.token);
+localStorage.setItem("user", JSON.stringify(data.user));
+setUser(data.user); 
+
+navigate("/dashboard");
+
+    } catch {
+      setError("Erreur réseau.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ---------------- LOGIN GOOGLE ----------------
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const idToken = await result.user.getIdToken();
+
+      const res = await fetch(`${API}/api/auth/google/google`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message || "Erreur Google.");
+        return;
+      }
+
+      if (data.twoFactorRequired) {
+        setStep("2fa");
+        setUserId(data.userId);
+        localStorage.setItem("tempUserId", data.userId);
+        return;
       }
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-      return data;
-
-    } catch (err) {
-      console.error(err);
-      setLoading(false);
-      setError("Erreur réseau. Réessayez.");
-      return null;
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-
-    if (!email.trim()) return setError("Veuillez saisir votre email.");
-    if (!password || password.length < 4) return setError("Mot de passe invalide.");
-
-    const result = await loginUser();
-    if (!result) return;
-
-     setTimeout(() => {
       navigate("/dashboard");
-    }, 1000);
-    // navigate("/dashboard");
-  };
-
-  //  Nouveau : Login Google
-  const handleGoogleLogin = async () => {
-    try {
-      // Récupérer l'URL d'authentification Google depuis le backend
-      const res = await fetch(`${API}/api/auth/google/config`);
-      const data = await res.json();
-
-      if (data.googleEnabled && data.url) {
-        // Redirection vers Google
-        window.location.href = data.url;
-      } else {
-        setError("Connexion Google non configurée.");
-      }
-    } catch (err) {
-      console.error(err);
-      setError("Impossible de se connecter via Google.");
+    } catch {
+      setError("Connexion Google impossible.");
+    } finally {
+      setLoading(false);
     }
   };
 
+  // ---------------- HANDLE SUBMIT ----------------
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (loading) return;
+    step === "login" ? loginUser() : verify2FA();
+  };
+
+  // ---------------- RENDER ----------------
   return (
     <div className="min-h-screen flex">
       {/* LEFT PANEL */}
@@ -98,14 +168,16 @@ export default function Login() {
             Gérez vos finances simplement avec notre plateforme moderne.
           </p>
           <ul className="space-y-3">
-            {["Sécurité maximale", "Transactions instantanées", "Support 24/7"].map((text, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm">
-                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                  <CheckCircleIcon className="w-5 h-5 text-[#6b5a49]" />
-                </div>
-                <span className="font-medium">{text}</span>
-              </li>
-            ))}
+            {["Sécurité maximale", "Transactions instantanées", "Support 24/7"].map(
+              (text, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm">
+                  <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                    <CheckCircleIcon className="w-5 h-5 text-[#6b5a49]" />
+                  </div>
+                  <span className="font-medium">{text}</span>
+                </li>
+              )
+            )}
           </ul>
         </div>
       </aside>
@@ -116,50 +188,62 @@ export default function Login() {
           <h2 className="text-2xl font-semibold text-[#6b5a49]">Connexion</h2>
           <p className="text-sm text-[#8f7e6b]">Entrez vos identifiants pour accéder à votre compte</p>
 
-          {error && (
-            <div className="bg-red-100 text-red-600 px-2 py-1 rounded-lg text-sm">{error}</div>
-          )}
+          {error && <div className="bg-red-100 text-red-600 px-2 py-1 rounded-lg text-sm">{error}</div>}
 
           <form onSubmit={handleSubmit} className="space-y-2">
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm"
-            />
+            {step === "login" && (
+              <>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm"
+                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Mot de passe"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-[#8f7e6b]"
+                  >
+                    {showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
+                  </button>
+                </div>
+              </>
+            )}
 
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Mot de passe"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm pr-10"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-[#8f7e6b]"
-              >
-                {showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
-              </button>
-            </div>
+            {step === "2fa" && (
+              <>
+                <p className="text-sm mb-1">Un code a été envoyé à votre email</p>
+                <input
+                  type="text"
+                  placeholder="Code validation"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm"
+                />
+              </>
+            )}
 
             <div className="flex justify-end text-sm">
-              <a href="/forgot" className="text-[#bfa98a] font-medium hover:underline">
-                Mot de passe oublié ?
-              </a>
+              <a href="/forgot" className="text-[#bfa98a] font-medium hover:underline">Mot de passe oublié ?</a>
             </div>
 
             <button
               type="submit"
               className="w-full py-2 rounded-lg bg-[#6b5a49] text-white font-medium text-sm hover:bg-[#5c4d3e]"
+              disabled={loading}
             >
-              {loading ? "Connexion..." : "Se connecter"}
+              {loading ? (step === "login" ? "Connexion..." : "Validation...") : (step === "login" ? "Se connecter" : "Valider le code")}
             </button>
 
-            {/*  Bouton Google */}
             <button
               type="button"
               onClick={handleGoogleLogin}
@@ -171,13 +255,40 @@ export default function Login() {
           </form>
 
           <p className="text-center text-sm text-[#8f7e6b] mt-2">
-            Pas de compte ?{" "}
-            <a href="/signup" className="text-[#bfa98a] font-medium hover:underline">
-              S’inscrire
-            </a>
+            Pas de compte ? <a href="/signup" className="text-[#bfa98a] font-medium hover:underline">S’inscrire</a>
           </p>
         </div>
       </main>
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

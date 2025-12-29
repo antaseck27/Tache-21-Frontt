@@ -1,36 +1,49 @@
-// src/components/Header.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Bars3Icon, BellIcon, MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 import logo from "../assets/logo.png";
-import { useAuth } from "../context/AuthContext.jsx";
+import { useAuth } from "../context/AuthContext";
 
 export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
   const navigate = useNavigate();
-  const { user, setUser } = useAuth();
+  const { user, setUser, logout } = useAuth(); 
+
   const [openProfile, setOpenProfile] = useState(false);
   const [openNotif, setOpenNotif] = useState(false);
   const profileRef = useRef();
   const notifRef = useRef();
   const fileInputRef = useRef();
+  const [notifications, setNotifications] = useState([]);
+  const unreadCount = notifications.filter(n => !n.read).length;
+const token = localStorage.getItem("token");
 
-  // Fermer les menus quand on clique ailleurs
+useEffect(() => {
+  if (!token) {
+    navigate("/login");
+  }
+}, [token, navigate]);
+
+
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (profileRef.current && !profileRef.current.contains(e.target)) setOpenProfile(false);
-      if (notifRef.current && !notifRef.current.contains(e.target)) setOpenNotif(false);
+      if (profileRef.current && !profileRef.current.contains(e.target))
+        setOpenProfile(false);
+      if (notifRef.current && !notifRef.current.contains(e.target))
+        setOpenNotif(false);
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  //  Déconnexion propre avec suppression du token et empêche retour arrière
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
-    navigate("/login");
+    logout(); // supprime le token et met user à null
+    setOpenProfile(false);
+    navigate("/login", { replace: true }); // empêche retour arrière
   };
 
-  const toggleDark = () => setDarkMode(prev => !prev);
+  const toggleDark = () => setDarkMode((prev) => !prev);
 
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
@@ -41,25 +54,74 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/settings/update-avatar", {
-        method: "PUT",
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData
-      });
+      const res = await fetch(
+        "http://localhost:5000/api/settings/update-avatar",
+        {
+          method: "PUT",
+          headers: { Authorization: `Bearer ${token}` },
+          body: formData,
+        }
+      );
       const data = await res.json();
-      setUser(prev => ({ ...prev, avatar: data.avatar }));
+      setUser((prev) => ({ ...prev, avatar: data.avatar }));
     } catch (err) {
-      console.error("Erreur lors de la mise à jour de l'avatar :", err);
+      console.error("Erreur avatar :", err);
     }
   };
 
-  return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a] border-b dark:border-gray-800 transition-colors duration-300">
-      <div className="max-w-[1400px] mx-auto flex items-center h-20 px-3 sm:px-4 md:px-6 gap-3">
+ 
 
-        {/* Menu mobile */}
-        <button onClick={onOpenSidebar} className="p-2 rounded md:hidden hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-          <Bars3Icon className="w-9 h-9 text-gray-700 dark:text-gray-200" />
+  // NOTIFICATION
+  const getNotifications = async (token) => {
+    const res = await fetch("http://localhost:5000/api/notifications", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) throw new Error("Erreur lors de la récupération des notifications");
+    return await res.json();
+  };
+
+  //  une notification comme lue
+  const handleMarkAsRead = async (id) => {
+    const token = localStorage.getItem("token");
+    try {
+      await fetch(`http://localhost:5000/api/notifications/${id}/read`, {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setNotifications(prev =>
+        prev.map(n => n._id === id ? { ...n, read: true } : n)
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // les notifications toutes les 5 secondes
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      try {
+        const data = await getNotifications(token);
+        setNotifications(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchNotifications();
+    const interval = setInterval(fetchNotifications, 5000);
+    return () => clearInterval(interval);
+  }, [token]);
+
+  return (
+    <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a] border-b dark:border-gray-800">
+      <div className="max-w-[1400px] mx-auto flex items-center h-20 px-4 gap-3">
+        <button
+          onClick={onOpenSidebar}
+          className="p-2 rounded md:hidden hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <Bars3Icon className="w-8 h-8" />
         </button>
 
         {/* Logo */}
@@ -78,21 +140,33 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
         {/* Zone droite */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Dark/Light */}
-          <button onClick={toggleDark} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-            {darkMode ? <SunIcon className="w-5 h-5 text-yellow-400" /> : <MoonIcon className="w-5 h-5 text-gray-700 dark:text-gray-200" />}
+          <button onClick={toggleDark} className="p-2 rounded-full hover:bg-beig-100 dark:hover:bg-beig-700 transition">
+            {darkMode ? <SunIcon className="w-5 h-5 text-yellow-400" /> : <MoonIcon className="w-5 h-5 text-beig-700 dark:text-beig-200" />}
           </button>
 
           {/* Notification */}
           <div className="relative" ref={notifRef}>
             <button onClick={() => setOpenNotif(p => !p)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition relative">
               <BellIcon className="w-5 h-5 text-gray-700 dark:text-gray-200" />
-              <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full px-1.5">2</span>
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full px-1.5">
+                  {unreadCount}
+                </span>
+              )}
             </button>
+
             {openNotif && (
-              <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md z-50">
-                <div className="p-3 text-sm text-gray-700 dark:text-gray-200">
-                  <p>Nouvelle transaction reçue</p>
-                </div>
+              <div className="absolute right-0 mt-2 w-64 max-h-80 overflow-y-auto bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md z-50">
+                {notifications.length === 0 ? (
+                  <p className="p-3 text-sm text-gray-700 dark:text-gray-200">Aucune notification</p>
+                ) : (
+                  notifications.map(n => (
+                    <div key={n._id} className={`p-3 text-sm border-b border-gray-200 dark:border-gray-700 cursor-pointer ${!n.read ? "bg-gray-100 dark:bg-gray-800" : ""}`} onClick={() => handleMarkAsRead(n._id)}>
+                      <p>{n.message}</p>
+                      <span className="text-xs text-gray-500">{new Date(n.createdAt).toLocaleString()}</span>
+                    </div>
+                  ))
+                )}
               </div>
             )}
           </div>
