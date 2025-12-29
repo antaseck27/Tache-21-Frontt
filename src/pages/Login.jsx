@@ -11,6 +11,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import logo from "../assets/logo.png";
 import { auth, googleProvider } from "../firebase/firebase";
 import { signInWithPopup } from "firebase/auth";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -31,7 +32,8 @@ export default function Login() {
   const loginUser = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API}/api/auth/login`, {
+     const res = await fetch(`${API}/api/auth/login`, {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -77,6 +79,7 @@ navigate("/dashboard");
       const id = userId || localStorage.getItem("tempUserId");
 
       const res = await fetch(`${API}/api/auth/verify-email-2fa`, {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: id, code }),
@@ -114,6 +117,7 @@ navigate("/dashboard");
       const idToken = await result.user.getIdToken();
 
       const res = await fetch(`${API}/api/auth/google/google`, {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ idToken }),
@@ -133,9 +137,11 @@ navigate("/dashboard");
         return;
       }
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      navigate("/dashboard");
+     localStorage.setItem("token", data.token);
+localStorage.setItem("user", JSON.stringify(data.user));
+setUser(data.user);
+navigate("/dashboard");
+
     } catch {
       setError("Connexion Google impossible.");
     } finally {
@@ -233,8 +239,13 @@ navigate("/dashboard");
             )}
 
             <div className="flex justify-end text-sm">
-              <a href="/forgot" className="text-[#bfa98a] font-medium hover:underline">Mot de passe oublié ?</a>
-            </div>
+             <Link
+  to="/forgot"
+  className="text-[#bfa98a] font-medium hover:underline"
+>
+  Mot de passe oublié ?
+</Link>
+</div>
 
             <button
               type="submit"
@@ -253,10 +264,16 @@ navigate("/dashboard");
               Se connecter avec Google
             </button>
           </form>
+<p className="text-center text-sm text-[#8f7e6b] mt-2">
+  Pas de compte ?{" "}
+  <Link
+    to="/signup"
+    className="text-[#bfa98a] font-medium hover:underline"
+  >
+    S’inscrire
+  </Link>
+</p>
 
-          <p className="text-center text-sm text-[#8f7e6b] mt-2">
-            Pas de compte ? <a href="/signup" className="text-[#bfa98a] font-medium hover:underline">S’inscrire</a>
-          </p>
         </div>
       </main>
     </div>
