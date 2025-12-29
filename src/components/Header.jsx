@@ -16,7 +16,7 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
   const [notifications, setNotifications] = useState([]);
   const unreadCount = notifications.filter(n => !n.read).length;
 const token = localStorage.getItem("token");
-
+const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : "";
 useEffect(() => {
   if (!token) {
     navigate("/login");
@@ -115,7 +115,7 @@ useEffect(() => {
   }, [token]);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a] border-b dark:border-gray-800">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a]  dark:border-gray-800">
       <div className="max-w-[1400px] mx-auto flex items-center h-20 px-4 gap-3">
         <button
           onClick={onOpenSidebar}
@@ -184,7 +184,10 @@ useEffect(() => {
     />
 
     <span className="hidden sm:inline">
-      {user ? `${user.prenom} ${user.name}` : "Utilisateur"} ▾
+  
+
+{user ? `${capitalize(user.prenom)} ${capitalize(user.name)}` : "Utilisateur"}
+ ▾
     </span>
   </button>
 

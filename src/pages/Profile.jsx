@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext.jsx";
 
-const API_URL = "http://localhost:5000/api";
+const API = "http://localhost:5000/api";
 
 /* ===================== UI HELPERS ===================== */
 const InfoInput = ({ icon, label, value }) => (
@@ -41,7 +41,7 @@ export default function ProfilePage() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
-  const [twoFA, setTwoFA] = useState(false);
+  const [twoFA, setTwoFA] = useState(user?.twoFA || false);
   const [emailNotif, setEmailNotif] = useState(true);
   const [lightMode, setLightMode] = useState(() => {
     try {
@@ -64,9 +64,8 @@ export default function ProfilePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Update profil général
       const resProfile = await axios.put(
-        `${API_URL}/settings/update-profile`,
+        `${API}/settings/update-profile`,
         {
           prenom: user.prenom,
           name: user.name,
@@ -78,13 +77,12 @@ export default function ProfilePage() {
 
       let updatedUser = resProfile.data.user;
 
-      // Update avatar si choisi
       if (selectedAvatar) {
         const formData = new FormData();
         formData.append("avatar", selectedAvatar);
 
         const resAvatar = await axios.put(
-          `${API_URL}/settings/update-avatar`,
+          `${API}/settings/update-avatar`,
           formData,
           {
             headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
@@ -94,7 +92,7 @@ export default function ProfilePage() {
         updatedUser.avatar = resAvatar.data.avatar;
       }
 
-      setUser(updatedUser); // impact global Header + Dashboard
+      setUser(updatedUser);
       setPreviewAvatar(updatedUser.avatar || "");
       setSelectedAvatar(null);
       setIsEditing(false);
@@ -109,7 +107,7 @@ export default function ProfilePage() {
   const handleChangePassword = async () => {
     try {
       await axios.put(
-        `${API_URL}/settings/change-password`,
+        `${API}/settings/change-password`,
         { oldPassword, newPassword },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -123,12 +121,41 @@ export default function ProfilePage() {
     }
   };
 
+  const handleForgotPassword = async () => {
+    try {
+      await axios.post(`${API}/auth/forgot-password`, { email: user.email });
+      alert("Email de réinitialisation envoyé !");
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de la demande de mot de passe oublié");
+    }
+  };
+
+  /* ===================== TWO-FACTOR ===================== */
+  const handleToggle2FA = async () => {
+    try {
+      const res = await axios.put(
+        `${API}/auth/settings/two-factor`,
+        { twoFA: !twoFA },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setTwoFA(res.data.twoFA);
+      alert(`2FA ${res.data.twoFA ? "activée" : "désactivée"} !`);
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de la mise à jour de l'authentification à deux facteurs");
+    }
+  };
+
   /* ===================== THEME ===================== */
   useEffect(() => {
     if (!lightMode) document.documentElement.classList.add("dark");
     else document.documentElement.classList.remove("dark");
 
-    try { localStorage.setItem("theme", lightMode ? "light" : "dark"); } catch {}
+    try { localStorage.setItem("theme", lightMode ? "light" : "dark"); } 
+    catch {
+      console(error);
+    }
   }, [lightMode]);
 
   if (!user) return <div>Chargement...</div>;
@@ -143,7 +170,7 @@ export default function ProfilePage() {
             <label className="relative cursor-pointer">
               <img
                 src={previewAvatar || user.avatar || "/avatar.png"}
-                alt="Avatar utilisateur"
+                alt=""
                 className="w-24 h-24 rounded-full object-cover"
               />
               <span className="absolute bottom-0 right-0 bg-[#6b5a49] text-white p-2 rounded-full">
@@ -158,9 +185,16 @@ export default function ProfilePage() {
               />
             </label>
 
-            <h4 className="mt-4 text-lg font-semibold">
-              {user.prenom} {user.name}
-            </h4>
+           <h4 className="mt-4 text-lg font-semibold">
+  {user.prenom
+    ? user.prenom.charAt(0).toUpperCase() + user.prenom.slice(1)
+    : ""}
+  {" "}
+  {user.name
+    ? user.name.charAt(0).toUpperCase() + user.name.slice(1)
+    : ""}
+</h4>
+
             <span className="text-sm text-[#8f7e6b]">Client Premium</span>
 
             <button
@@ -177,8 +211,8 @@ export default function ProfilePage() {
 
             {!isEditing ? (
               <>
-                <InfoInput icon="fa-solid fa-user" label="Prénom" value={user.prenom} />
-                <InfoInput icon="fa-solid fa-id-card" label="Nom" value={user.name} />
+                <InfoInput icon="fa-solid fa-user" label="Prénom" value={user.prenom ? user.prenom.charAt(0).toUpperCase() + user.prenom.slice(1) : "-"} />
+                <InfoInput icon="fa-solid fa-id-card" label="Nom" value={user.name ? user.name.charAt(0).toUpperCase() + user.name .slice(1) : "-"} />
                 <InfoInput icon="fa-solid fa-envelope" label="Email" value={user.email} />
                 <InfoInput icon="fa-solid fa-phone" label="Numéro" value={user.telephone} />
               </>
@@ -205,7 +239,7 @@ export default function ProfilePage() {
 
           <div className="flex justify-between items-center">
             <span>Authentification à deux facteurs</span>
-            <Toggle active={twoFA} onClick={() => setTwoFA(!twoFA)} />
+            <Toggle active={twoFA} onClick={handleToggle2FA} />
           </div>
 
           <div className="flex justify-between items-center">
@@ -222,7 +256,10 @@ export default function ProfilePage() {
             <div className="space-y-2">
               <input type="password" className="w-full p-2 rounded" placeholder="Ancien mot de passe" value={oldPassword} onChange={(e)=>setOldPassword(e.target.value)} />
               <input type="password" className="w-full p-2 rounded" placeholder="Nouveau mot de passe" value={newPassword} onChange={(e)=>setNewPassword(e.target.value)} />
-              <button onClick={handleChangePassword} className="px-4 py-2 bg-green-600 text-white rounded">Valider</button>
+              <div className="flex gap-2">
+                <button onClick={handleChangePassword} className="px-4 py-2 bg-green-600 text-white rounded">Valider</button>
+                <button onClick={handleForgotPassword} className="px-4 py-2 bg-blue-600 text-white rounded">Mot de passe oublié</button>
+              </div>
             </div>
           )}
         </div>

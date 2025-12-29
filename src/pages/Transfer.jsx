@@ -7,17 +7,25 @@ import axios from "axios";
 export default function Transfer() {
   const [activeTab, setActiveTab] = useState("interne");
   const [accounts, setAccounts] = useState([]);
-  const [contacts] = useState([
-    { name: "Mamadou Ndiaye", email: "mamadou.ndiaye@email.sn", icon: "fa-solid fa-user" },
-    { name: "Awa Diop", email: "awa.diop@email.sn", icon: "fa-solid fa-user" },
-    { name: "Cheikh Fall", email: "cheikh.fall@email.sn", icon: "fa-solid fa-user" },
-    { name: "Fatoumata Sow", email: "fatoumata.sow@email.sn", icon: "fa-solid fa-user" },
-  ]);
-  const [infos] = useState([
-    { icon: "fa-solid fa-user", title: "Les transferts internes sont instantanés.", subtitle: "Entre vos comptes BankApp" },
-    { icon: "fa-solid fa-wallet", title: "Gérez facilement vos portefeuilles.", subtitle: "Toutes vos cartes BankApp" },
-    { icon: "fa-solid fa-credit-card", title: "Vos paiements sécurisés.", subtitle: "Cartes BankApp protégées" },
-  ]);
+const [contacts, setContacts] = useState([]);
+const [infos] = useState([
+  {
+    icon: "fa-solid fa-user",
+    title: "Les transferts internes sont instantanés.",
+    subtitle: "Entre vos comptes BankApp",
+  },
+  {
+    icon: "fa-solid fa-wallet",
+    title: "Gérez facilement vos portefeuilles.",
+    subtitle: "Toutes vos cartes BankApp",
+  },
+  {
+    icon: "fa-solid fa-credit-card",
+    title: "Vos paiements sécurisés.",
+    subtitle: "Cartes BankApp protégées",
+  },
+]);
+
 
   const [formData, setFormData] = useState({
     sourceAccount: "",
@@ -32,6 +40,31 @@ export default function Transfer() {
 
   const token = localStorage.getItem("token");
   const API_BASE = "http://localhost:5000/api";
+
+  useEffect(() => {
+  const fetchContacts = async () => {
+    if (!token) return;
+
+    try {
+      const res = await axios.get(`${API_BASE}/contacts`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setContacts(res.data);
+    } catch (err) {
+      console.error("Erreur chargement contacts", err);
+    }
+  };
+
+  fetchContacts();
+}, [token]);
+const handleContactClick = (contact) => {
+  setActiveTab("externe");
+  setFormData((prev) => ({
+    ...prev,
+    beneficiaryIban: contact.iban,
+  }));
+};
+
 
   //  Récupération des comptes utilisateur
   useEffect(() => {
@@ -191,9 +224,29 @@ export default function Transfer() {
         <div className="space-y-6">
           <div className="bg-white dark:bg-[#2a2a2a] p-5 rounded-xl shadow border border-[#e7ded5] dark:border-[#3a3a3a]">
             <h3 className="text-lg font-semibold mb-3 dark:text-[#f1e8dc]">Contacts récents</h3>
-            <ul className="space-y-3">
-              {contacts.map((c,i)=>(<li key={i} className="flex items-center gap-3"><i className={`${c.icon} text-[#8f7e6b] dark:text-[#d6c5a9] text-xl`}/><div><p className="font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">{c.name}</p><p className="text-sm text-[#8f7e6b] dark:text-[#d6c5a9]">{c.email}</p></div></li>))}
-            </ul>
+              <ul className="space-y-3">
+              {contacts.length === 0 ? (
+  <p className="text-sm text-[#8f7e6b]">
+    Aucun contact enregistré
+  </p>
+) : (
+  contacts.map((c) => (
+    <li
+      key={c._id}
+      onClick={() => handleContactClick(c)}
+      className="flex items-center gap-3 cursor-pointer hover:bg-[#f1ece6] dark:hover:bg-[#333] p-2 rounded-lg transition"
+    >
+      <i className="fa-solid fa-user text-[#8f7e6b] text-xl" />
+      <div>
+        <p className="font-semibold">{c.name}</p>
+        <p className="text-sm text-[#8f7e6b]">{c.iban}</p>
+      </div>
+    </li>
+  ))
+)}
+
+          </ul>
+
           </div>
 
           <div className="bg-white dark:bg-[#2a2a2a] p-5 rounded-xl shadow border border-[#e7ded5] dark:border-[#3a3a3a]">

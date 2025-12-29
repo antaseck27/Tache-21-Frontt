@@ -7,7 +7,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyBeg3Ac7nEFAQ_nsYC5fo0aLjdHY-uQ2uE",
   authDomain: "banquerewmi.firebaseapp.com",
   projectId: "banquerewmi",
-  storageBucket: "banquerewmi.appspot.com", // ⚡ Correct
+  storageBucket: "banquerewmi.appspot.com", 
   messagingSenderId: "9207360200",
   appId: "1:9207360200:web:40d2446d8834cdc68f53fd"
 };

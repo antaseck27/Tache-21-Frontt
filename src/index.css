@@ -300,19 +300,19 @@ padding: 20px;
 }
 
 .dark-mode button{
-  background-color: rgb(3, 25, 53);
-  color: #ffffff;
+  background-color: rgb(3, 25, 53) !important;
+  color: #ffffff !important;
 }
 .dark-mode button:hover{
-  background-color: rgb(40, 40, 41);
-  color: #ffffff;
+  background-color: rgb(40, 40, 41) !important;
+  color: #ffffff !important;
 }
 
 .dark-mode .toggle{
-  background-color: rgb(228, 228, 229); /* couleur foncée */
+  background-color: rgb(228, 228, 229) !important; /* couleur foncée */
 }
 .dark-mode .toggle .circle{
-  background: black;
+  background: black !important;
 }
 
 
@@ -359,33 +359,55 @@ padding: 20px;
 
 @media (max-width: 1024px) { /* tablette */
   .infoPersonel .photo {
-    width: 25%;
-    height: 80px;
-    font-size: 17px;
+    width: 25% !important;
+    height: 80px !important;
+    font-size: 17px !important;
   }
 }
 
 
 @media (max-width: 768px) { /* mobile */
   .infoPersonel .photo {
-    width: 20%;
-    height: 85px;
-    font-size: 16px;
+    width: 20% !important;
+    height: 85px !important;
+    font-size: 16px !important;
   }
 }
 
 @media (max-width: 400px) { /* petit mobile */
   .infoPersonel .photo {
-    width: 22%;
-    height: 66px;
-    font-size: 16px;
-    background: #22c55e;
+    width: 22% !important;
+    height: 66px !important;
+    font-size: 16px !important;
+    background: #22c55e !important;
   }
 }
 
 
 
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px #f3e8d7, 0 0 10px #cbb99a, 0 0 15px #d4b8a5 !important;
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 10px #f3e8d7, 0 0 20px #cbb99a, 0 0 30px #d4b8a5 !important;
+    transform: scale(1.2) !important;
+  }
+}
 
+.animate-glow {
+  animation: glow 2s infinite ease-in-out !important;
+}
+
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.5s forwards !important;
+}
 
 /* ...............................Paiement................................... */
 
