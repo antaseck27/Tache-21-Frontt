@@ -32,7 +32,7 @@ export default function Login() {
   const loginUser = async () => {
     try {
       setLoading(true);
-     const res = await fetch(`${API}/api/auth/login`, {
+     const res = await fetch(`${API}/auth/login`, {
 
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -78,7 +78,7 @@ navigate("/dashboard");
     try {
       const id = userId || localStorage.getItem("tempUserId");
 
-      const res = await fetch(`${API}/api/auth/verify-email-2fa`, {
+      const res = await fetch(`${API}/auth/verify-email-2fa`, {
 
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -116,7 +116,7 @@ navigate("/dashboard");
       const result = await signInWithPopup(auth, googleProvider);
       const idToken = await result.user.getIdToken();
 
-      const res = await fetch(`${API}/api/auth/google/google`, {
+      const res = await fetch(`${API}/auth/google/google`, {
 
         method: "POST",
         headers: { "Content-Type": "application/json" },
