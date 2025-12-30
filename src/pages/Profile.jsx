@@ -66,7 +66,7 @@ export default function ProfilePage() {
     e.preventDefault();
     try {
       const resProfile = await axios.put(
-        `${API}/settings/update-profile`,
+        `${API}/api/settings/update-profile`,
         {
           prenom: user.prenom,
           name: user.name,
@@ -83,7 +83,7 @@ export default function ProfilePage() {
         formData.append("avatar", selectedAvatar);
 
         const resAvatar = await axios.put(
-          `${API}/settings/update-avatar`,
+          `${API}/api/settings/update-avatar`,
           formData,
           {
             headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
@@ -108,7 +108,7 @@ export default function ProfilePage() {
   const handleChangePassword = async () => {
     try {
       await axios.put(
-        `${API}/settings/change-password`,
+        `${API}/api/settings/change-password`,
         { oldPassword, newPassword },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -124,7 +124,7 @@ export default function ProfilePage() {
 
   const handleForgotPassword = async () => {
     try {
-      await axios.post(`${API}/auth/forgot-password`, { email: user.email });
+      await axios.post(`${API}/api/auth/forgot-password`, { email: user.email });
       alert("Email de réinitialisation envoyé !");
     } catch (err) {
       console.error(err);
@@ -136,7 +136,7 @@ export default function ProfilePage() {
   const handleToggle2FA = async () => {
     try {
       const res = await axios.put(
-        `${API}/auth/settings/two-factor`,
+        `${API}/api/auth/settings/two-factor`,
         { twoFA: !twoFA },
         { headers: { Authorization: `Bearer ${token}` } }
       );

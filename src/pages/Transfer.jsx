@@ -46,7 +46,7 @@ const [infos] = useState([
     if (!token) return;
 
     try {
-      const res = await axios.get(`${API_BASE}/contacts`, {
+      const res = await axios.get(`${API_BASE}/api/contacts`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setContacts(res.data);
@@ -71,7 +71,7 @@ const handleContactClick = (contact) => {
     const fetchAccounts = async () => {
       if (!token) return;
       try {
-        const res = await axios.get(`${API_BASE}/accounts`, {
+        const res = await axios.get(`${API_BASE}/api/accounts`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setAccounts(res.data || []);
@@ -106,7 +106,7 @@ const handleContactClick = (contact) => {
 
     try {
       if (activeTab === "interne") {
-        const res = await axios.post(`${API_BASE}/transfer/internal`, {
+        const res = await axios.post(`${API_BASE}/api/transfer/internal`, {
               sourceAccount: formData.sourceAccount,
     destinationAccount: formData.destinationAccount,
     amount: Number(formData.amount)

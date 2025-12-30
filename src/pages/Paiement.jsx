@@ -47,7 +47,7 @@ export default function Paiement() {
 const fetchHistorique = async (page = 1) => {
   try {
     const res = await fetch(
-      `https://banking-backend-rtsx.onrender.com/payments?page=${page}&limit=${limit}`,
+      `https://banking-backend-rtsx.onrender.com/api/payments?page=${page}&limit=${limit}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -83,7 +83,7 @@ useEffect(() => {
 
 const fetchBeneficiaires = async () => {
   try {
-    const res = await fetch("https://banking-backend-rtsx.onrender.com/beneficiaires", {
+    const res = await fetch("https://banking-backend-rtsx.onrender.com/api/beneficiaires", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -114,7 +114,7 @@ const confirmPayment = async () => {
   if (!paymentForm.montant || !activeService) return;
 
   try {
-    const res = await fetch("https://banking-backend-rtsx.onrender.com/payments/service", {
+    const res = await fetch("https://banking-backend-rtsx.onrender.com/api/payments/service", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -159,7 +159,7 @@ const addNewBeneficiaire = async () => {
   }
 
   try {
-    const res = await fetch("https://banking-backend-rtsx.onrender.com/beneficiaires", {
+    const res = await fetch("https://banking-backend-rtsx.onrender.com/api/beneficiaires", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
