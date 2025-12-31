@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Calendar } from "primereact/calendar";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import {
   EyeIcon,
   EyeSlashIcon,
@@ -146,11 +148,12 @@ export default function SignupCompact() {
             {/* Email + Téléphone */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <input type="email" placeholder="Email" value={formData.email} onChange={e => updateField("email", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm" />
-              <input type="tel" placeholder="Téléphone" value={formData.telephone} onChange={e => updateField("telephone", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm" />
+              <PhoneInput country={"sn"} value={formData.telephone} onChange={(phone) => updateField("telephone", phone)} inputClass="!w-full !bg-[#fdf8f2] !border-[#d8c4a8] !rounded-lg !text-sm" buttonClass="!border-[#d8c4a8]" dropdownClass="!bg-white"  inputStyle={{ width: "100%", backgroundColor: "#fdf8f2", borderRadius: "0.5rem", borderColor: "#d8c4a8",}}/>
             </div>
 
             {/* Date de naissance */}
-            <Calendar value={formData.dateNaissance} onChange={e => updateField("dateNaissance", e.value)} showIcon dateFormat="dd/mm/yy" placeholder="Date de naissance" className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] text-sm" />
+            <input type="date" value={formData.dateNaissance ? dayjs(formData.dateNaissance).format("YYYY-MM-DD") : ""} onChange={(e) => updateField("dateNaissance", new Date(e.target.value))} placeholder="Date de naissance"className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] text-sm text-[#6b5a49] focus:outline-none focus:ring-2 focus:ring-[#bfa98a]"/>
+
 
             {/* Mot de passe */}
             <div className="relative">
