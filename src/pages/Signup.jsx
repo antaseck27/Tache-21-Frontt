@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Calendar } from "primereact/calendar";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { Link } from "react-router-dom";
 import {
   EyeIcon,
   EyeSlashIcon,
@@ -176,7 +177,12 @@ export default function SignupCompact() {
 
           {/* Lien Se connecter */}
           <p className="text-center text-sm text-[#8f7e6b] mt-2">
-            Déjà un compte ? <a href="/login" className="text-[#bfa98a] font-medium hover:underline">Se connecter</a>
+            Déjà un compte ? <Link 
+    to="/login" 
+    className="text-[#bfa98a] font-medium hover:underline"
+  >
+    Se connecter
+  </Link>
           </p>
         </div>
       </main>
