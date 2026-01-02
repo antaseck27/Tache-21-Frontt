@@ -21,7 +21,7 @@ export default function ForgotPassword() {
     try {
       setLoading(true);
 
-      const res = await fetch(`https://banking-backend-rtsx.onrender.com/auth/forgot-password`, {
+      const res = await fetch(`https://banking-backend-rtsx.onrender.com/api/auth/forgot-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext.jsx";
 
-
   const API = import.meta.env.VITE_API_URL;
 
 /* ===================== UI HELPERS ===================== */
@@ -29,6 +28,8 @@ const Toggle = ({ active, onClick }) => (
   </button>
 );
 
+
+
 export default function ProfilePage() {
   const { user, setUser } = useAuth();
   const token = localStorage.getItem("token");
@@ -50,7 +51,9 @@ export default function ProfilePage() {
       return saved === "light";
     } catch { return true; }
   });
-
+useEffect(() => {
+  if (user?.avatar) setPreviewAvatar(user.avatar);
+}, [user]);
   /* ===================== AVATAR ===================== */
   const handleAvatarChange = (file) => {
     if (!file) return;
@@ -169,11 +172,15 @@ export default function ProfilePage() {
         <div className="flex flex-col md:flex-row gap-6">
           <div className="md:w-1/3 p-6 rounded-xl bg-[#e8dcc7] dark:bg-[#2a2a2a] shadow-md flex flex-col items-center">
             <label className="relative cursor-pointer">
-              <img
-                src={previewAvatar || user.avatar || "/avatar.png"}
-                alt=""
-                className="w-24 h-24 rounded-full object-cover"
-              />
+            <img
+  src={
+    previewAvatar ||
+    (user.avatar ? `${API}/api/${user.avatar}` : "/avatar.png")
+  }
+  alt=""
+  className="w-24 h-24 rounded-full object-cover"
+/>
+
               <span className="absolute bottom-0 right-0 bg-[#6b5a49] text-white p-2 rounded-full">
                 <i className="fa-solid fa-camera"></i>
               </span>

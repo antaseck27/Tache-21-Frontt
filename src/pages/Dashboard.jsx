@@ -1,6 +1,6 @@
 // src/pages/Dashboard.jsx
 import React, { useState, useEffect } from "react";
-import api from "../services/apiTransat.jsx";
+import api from "../services/apitransat.jsx";
 
 import { useAuth } from "../context/AuthContext.jsx";
 import { Line } from "react-chartjs-2";
@@ -63,7 +63,7 @@ export default function Dashboard() {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const res = await api.get("/dashboard/summary");
+      const res = await api.get("/api/dashboard/summary");
 
 setDashboardData(prev => ({
   ...prev,
@@ -83,7 +83,7 @@ setDashboardData(prev => ({
 
   const fetchComptes = async () => {
     try {
-     const res = await api.get("/accounts");
+     const res = await api.get("/api/accounts");
 
 setDashboardData(prev => ({
   ...prev,

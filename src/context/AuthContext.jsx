@@ -44,30 +44,108 @@
 
 // export const useAuth = () => useContext(AuthContext);
 
+// import { createContext, useContext, useEffect, useState } from "react";
+// import axios from "axios";
+
+// const AuthContext = createContext();
+
+// const API = import.meta.env.VITE_API_URL;
+
+
+
+
+// export const AuthProvider = ({ children }) => {
+//   // Initialisation depuis localStorage
+//   const [user, setUser] = useState(() => {
+//     try {
+//       return JSON.parse(localStorage.getItem("user"));
+//     } catch {
+//       return null;
+//     }
+//   });
+//   const [loadingUser, setLoadingUser] = useState(true);
+
+//   const fetchUser = async () => {
+//     const token = localStorage.getItem("token");
+
+//     if (!token) {
+//       setUser(null);
+//       setLoadingUser(false);
+//       return;
+//     }
+
+//     try {
+//       const res = await axios.get(`${API}/api/settings/me`, {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       });
+
+//       setUser(res.data);
+//     } catch (err) {
+//       console.error("Auth error:", err.message);
+//       localStorage.removeItem("token");
+//       localStorage.removeItem("user");
+//       setUser(null);
+//     } finally {
+//       setLoadingUser(false);
+//     }
+//   };
+
+//   //  Charger user au démarrage
+
+//   const logout = () => {
+//     localStorage.removeItem("token");
+//     localStorage.removeItem("user");
+//     setUser(null);
+//   };
+
+//   useEffect(() => {
+//     fetchUser();
+//   }, []);
+
+//   return (
+//     <AuthContext.Provider
+//       value={{ user, setUser, fetchUser, loadingUser, logout }}
+//     >
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };
+
+// export const useAuth = () => useContext(AuthContext);
+// src/context/AuthContext.jsx
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
-
 const API = import.meta.env.VITE_API_URL;
-
-
-
 
 export const AuthProvider = ({ children }) => {
   // Initialisation depuis localStorage
-  const [user, setUser] = useState(() => {
+  const [user, setUserState] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("user"));
     } catch {
       return null;
     }
   });
+
   const [loadingUser, setLoadingUser] = useState(true);
 
+  // Wrapper pour setUser qui synchronise localStorage
+  const setUser = (userData) => {
+    setUserState(userData);
+    if (userData) {
+      localStorage.setItem("user", JSON.stringify(userData));
+    } else {
+      localStorage.removeItem("user");
+    }
+  };
+
+  // Récupère le user depuis l'API
   const fetchUser = async () => {
     const token = localStorage.getItem("token");
-
     if (!token) {
       setUser(null);
       setLoadingUser(false);
@@ -76,38 +154,32 @@ export const AuthProvider = ({ children }) => {
 
     try {
       const res = await axios.get(`${API}/api/settings/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-
       setUser(res.data);
     } catch (err) {
-      console.error("Auth error:", err.message);
+      console.error("Erreur AuthContext:", err.message);
       localStorage.removeItem("token");
-      localStorage.removeItem("user");
       setUser(null);
     } finally {
       setLoadingUser(false);
     }
   };
 
-  //  Charger user au démarrage
-
+  // Déconnexion
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
   };
 
+  // Charger le user au démarrage
   useEffect(() => {
     fetchUser();
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{ user, setUser, fetchUser, loadingUser, logout }}
-    >
+    <AuthContext.Provider value={{ user, setUser, fetchUser, loadingUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

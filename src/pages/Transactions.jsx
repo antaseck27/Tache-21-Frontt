@@ -16,7 +16,7 @@ export default function Transactions() {
    useEffect(() => {
   const fetchTransactions = async () => {
     try {
-      const res = await api.get("/transactions");
+      const res = await api.get("/api/transactions");
 
       const formatted = res.data.transactions.map((t) => ({
         id: t._id,
@@ -44,7 +44,7 @@ export default function Transactions() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await api.get("/categories");
+        const res = await api.get("/api/categories");
         setCategories(res.data);
       } catch (error) {
         console.error("Erreur chargement catégories", error);

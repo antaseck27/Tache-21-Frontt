@@ -176,11 +176,12 @@ const API = import.meta.env.VITE_API_URL;
     onClick={() => setOpenProfile(p => !p)}
     className="flex items-center gap-2 px-2 sm:px-3 py-1.5 text-sm font-medium rounded-full bg-[#e8dcc7] text-[#6b5a49] hover:bg-[#d6c5a9] dark:bg-[#b19b7a] dark:text-[#f1e8dc] dark:hover:bg-[#9c8b73] transition"
   >
-    <img
-      src={user?.avatar || "/avatar.png"}
-      alt="Avatar utilisateur"
-      className="w-7 h-7 rounded-full object-cover"
-    />
+   <img
+  src={user?.avatar ? `${API}/${user.avatar}` : "/avatar.png"}
+  alt="Avatar utilisateur"
+  className="w-7 h-7 rounded-full object-cover"
+/>
+
 
     <span className="hidden sm:inline">
   
