@@ -118,7 +118,7 @@ export default function SignupCompact() {
                 <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
                   <CheckCircleIcon className="w-5 h-5 text-[#6b5a49]" />
                 </div>
-                <span className="font-medium">{text}</span>
+                <span className="font-medium mt-2">{text}</span>
               </li>
             ))}
           </ul>
