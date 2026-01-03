@@ -32,7 +32,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#f3e8d7] text-[#6b5a49]">
-      <section className="relative w-full h-[90vh] overflow-hidden flex items-center justify-center">
+      
+    <section className="relative w-full h-[90vh] overflow-hidden flex items-center justify-center">
         {heroImages.map((img, i) => (
           <motion.img
             key={i}
@@ -224,7 +225,7 @@ export default function Home() {
         <h2 className="text-4xl font-bold text-var(--gradient-beige-brown)">Prêt à rejoindre BankRewmi ?</h2>
         <p className="text-[#6b5a49] mt-3 text-lg">Ouvrez votre compte en 2 minutes.</p>
         <Link
-          to="/signup"
+          to="/Login"
           className="mt-6 inline-block px-8 py-3 bg-[#e8dcc7]  font-semibold rounded-xl shadow-lg"
         >
           Commencer maintenant

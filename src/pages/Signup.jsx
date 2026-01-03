@@ -149,11 +149,26 @@ export default function SignupCompact() {
             {/* Email + Téléphone */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <input type="email" placeholder="Email" value={formData.email} onChange={e => updateField("email", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm" />
-              <PhoneInput country={"sn"} value={formData.telephone} onChange={(phone) => updateField("telephone", phone)} inputClass="!w-full !bg-[#fdf8f2] !border-[#d8c4a8] !rounded-lg !text-sm" buttonClass="!border-[#d8c4a8]" dropdownClass="!bg-white"  inputStyle={{ width: "100%", backgroundColor: "#fdf8f2", borderRadius: "0.5rem", borderColor: "#d8c4a8",}}/>
+              <PhoneInput country={"sn"} value={formData.telephone} onChange={(phone) => updateField("telephone", phone)} inputClass="!w-full !bg-[#fdf8f2] !border-[#d8c4a8] !rounded-lg   py-5 !text-sm" buttonClass="!border-[#d8c4a8]" dropdownClass="!bg-white"  inputStyle={{ width: "100%", backgroundColor: "#fdf8f2", borderRadius: "0.5rem", borderColor: "#d8c4a8",}}/>
             </div>
 
             {/* Date de naissance */}
-            <input type="date" value={formData.dateNaissance ? dayjs(formData.dateNaissance).format("YYYY-MM-DD") : ""} onChange={(e) => updateField("dateNaissance", new Date(e.target.value))} placeholder="Date de naissance"className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] text-sm text-[#6b5a49] focus:outline-none focus:ring-2 focus:ring-[#bfa98a]"/>
+<Calendar
+  value={formData.dateNaissance}
+  onChange={(e) => updateField("dateNaissance", e.value)}
+  showIcon
+  dateFormat="dd/mm/yy"
+  placeholder="Date de naissance"
+  className="w-full   rounded-lg bg-[#fdf8f2] text-[#6b5a49] text-sm focus:outline-none focus:ring-2 focus:ring-[#fdf8f2]"
+  panelClassName="!bg-[#fdf8f2] !text-[#6b5a49] !rounded-lg !shadow-md"
+  inputClassName="!bg-[#fdf8f2] !text-[#6b5a49] !border-none !rounded-lg"
+/>
+
+
+
+
+
+
 
 
             {/* Mot de passe */}

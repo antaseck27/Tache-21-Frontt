@@ -114,7 +114,7 @@ const API = import.meta.env.VITE_API_URL;
   }, [token]);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a] border-b dark:border-gray-800">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a]  dark:border-gray-800">
       <div className="max-w-[1400px] mx-auto flex items-center h-20 px-4 gap-3">
         <button
           onClick={onOpenSidebar}
@@ -125,9 +125,30 @@ const API = import.meta.env.VITE_API_URL;
 
         {/* Logo */}
         <Link to="/dashboard" className="flex items-center gap-3 flex-shrink-0">
-          <div className="sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
-            <img src={logo} alt="logo" className="w-20 h-20 object-contain" />
-          </div>
+         <div
+  className="
+    w-10 h-10
+    sm:w-12 sm:h-12
+    md:w-14 md:h-14
+    rounded-lg
+    flex items-center justify-center
+    shadow-lg
+    overflow-hidden
+    bg-white
+  "
+>
+  <img
+    src={logo}
+    alt="logo"
+    className="
+      w-8 h-8
+      sm:w-10 sm:h-10
+      md:w-12 md:h-12
+      object-contain
+    "
+  />
+</div>
+
           <div className="hidden sm:flex flex-col leading-none">
             <p className="text-sm sm:text-lg font-semibold text-[#6b5a49] dark:text-[#f7f3ee]">BankRewmi</p>
             <p className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">Sa Karàngué Koppar</p>

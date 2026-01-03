@@ -35,6 +35,7 @@ export default function App() {
   });
 
   return (
+    
     <Routes>
       {/* Public */}
       <Route path="/" element={<Home />} />

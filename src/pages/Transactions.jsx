@@ -18,16 +18,16 @@ export default function Transactions() {
     try {
       const res = await api.get("/api/transactions");
 
-      const formatted = res.data.transactions.map((t) => ({
-        id: t._id,
-        title: t.label || t.merchant || "Transaction",
-        type: t.direction === "revenue" ? "Revenu" : "Dépense",
-        rawType: t.type,
-        category: t.category || "Autre",
-        amount: t.direction === "income" ? t.amount : -t.amount,
-        date: new Date(t.createdAt || t.date).toLocaleString("fr-FR"),
-        status: "Réussie",
-      }));
+    const formatted = res.data.transactions.map((t) => ({
+  id: t._id,
+  title: t.label || t.merchant || "Transaction",
+  type: t.direction === "income" ? "Revenu" : "Dépense",
+  category: t.category || "Autre",
+  amount: t.direction === "income" ? t.amount : -t.amount,
+  date: new Date(t.createdAt || t.date).toLocaleString("fr-FR"),
+  status: "Réussie",
+}));
+
 
       setTransactions(formatted);
     } catch (err) {
@@ -207,173 +207,3 @@ const SummaryCard = ({ title, value, color = "" }) => (
   </div>
 );
 
-// import React, { useEffect, useState } from "react";
-// import api from "../services/apitransat";
-
-// export default function Transactions() {
-//   const [transactions, setTransactions] = useState([]);
-//   const [categories, setCategories] = useState([]);
-
-//   const [search, setSearch] = useState("");
-//   const [typeFilter, setTypeFilter] = useState("Tous");
-//   const [categoryFilter, setCategoryFilter] = useState("Tous");
-//   const [visibleCount, setVisibleCount] = useState(5);
-//   const [expanded, setExpanded] = useState(false);
-//   const [loading, setLoading] = useState(true);
-
-//   /* ================= FETCH TRANSACTIONS ================= */
-//   useEffect(() => {
-//   const fetchTransactions = async () => {
-//     try {
-//       const res = await api.get("/transactions");
-
-//       const formatted = res.data.transactions.map((t) => ({
-//         id: t._id,
-//         title: t.label || t.merchant || "Transaction",
-//         type: t.direction === "income" ? "Revenu" : "Dépense",
-//         rawType: t.type,
-//         category: t.category || "Autre",
-//         amount: t.direction === "income" ? t.amount : -t.amount,
-//         date: new Date(t.createdAt || t.date).toLocaleString("fr-FR"),
-//         status: "Réussie",
-//       }));
-
-//       setTransactions(formatted);
-//     } catch (err) {
-//       console.error("Erreur chargement transactions", err);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   fetchTransactions();
-// }, []);
-
-//   /* ================= FETCH CATEGORIES ================= */
-//   useEffect(() => {
-//     api.get("/categories")
-//       .then((res) => setCategories(res.data))
-//       .catch(() => {});
-//   }, []);
-
-//   /* ================= FILTRAGE ================= */
-//   const filteredTransactions = transactions.filter((t) => {
-//     const matchSearch = t.title.toLowerCase().includes(search.toLowerCase());
-//     const matchType =
-//       typeFilter === "Tous" || t.type === typeFilter;
-//     const matchCategory =
-//       categoryFilter === "Tous" ||
-//       t.category.toLowerCase() === categoryFilter.toLowerCase();
-
-//     return matchSearch && matchType && matchCategory;
-//   });
-
-//   /* ================= TOTAUX ================= */
-//   const totalRevenus = filteredTransactions
-//     .filter((t) => t.amount > 0)
-//     .reduce((sum, t) => sum + t.amount, 0);
-
-//   const totalDepenses = filteredTransactions
-//     .filter((t) => t.amount < 0)
-//     .reduce((sum, t) => sum + Math.abs(t.amount), 0);
-
-//   if (loading) {
-//     return <div className="p-6 text-center">Chargement...</div>;
-//   }
-
-//   return (
-//     <div className="min-h-screen p-6 bg-[#f7f3ee]">
-//       <div className="max-w-6xl mx-auto">
-
-//         <h2 className="text-3xl font-bold mb-2">Transactions</h2>
-//         <p className="text-sm text-gray-500 mb-6">
-//           Historique complet de vos opérations
-//         </p>
-
-//         {/* ================= SUMMARY ================= */}
-//         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-//           <SummaryCard title="Transactions" value={filteredTransactions.length} />
-//           <SummaryCard title="Revenus" value={`+${totalRevenus} FCFA`} color="text-green-600" />
-//           <SummaryCard title="Dépenses" value={`-${totalDepenses} FCFA`} color="text-red-600" />
-//         </div>
-
-//         {/* ================= FILTRES ================= */}
-//         <div className="flex flex-wrap gap-3 mb-6">
-//           <input
-//             type="text"
-//             placeholder="Recherche..."
-//             value={search}
-//             onChange={(e) => setSearch(e.target.value)}
-//             className="border p-2 rounded w-full md:w-1/3"
-//           />
-
-//           <select
-//             value={typeFilter}
-//             onChange={(e) => setTypeFilter(e.target.value)}
-//             className="border p-2 rounded"
-//           >
-//             <option value="Tous">Tous</option>
-//             <option value="Revenu">Revenus</option>
-//             <option value="Dépense">Dépenses</option>
-//           </select>
-
-//           <select
-//             value={categoryFilter}
-//             onChange={(e) => setCategoryFilter(e.target.value)}
-//             className="border p-2 rounded"
-//           >
-//             <option value="Tous">Toutes catégories</option>
-//             {categories.map((c) => (
-//               <option key={c._id} value={c.name}>{c.name}</option>
-//             ))}
-//           </select>
-//         </div>
-
-//         {/* ================= LISTE ================= */}
-//         <div className="space-y-3">
-//           {filteredTransactions.slice(0, visibleCount).map((t) => (
-//             <div
-//               key={t.id}
-//               className="bg-white rounded-xl shadow p-4 flex justify-between items-center"
-//             >
-//               <div>
-//                 <p className="font-bold">{t.title}</p>
-//                 <p className="text-sm text-gray-500">
-//                   {t.date} • {t.category}
-//                 </p>
-//               </div>
-
-//               <div className={`font-bold ${t.amount > 0 ? "text-green-600" : "text-red-600"}`}>
-//                 {t.amount > 0 ? "+" : "-"}{Math.abs(t.amount)} FCFA
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-
-//         {/* ================= VOIR PLUS ================= */}
-//         {filteredTransactions.length > 5 && (
-//           <div className="text-center mt-6">
-//             <button
-//               onClick={() => {
-//                 setVisibleCount(expanded ? 5 : filteredTransactions.length);
-//                 setExpanded(!expanded);
-//               }}
-//               className="px-4 py-2 bg-[#6b5a49] text-white rounded"
-//             >
-//               {expanded ? "Voir moins" : "Voir plus"}
-//             </button>
-//           </div>
-//         )}
-
-//       </div>
-//     </div>
-//   );
-// }
-
-// /* ================= SUMMARY CARD ================= */
-// const SummaryCard = ({ title, value, color = "" }) => (
-//   <div className="bg-white rounded-xl shadow p-4">
-//     <p className="text-sm text-gray-500">{title}</p>
-//     <p className={`text-xl font-bold ${color}`}>{value}</p>
-//   </div>
-// );

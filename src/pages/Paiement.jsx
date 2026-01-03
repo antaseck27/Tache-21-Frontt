@@ -449,7 +449,7 @@ export default function Paiement() {
   const [totalPages, setTotalPages] = useState(1);
   const limit = 5;
 
-  const [paymentForm, setPaymentForm] = useState({ montant: "", reference: "" });
+  const [paymentForm, setPaymentForm] = useState({ montant: "", reference: "" , meterNumber: "",});
   const [newBenefForm, setNewBenefForm] = useState({ nom: "", type: "", service: "", reference: "" });
 
   const API = import.meta.env.VITE_API_URL;
@@ -527,11 +527,13 @@ export default function Paiement() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          amount: Number(paymentForm.montant),
-          service: activeService.label,
-          reference: paymentForm.reference,
-        }),
+       body: JSON.stringify({
+  amount: Number(paymentForm.montant),
+  service: activeService.label,
+  invoiceNumber: paymentForm.reference, 
+  meterNumber: paymentForm.meterNumber,
+}),
+
       });
 
       const data = await res.json();
@@ -544,7 +546,7 @@ export default function Paiement() {
       await fetchHistorique(); // rafraîchir historique
 
       // Réinitialiser
-      setPaymentForm({ montant: "", reference: "" });
+      setPaymentForm({ montant: "", reference: "",meterNumber: ""  });
       setActiveService(null);
       setShowPaymentModal(false);
     } catch (err) {
@@ -703,6 +705,12 @@ export default function Paiement() {
               </div>
               <input placeholder="Montant" className="w-full mb-3 p-3 rounded-xl border" value={paymentForm.montant} onChange={(e) => setPaymentForm({ ...paymentForm, montant: e.target.value })} />
               <input placeholder="Référence / Facture" className="w-full mb-4 p-3 rounded-xl border" value={paymentForm.reference} onChange={(e) => setPaymentForm({ ...paymentForm, reference: e.target.value })} />
+              <input
+  placeholder="Numéro de compteur"
+  className="w-full mb-4 p-3 rounded-xl border"
+  value={paymentForm.meterNumber}
+  onChange={(e) => setPaymentForm({ ...paymentForm, meterNumber: e.target.value })}
+/>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <button onClick={() => setShowPaymentModal(false)}>Annuler</button>
                 <button type="button" onClick={confirmPayment} className="bg-[#6b5a49] text-white px-6 py-2 rounded-xl">Confirmer le paiement</button>

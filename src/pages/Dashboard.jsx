@@ -37,6 +37,29 @@ const Card = ({ children, className = "" }) => (
     {children}
   </div>
 );
+const getMonthlyStats = (transactions) => {
+  const months = [
+    "Jan", "Fév", "Mar", "Avr", "Mai", "Juin",
+    "Juil", "Août", "Sep", "Oct", "Nov", "Déc",
+  ];
+
+  const revenue = Array(12).fill(0);
+  const expense = Array(12).fill(0);
+
+  transactions.forEach((t) => {
+    const date = new Date(t.createdAt || t.date);
+    const month = date.getMonth(); // 0 → 11
+
+    if (t.direction === "income") {
+      revenue[month] += t.amount;
+    } else {
+      expense[month] += t.amount;
+    }
+  });
+
+  return { months, revenue, expense };
+};
+
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -58,28 +81,35 @@ export default function Dashboard() {
     cards: []
   });
 
-  const fetchDashboard = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) return;
+const fetchDashboard = async () => {
+  try {
+    const res = await api.get("/api/dashboard/summary");
 
-      const res = await api.get("/api/dashboard/summary");
+    setDashboardData(prev => ({
+      ...prev,
+      totalBalance: res.data.totalBalance || 0,
+      revenueThisMonth:
+        res.data.revenueThisMonth ??
+        res.data.incomeThisMonth ??
+        0,
+      expenseThisMonth:
+        res.data.expenseThisMonth ??
+        res.data.totalExpenseThisMonth ??
+        0,
+      transactions: res.data.transactions || [],
+      loading: false,
+      error: null,
+    }));
+  } catch (err) {
+    console.error("Erreur fetch dashboard:", err);
+    setDashboardData(prev => ({
+      ...prev,
+      loading: false,
+      error: "Erreur chargement dashboard",
+    }));
+  }
+};
 
-setDashboardData(prev => ({
-  ...prev,
-  ...res.data,
-  loading: false,
-}));
-
-
-      setDashboardData(prev => ({
-        ...prev,
-        ...res.data,
-      }));
-    } catch (err) {
-      console.error("Erreur fetch dashboard:", err);
-    }
-  };
 
   const fetchComptes = async () => {
     try {
@@ -135,36 +165,96 @@ setDashboardData(prev => ({
 
   if (dashboardData.loading) return <p className="text-center mt-20">Chargement des comptes...</p>;
   if (dashboardData.error) return <p className="text-center text-red-500">{dashboardData.error}</p>;
+const { months, revenue, expense } = getMonthlyStats(
+  dashboardData.transactions
+);
 
-  const lineData = {
-    labels: ["Revenus", "Dépenses"],
-    datasets: [
-      {
-        label: "Montant",
-        data: [dashboardData.revenueThisMonth, dashboardData.expenseThisMonth],
-        fill: true,
-        backgroundColor: "#d4b8a5",
-        borderColor: "#8f7e6b",
-        tension: 0.3,
-        pointRadius: 0
-      }
-    ]
-  };
+const lineData = {
+  labels: months,
+  datasets: [
+    {
+      label: "Revenus",
+      data: revenue,
+      borderColor: "#6b5a49", 
+      backgroundColor: "rgba(107, 90, 73, 0.25)",
+      pointBackgroundColor: "#6b5a49",
+      pointBorderColor: "#6b5a49",
+      tension: 0.4,
+      fill: true,
+    },
+    {
+      label: "Dépenses",
+      data: expense,
+      borderColor: "#8f7e6b", // même que texte carte
+      backgroundColor: "rgba(143, 126, 107, 0.25)",
+      pointBackgroundColor: "#8f7e6b",
+      pointBorderColor: "#8f7e6b",
+      tension: 0.4,
+      fill: true,
+    },
+  ],
+};
 
-  const lineOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: { legend: { display: false } }
-  };
+
+
+const lineOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "bottom",
+      labels: {
+        color: "#6b5a49",
+        font: {
+          weight: "600",
+        },
+      },
+    },
+    tooltip: {
+      backgroundColor: "#f3e8d7",
+      titleColor: "#6b5a49",
+      bodyColor: "#6b5a49",
+      borderColor: "#d4b8a5",
+      borderWidth: 1,
+    },
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: "#6b5a49",
+      },
+      grid: {
+        color: "rgba(107, 90, 73, 0.1)",
+      },
+    },
+    y: {
+      ticks: {
+        color: "#6b5a49",
+        callback: value => `${value.toLocaleString()} FCFA`,
+      },
+      grid: {
+        color: "rgba(107, 90, 73, 0.1)",
+      },
+    },
+  },
+};
+
+
+
+
 
   return (
-    <div className="space-y-6 p-4 sm:p-6">
+    <div className="space-y-6 p-4 sm:p-6 ">
 
       {/* Header */}
       <div className="p-6 bg-[#e8dcc7] rounded-xl shadow-lg"> 
         <h2 className="text-3xl font-semibold text-[#8f7e6b]">
-          Bienvenue{user?.prenom ? `, ${user.prenom}` : ""}
-        </h2>
+  Bienvenue
+  {user?.prenom
+    ? `, ${user.prenom.charAt(0).toUpperCase()}${user.prenom.slice(1)}`
+    : ""}
+</h2>
+
         <p className="text-sm text-[#6b5a49] mt-1">
           Voici un aperçu de votre situation financière
         </p>
@@ -211,7 +301,7 @@ setDashboardData(prev => ({
       </div>
 
       {/* Mes Comptes */}
-      <section className="mt-20 mb-20 flex justify-center">
+      <section className="mt-17 mb-20 flex justify-center">
         <div className="w-full max-w-8xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] rounded-3xl shadow-1xl p-10 relative">
           <h3 className="text-3xl font-bold text-center text-[#6b5a49] mb-12">Mes Comptes</h3>
           <div className="relative">
