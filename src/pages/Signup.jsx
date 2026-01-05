@@ -37,23 +37,24 @@ export default function SignupCompact() {
     try {
       setLoading(true);
 
-      // Convertir la date en ISO string pour MongoDB
-      const isoDate = formData.dateNaissance
-        ? formData.dateNaissance.toISOString()
-        : null;
+    
+    // Convertir la date pour MongoDB
+const dateMongo = formData.dateNaissance
+  ? dayjs(formData.dateNaissance).toISOString() // format ISO reconnu par MongoDB
+  : null;
 
-      const res = await fetch(`${API}/api/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prenom: formData.prenom,
-          name: formData.name,
-          email: formData.email,
-          telephone: formData.telephone,
-          dateDeNaissance: isoDate, 
-          password: formData.password
-        })
-      });
+const res = await fetch(`${API}/api/auth/register`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    prenom: formData.prenom,
+    name: formData.name,
+    email: formData.email,
+    telephone: formData.telephone,
+    dateDeNaissance: dateMongo, // envoi au format ISO
+    password: formData.password
+  })
+});
 
       const data = await res.json();
       setLoading(false);
@@ -154,9 +155,16 @@ export default function SignupCompact() {
 
             {/* Date de naissance */}
  {/* Date de naissance */}
-            <input type="date" value={formData.dateNaissance ? dayjs(formData.dateNaissance).format("YYYY-MM-DD") : ""} onChange={(e) => updateField("dateNaissance", new Date(e.target.value))} placeholder="Date de naissance"className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] text-sm text-[#6b5a49] focus:outline-none focus:ring-2 focus:ring-[#bfa98a]"/>
-
-
+          <input
+  type="date"
+  value={formData.dateNaissance ? dayjs(formData.dateNaissance).format("YYYY-MM-DD") : ""}
+  onChange={(e) => {
+    const dateValue = e.target.value ? new Date(e.target.value) : null;
+    updateField("dateNaissance", dateValue);
+  }}
+  placeholder="Date de naissance"
+  className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] text-sm text-[#6b5a49] focus:outline-none focus:ring-2 focus:ring-[#bfa98a]"
+/>
 
 
 
