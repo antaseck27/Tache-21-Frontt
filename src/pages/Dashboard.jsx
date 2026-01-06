@@ -305,34 +305,34 @@ const lineOptions = {
         <div className="w-full max-w-7xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] rounded-3xl shadow-1xl p-10 relative">
           <h3 className="text-2xl sm:text-3xl font-bold text-center text-[#6b5a49] mb-12">Mes Comptes</h3>
           <div className="relative">
-            <div className="absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-[#d8cbb4] via-[#cbbba3] to-transparent -translate-x-1/2 shadow-md"></div>
-            <div className="space-y-12 sm:space-y-16">
+            <div className="hidden sm:block absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-[#d8cbb4] via-[#cbbba3] to-transparent -translate-x-1/2 shadow-md"></div>
+            <div className="space-y-8 sm:space-y-12 md:space-y-16">
               {dashboardData.comptes.map((compte, index) => (
                 <div
                   key={compte._id}
-                  className={`relative flex items-center w-full ${index % 2 === 0 ? "justify-start pl-4 sm:pl-[calc(50%+20px)]" : "justify-end pr-4 sm:pr-[calc(50%+20px)]"}`}
+                  className={`relative flex items-center w-full ${index % 2 === 0 ? "justify-start pl-4 sm:pl-[calc(50%+24px)]" : "justify-end pr-4 sm:pr-[calc(50%+24px)]"}`}
                 >
-                  <span className="absolute left-1/2 w-6 h-6 bg-gradient-to-tr from-[#cbb99a] via-[#d4b8a5] to-[#cbb99a] rounded-full shadow-lg -translate-x-1/2  hidden sm:block flex items-center justify-center text-white font-bold">
+                  <span className=" hidden sm:flex absolute left-1/2 w-6 h-6 bg-gradient-to-tr from-[#cbb99a] via-[#d4b8a5] to-[#cbb99a] rounded-full shadow-lg -translate-x-1/2  flex items-center justify-center text-white font-bold">
                     {index + 1}
                   </span>
 
-                  <div className="w-full max-w-[350px] sm:max-w-[400px] p-6 rounded-2xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] shadow-lg">
+                  <div className="w-full max-w-sm sm:max-w-md p-5 sm:p-6 rounded-2xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] shadow-lg">
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-xs uppercase tracking-widest text-[#6b5a49]/70">{compte.type}</p>
-                        <h4 className="text-xl font-bold text-[#6b5a49] mt-1">{compte.name}</h4>
-                        <p className="text-sm text-[#6b5a49]/70">
+                        <h4 className="text-lg sm:text-xl font-bold text-[#6b5a49] mt-1">{compte.name}</h4>
+                        <p className="text-xs sm:text-sm text-[#6b5a49]/70">
                           Numéro : {compte.accountNumber ? compte.accountNumber.replace(/(.{4})/g, "$1 ") : "N/A"}
                         </p>
                       </div>
 
-                      <div className="w-12 h-12 rounded-full bg-[#cbb99a]/30 flex items-center justify-center text-[#6b5a49]">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#cbb99a]/30 flex items-center justify-center text-[#6b5a49]">
                         <i className={`fas ${compte.type === "courant" ? "fa-wallet" : compte.type === "epargne" ? "fa-piggy-bank" : "fa-briefcase"}`}></i>
                       </div>
                     </div>
 
                     <div className="mt-4">
-                      <p className="text-xl sm:text-2xl font-extrabold text-[#6b5a49]">{compte.balance.toLocaleString()} {compte.currency}</p>
+                      <p className="text-lg sm:text-xl  md:text-2xl font-extrabold text-[#6b5a49]">{compte.balance.toLocaleString()} {compte.currency}</p>
                       <p className="text-xs sm:text-sm text-[#6b5a49]/60">Solde disponible</p>
                     </div>
                   </div>
@@ -340,7 +340,7 @@ const lineOptions = {
               ))}
             </div>
           </div>
-          <p className="mt-8 sm:mt-12 text-center text-[#8f7e6b] italic font-medium text-lg">
+          <p className="mt-8 sm:mt-12 text-center text-[#8f7e6b] italic font-medium  text-base sm:text-lg">
             "Gérez vos comptes, simplifiez votre vie financière"
           </p>
         </div>
