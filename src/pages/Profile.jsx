@@ -20,7 +20,7 @@ const Toggle = ({ active, onClick }) => (
   <button
     onClick={onClick}
     aria-pressed={active}
-    className={`inline-flex items-center w-12 h-6 p-1 rounded-full transition-colors duration-200 ${active ? "bg-[#cbb99a] justify-end" : "bg-[#f3e8d7] dark:bg-gray-600 justify-start"
+    className={`inline-flex items-center w-12 h-6 p-1 rounded-full transition-colors duration-200 ${active ? "bg-[#bfa276] justify-end" : "bg-[#f3e8d7] dark:bg-#xxxxxx justify-start"
       }`}
   >
     <span className="w-4 h-4 bg-white rounded-full shadow-sm" />
