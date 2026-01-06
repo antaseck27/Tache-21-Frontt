@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext.jsx";
 
-  const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL;
 
 /* ===================== UI HELPERS ===================== */
 const InfoInput = ({ icon, label, value }) => (
@@ -20,9 +20,8 @@ const Toggle = ({ active, onClick }) => (
   <button
     onClick={onClick}
     aria-pressed={active}
-    className={`inline-flex items-center w-12 h-6 p-1 rounded-full transition-colors duration-200 ${
-      active ? "bg-green-500 justify-end" : "bg-gray-300 dark:bg-gray-600 justify-start"
-    }`}
+    className={`inline-flex items-center w-12 h-6 p-1 rounded-full transition-colors duration-200 ${active ? "bg-[#cbb99a] justify-end" : "bg-[#f3e8d7] dark:bg-gray-600 justify-start"
+      }`}
   >
     <span className="w-4 h-4 bg-white rounded-full shadow-sm" />
   </button>
@@ -51,9 +50,9 @@ export default function ProfilePage() {
       return saved === "light";
     } catch { return true; }
   });
-useEffect(() => {
-  if (user?.avatar) setPreviewAvatar(user.avatar);
-}, [user]);
+  useEffect(() => {
+    if (user?.avatar) setPreviewAvatar(user.avatar);
+  }, [user]);
   /* ===================== AVATAR ===================== */
   const handleAvatarChange = (file) => {
     if (!file) return;
@@ -156,7 +155,7 @@ useEffect(() => {
     if (!lightMode) document.documentElement.classList.add("dark");
     else document.documentElement.classList.remove("dark");
 
-    try { localStorage.setItem("theme", lightMode ? "light" : "dark"); } 
+    try { localStorage.setItem("theme", lightMode ? "light" : "dark"); }
     catch {
       console(error);
     }
@@ -172,14 +171,14 @@ useEffect(() => {
         <div className="flex flex-col md:flex-row gap-6">
           <div className="md:w-1/3 p-6 rounded-xl bg-[#e8dcc7] dark:bg-[#2a2a2a] shadow-md flex flex-col items-center">
             <label className="relative cursor-pointer">
-            <img
-  src={
-    previewAvatar ||
-    (user.avatar ? `${API}/api/${user.avatar}` : "/avatar.png")
-  }
-  alt=""
-  className="w-24 h-24 rounded-full object-cover"
-/>
+              <img
+                src={
+                  previewAvatar ||
+                  (user.avatar ? `${API}/api/${user.avatar}` : "/avatar.png")
+                }
+                alt=""
+                className="w-24 h-24 rounded-full object-cover"
+              />
 
               <span className="absolute bottom-0 right-0 bg-[#6b5a49] text-white p-2 rounded-full">
                 <i className="fa-solid fa-camera"></i>
@@ -193,15 +192,15 @@ useEffect(() => {
               />
             </label>
 
-           <h4 className="mt-4 text-lg font-semibold">
-  {user.prenom
-    ? user.prenom.charAt(0).toUpperCase() + user.prenom.slice(1)
-    : ""}
-  {" "}
-  {user.name
-    ? user.name.charAt(0).toUpperCase() + user.name.slice(1)
-    : ""}
-</h4>
+            <h4 className="mt-4 text-lg font-semibold">
+              {user.prenom
+                ? user.prenom.charAt(0).toUpperCase() + user.prenom.slice(1)
+                : ""}
+              {" "}
+              {user.name
+                ? user.name.charAt(0).toUpperCase() + user.name.slice(1)
+                : ""}
+            </h4>
 
             <span className="text-sm text-[#8f7e6b]">Client Premium</span>
 
@@ -220,16 +219,16 @@ useEffect(() => {
             {!isEditing ? (
               <>
                 <InfoInput icon="fa-solid fa-user" label="Prénom" value={user.prenom ? user.prenom.charAt(0).toUpperCase() + user.prenom.slice(1) : "-"} />
-                <InfoInput icon="fa-solid fa-id-card" label="Nom" value={user.name ? user.name.charAt(0).toUpperCase() + user.name .slice(1) : "-"} />
+                <InfoInput icon="fa-solid fa-id-card" label="Nom" value={user.name ? user.name.charAt(0).toUpperCase() + user.name.slice(1) : "-"} />
                 <InfoInput icon="fa-solid fa-envelope" label="Email" value={user.email} />
                 <InfoInput icon="fa-solid fa-phone" label="Numéro" value={user.telephone} />
               </>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-2">
-                <input className="w-full p-2 rounded" value={user.prenom} onChange={(e)=>setUser({...user, prenom:e.target.value})} placeholder="Prénom" />
-                <input className="w-full p-2 rounded" value={user.name} onChange={(e)=>setUser({...user, name:e.target.value})} placeholder="Nom" />
-                <input className="w-full p-2 rounded" value={user.email} onChange={(e)=>setUser({...user, email:e.target.value})} placeholder="Email" />
-                <input className="w-full p-2 rounded" value={user.telephone} onChange={(e)=>setUser({...user, telephone:e.target.value})} placeholder="Téléphone" />
+                <input className="w-full p-2 rounded" value={user.prenom} onChange={(e) => setUser({ ...user, prenom: e.target.value })} placeholder="Prénom" />
+                <input className="w-full p-2 rounded" value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} placeholder="Nom" />
+                <input className="w-full p-2 rounded" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} placeholder="Email" />
+                <input className="w-full p-2 rounded" value={user.telephone} onChange={(e) => setUser({ ...user, telephone: e.target.value })} placeholder="Téléphone" />
                 <div className="flex gap-2 pt-2">
                   <button className="px-5 py-2.5 rounded-lg font-semibold
   bg-gradient-to-tr from-[#f3e8d7] via-[#d4c2a8] to-[#f3e8d7]
@@ -241,7 +240,7 @@ useEffect(() => {
   dark:bg-gradient-to-tr dark:from-[#2e2a25] dark:via-[#3a342d] dark:to-[#2e2a25]
   dark:text-[#f3e8d7]
   dark:hover:bg-[#cbb99a] dark:hover:text-[#2e2a25] ">Sauvegarder</button>
-                  <button type="button" onClick={()=>setIsEditing(false)} className="
+                  <button type="button" onClick={() => setIsEditing(false)} className="
           px-5 py-2.5 rounded-lg font-medium
   bg-gradient-to-tr from-[#f7efe4] via-[#e3d1b8] to-[#f7efe4]
   text-[#7a6a57]
@@ -280,11 +279,27 @@ useEffect(() => {
 
           {showPassword && (
             <div className="space-y-2">
-              <input type="password" className="w-full p-2 rounded" placeholder="Ancien mot de passe" value={oldPassword} onChange={(e)=>setOldPassword(e.target.value)} />
-              <input type="password" className="w-full p-2 rounded" placeholder="Nouveau mot de passe" value={newPassword} onChange={(e)=>setNewPassword(e.target.value)} />
+              <input type="password" className="w-full p-2 rounded" placeholder="Ancien mot de passe" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
+              <input type="password" className="w-full p-2 rounded" placeholder="Nouveau mot de passe" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
               <div className="flex gap-2">
-                <button onClick={handleChangePassword} className="px-4 py-2 bg-green-600 text-white rounded">Valider</button>
-                <button onClick={handleForgotPassword} className="px-4 py-2 bg-blue-600 text-white rounded">Mot de passe oublié</button>
+                <button onClick={handleChangePassword} className="px-4 py-2 px-5 py-2.5 rounded-lg font-semibold
+  bg-gradient-to-tr from-[#f3e8d7] via-[#d4c2a8] to-[#f3e8d7]
+  text-[#6b5a49]
+  shadow-lg
+  hover:bg-[#6b5a49] hover:bg-none hover:text-white
+  transition-all duration-300
+
+  dark:bg-gradient-to-tr dark:from-[#2e2a25] dark:via-[#3a342d] dark:to-[#2e2a25]
+  dark:text-[#f3e8d7]
+  dark:hover:bg-[#cbb99a] dark:hover:text-[#2e2a25]">Valider</button>
+                <button onClick={handleForgotPassword} className="px-4 py-2  px-5 py-2.5 rounded-lg font-medium
+  bg-gradient-to-tr from-[#f7efe4] via-[#e3d1b8] to-[#f7efe4]
+  text-[#7a6a57]
+  shadow-md
+  hover:brightness-90 transition-all
+
+  dark:bg-gradient-to-tr dark:from-[#3a342d] dark:via-[#4a433a] dark:to-[#3a342d]
+  dark:text-[#e8dcc7]">Mot de passe oublié</button>
               </div>
             </div>
           )}
