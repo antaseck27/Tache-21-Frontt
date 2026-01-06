@@ -164,7 +164,7 @@ const res = await fetch(`${API}/api/auth/register`, {
   }}
   placeholder="Date de naissance"
   className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] text-sm text-[#6b5a49] focus:outline-none focus:ring-2 focus:ring-[#bfa98a]"
-/>
+  />
 
 
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -35,9 +36,10 @@ export default function ConfirmEmail() {
           <h2 className="text-green-600 text-xl font-bold">
             Compte activé avec succès 
           </h2>
-          <a href="/login" className="text-blue-600 underline">
-            Se connecter
-          </a>
+         <Link to="/login" className="text-blue-600 underline">
+  Se connecter
+</Link>
+
         </div>
       )}
       {status === "error" && (
