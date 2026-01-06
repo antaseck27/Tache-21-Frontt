@@ -231,7 +231,11 @@ useEffect(() => {
                 <input className="w-full p-2 rounded" value={user.email} onChange={(e)=>setUser({...user, email:e.target.value})} placeholder="Email" />
                 <input className="w-full p-2 rounded" value={user.telephone} onChange={(e)=>setUser({...user, telephone:e.target.value})} placeholder="Téléphone" />
                 <div className="flex gap-2 pt-2">
-                  <button className="px-4 py-2 bg-green-600 text-white rounded">Sauvegarder</button>
+                  <button className="px-4 py-2 rounded  bg-gradient-to-tr from-[#f3e8d7] via-[#d4c2a8] to-[#f3e8d7] 
+text-[#6b5a49] font-semibold 
+shadow-lg hover:shadow-xl 
+hover:brightness-110 
+transition-all duration-300">Sauvegarder</button>
                   <button type="button" onClick={()=>setIsEditing(false)} className="px-4 py-2 bg-gray-400 text-white rounded">Annuler</button>
                 </div>
               </form>
