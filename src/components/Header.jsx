@@ -114,11 +114,11 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
   }, [token]);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#1a1a1a]  dark:border-gray-800">
+    <header className="fixed top-0 left-0 w-full z-50 bg-[#f3e8d7] dark:bg-[#3a2e2a] border-b border-[#cbb99a] dark:bg-[#3a2e2a] border-b border-[#cbb99a] dark:border-[#b19b7a] text-[#6b5a49] dark:text-[#f1e8dc]">
       <div className="max-w-[1400px] mx-auto flex items-center h-20 px-4 gap-3">
         <button
           onClick={onOpenSidebar}
-          className="p-2 rounded md:hidden hover:bg-gray-100 dark:hover:bg-gray-700"
+          className="p-2 rounded md:hidden hover:bg-gray-100 dark:hover:bg-[#b19b7a]"
         >
           <Bars3Icon className="w-8 h-8" />
         </button>
@@ -160,14 +160,14 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
         {/* Zone droite */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Dark/Light */}
-          <button onClick={toggleDark} className="p-2 rounded-full hover:bg-beig-100 dark:hover:bg-beig-700 transition">
-            {darkMode ? <SunIcon className="w-5 h-5 text-yellow-400" /> : <MoonIcon className="w-5 h-5 text-beig-700 dark:text-beig-200" />}
+          <button onClick={toggleDark} className="p-2 rounded-full hover:bg-[#e8dcc7] dark:hover:bg-[#b19b7a] transition">
+            {darkMode ? <SunIcon className="w-5 h-5 text-yellow-400" /> : <MoonIcon className="w-5 h-5 text-[#6b5a49] dark:text-[#f1e8dc]" />}
           </button>
 
           {/* Notification */}
           <div className="relative" ref={notifRef}>
-            <button onClick={() => setOpenNotif(p => !p)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition relative">
-              <BellIcon className="w-5 h-5 text-gray-700 dark:text-gray-200" />
+            <button onClick={() => setOpenNotif(p => !p)} className="p-2 rounded-full hover:bg-[#e8dcc7] dark:hover:bg-[#b19b7a] transition relative">
+              <BellIcon className="w-5 h-5 text-[#b19b7a] dark:text-[#f1e8dc]" />
               {unreadCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full px-1.5">
                   {unreadCount}
@@ -176,14 +176,14 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
             </button>
 
             {openNotif && (
-              <div className="absolute right-0 mt-2 w-64 max-h-80 overflow-y-auto bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md z-50">
+              <div className="absolute right-0 mt-2 w-64 max-h-80 overflow-y-auto bg-white dark:bg-[#222] border border-[#cbb99a] dark:border-[#b19b7a] rounded-md shadow-md z-50">
                 {notifications.length === 0 ? (
-                  <p className="p-3 text-sm text-gray-700 dark:text-gray-200">Aucune notification</p>
+                  <p className="p-3 text-sm text-[#b19b7a] dark:text-[#f1e8dc]">Aucune notification</p>
                 ) : (
                   notifications.map(n => (
-                    <div key={n._id} className={`p-3 text-sm border-b border-gray-200 dark:border-gray-700 cursor-pointer ${!n.read ? "bg-gray-100 dark:bg-gray-800" : ""}`} onClick={() => handleMarkAsRead(n._id)}>
+                    <div key={n._id} className={`p-3 text-sm border-b border-[#cbb99a] dark:border-[#b19b7a] cursor-pointer ${!n.read ? "bg-[#e8dcc7] dark:bg-[#b19b7a]" : ""}`} onClick={() => handleMarkAsRead(n._id)}>
                       <p>{n.message}</p>
-                      <span className="text-xs text-gray-500">{new Date(n.createdAt).toLocaleString()}</span>
+                      <span className="text-xs text-[#8f7e6b]">{new Date(n.createdAt).toLocaleString()}</span>
                     </div>
                   ))
                 )}
@@ -213,10 +213,10 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
             </button>
 
             {openProfile && (
-              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md overflow-hidden z-50">
+              <div className="absolute right-0 mt-2 w-48 bg-[#f3e8d7] dark:bg-[#3a2e2a] border border-[#cbb99a] dark:border-[#b19b7a] rounded-md shadow-md overflow-hidden z-50">
                 <Link
                   to="/profile"
-                  className="block px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]"
+                  className="block px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#9c8b73]"
                   onClick={() => setOpenProfile(false)}
                 >
                   Profil
@@ -224,7 +224,7 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
 
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]"
+                  className="w-full text-left px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#9c8b73]"
                 >
                   Déconnexion
                 </button>
