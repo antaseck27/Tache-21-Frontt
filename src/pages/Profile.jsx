@@ -231,8 +231,26 @@ useEffect(() => {
                 <input className="w-full p-2 rounded" value={user.email} onChange={(e)=>setUser({...user, email:e.target.value})} placeholder="Email" />
                 <input className="w-full p-2 rounded" value={user.telephone} onChange={(e)=>setUser({...user, telephone:e.target.value})} placeholder="Téléphone" />
                 <div className="flex gap-2 pt-2">
-                  <button className="px-4 py-2 rounded  bg-gradient-to-tr from-[#f3e8d7] via-[#d4c2a8] to-[#f3e8d7] text-[#6b5a49] font-semibold shadow-lg hover:bg-[#6b5a49] text-white transition-all duration-300">Sauvegarder</button>
-                  <button type="button" onClick={()=>setIsEditing(false)} className="px-4 py-2 bg-gray-400 text-white rounded">Annuler</button>
+                  <button className="px-5 py-2.5 rounded-lg font-semibold
+  bg-gradient-to-tr from-[#f3e8d7] via-[#d4c2a8] to-[#f3e8d7]
+  text-[#6b5a49]
+  shadow-lg
+  hover:bg-[#6b5a49] hover:bg-none hover:text-white
+  transition-all duration-300
+
+  dark:bg-gradient-to-tr dark:from-[#2e2a25] dark:via-[#3a342d] dark:to-[#2e2a25]
+  dark:text-[#f3e8d7]
+  dark:hover:bg-[#cbb99a] dark:hover:text-[#2e2a25] ">Sauvegarder</button>
+                  <button type="button" onClick={()=>setIsEditing(false)} className="
+          px-5 py-2.5 rounded-lg font-medium
+  bg-gradient-to-tr from-[#f7efe4] via-[#e3d1b8] to-[#f7efe4]
+  text-[#7a6a57]
+  shadow-md
+  hover:brightness-90 transition-all
+
+  dark:bg-gradient-to-tr dark:from-[#3a342d] dark:via-[#4a433a] dark:to-[#3a342d]
+  dark:text-[#e8dcc7]
+                  ">Annuler</button>
                 </div>
               </form>
             )}
