@@ -312,7 +312,7 @@ const lineOptions = {
                   key={compte._id}
                   className={`relative flex items-center w-full ${index % 2 === 0 ? "justify-start pl-4 sm:pl-[calc(50%+20px)]" : "justify-end pr-4 sm:pr-[calc(50%+20px)]"}`}
                 >
-                  <span className="absolute left-1/2 w-6 h-6 bg-gradient-to-tr from-[#cbb99a] via-[#d4b8a5] to-[#cbb99a] rounded-full shadow-lg -translate-x-1/2 flex items-center justify-center text-white font-bold">
+                  <span className="absolute left-1/2 w-6 h-6 bg-gradient-to-tr from-[#cbb99a] via-[#d4b8a5] to-[#cbb99a] rounded-full shadow-lg -translate-x-1/2  hidden sm:block flex items-center justify-center text-white font-bold">
                     {index + 1}
                   </span>
 
