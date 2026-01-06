@@ -301,7 +301,7 @@ const lineOptions = {
       </div>
 
       {/* Mes Comptes */}
-      <section className="mt-17 mb-20 flex justify-center">
+      <section className="mt-17 mb-20 flex justify-center hidden sm:block">
         <div className="w-full max-w-7xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] rounded-3xl shadow-1xl p-10 relative">
           <h3 className="text-2xl sm:text-3xl font-bold text-center text-[#6b5a49] mb-12">Mes Comptes</h3>
           <div className="relative">
