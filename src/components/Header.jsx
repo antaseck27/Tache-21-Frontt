@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
   const navigate = useNavigate();
-  const { user, setUser, logout } = useAuth(); 
+  const { user, setUser, logout } = useAuth();
 
   const [openProfile, setOpenProfile] = useState(false);
   const [openNotif, setOpenNotif] = useState(false);
@@ -15,15 +15,15 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
   const fileInputRef = useRef();
   const [notifications, setNotifications] = useState([]);
   const unreadCount = notifications.filter(n => !n.read).length;
-const token = localStorage.getItem("token");
-const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : "";
-useEffect(() => {
-  if (!token) {
-    navigate("/login");
-  }
-}, [token, navigate]);
+  const token = localStorage.getItem("token");
+  const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : "";
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token, navigate]);
 
-const API = import.meta.env.VITE_API_URL;
+  const API = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -56,10 +56,10 @@ const API = import.meta.env.VITE_API_URL;
     try {
       const token = localStorage.getItem("token");
       const res = await fetch(`${API}/api/settings/update-avatar`, {
-          method: "PUT",
-          headers: { Authorization: `Bearer ${token}` },
-          body: formData,
-        }
+        method: "PUT",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      }
       );
       const data = await res.json();
       setUser((prev) => ({ ...prev, avatar: data.avatar }));
@@ -68,7 +68,7 @@ const API = import.meta.env.VITE_API_URL;
     }
   };
 
- 
+
 
   // NOTIFICATION
   const getNotifications = async (token) => {
@@ -125,8 +125,8 @@ const API = import.meta.env.VITE_API_URL;
 
         {/* Logo */}
         <Link to="/dashboard" className="flex items-center gap-3 flex-shrink-0">
-         <div
-  className="
+          <div
+            className="
     w-10 h-10
     sm:w-12 sm:h-12
     md:w-14 md:h-14
@@ -136,18 +136,18 @@ const API = import.meta.env.VITE_API_URL;
     overflow-hidden
     bg-white
   "
->
-  <img
-    src={logo}
-    alt="logo"
-    className="
+          >
+            <img
+              src={logo}
+              alt="logo"
+              className="
       w-8 h-8
       sm:w-10 sm:h-10
       md:w-12 md:h-12
       object-contain
     "
-  />
-</div>
+            />
+          </div>
 
           <div className="hidden sm:flex flex-col leading-none">
             <p className="text-sm sm:text-lg font-semibold text-[#6b5a49] dark:text-[#f7f3ee]">BankRewmi</p>
@@ -193,44 +193,44 @@ const API = import.meta.env.VITE_API_URL;
 
           {/* Profil */}
           <div className="relative" ref={profileRef}>
-  <button
-    onClick={() => setOpenProfile(p => !p)}
-    className="flex items-center gap-2 px-2 sm:px-3 py-1.5 text-sm font-medium rounded-full bg-[#e8dcc7] text-[#6b5a49] hover:bg-[#d6c5a9] dark:bg-[#b19b7a] dark:text-[#f1e8dc] dark:hover:bg-[#9c8b73] transition"
-  >
-   <img
-  src={user?.avatar ? `${API}/${user.avatar}` : "/avatar.png"}
-  alt="Avatar utilisateur"
-  className="w-7 h-7 rounded-full object-cover"
-/>
+            <button
+              onClick={() => setOpenProfile(p => !p)}
+              className="flex items-center gap-2 px-2 sm:px-3 py-1.5 text-sm font-medium rounded-full bg-[#e8dcc7] text-[#6b5a49] hover:bg-[#d6c5a9] dark:bg-[#b19b7a] dark:text-[#f1e8dc] dark:hover:bg-[#9c8b73] transition"
+            >
+              <img
+                src={user?.avatar ? `${API}/${user.avatar}` : "/avatar.png"}
+                alt="Avatar utilisateur"
+                className="w-7 h-7 rounded-full object-cover"
+              />
 
 
-    <span className="hidden sm:inline">
-  
+              <span className="hidden sm:inline">
 
-{user ? `${capitalize(user.prenom)} ${capitalize(user.name)}` : "Utilisateur"}
- ▾
-    </span>
-  </button>
 
-  {openProfile && (
-    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md overflow-hidden z-50">
-      <Link
-        to="/profile"
-        className="block px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]"
-        onClick={() => setOpenProfile(false)}
-      >
-        Profil
-      </Link>
+                {user ? `${capitalize(user.prenom)} ${capitalize(user.name)}` : "Utilisateur"}
+                ▾
+              </span>
+            </button>
 
-      <button
-        onClick={handleLogout}
-        className="w-full text-left px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]"
-      >
-        Déconnexion
-      </button>
-    </div>
-  )}
-</div>
+            {openProfile && (
+              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#222] border border-gray-300 dark:border-gray-700 rounded-md shadow-md overflow-hidden z-50">
+                <Link
+                  to="/profile"
+                  className="block px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]"
+                  onClick={() => setOpenProfile(false)}
+                >
+                  Profil
+                </Link>
+
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#3a3a3a]"
+                >
+                  Déconnexion
+                </button>
+              </div>
+            )}
+          </div>
 
         </div>
       </div>

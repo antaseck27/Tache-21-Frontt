@@ -18,6 +18,21 @@ export default function AppLayout({ darkMode, setDarkMode }) {
     return () => window.removeEventListener("popstate", handleRoute);
   }, []);
 
+  // Sauvegarder et récupérer le thème dans localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setDarkMode(savedTheme === "dark");
+    }
+  }, [setDarkMode]);
+
+  useEffect(() => {
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+    document.body.classList.toggle("dark", darkMode);
+  }, [darkMode]);
+
+  
+
   return (
     <div className="
       min-h-screen
