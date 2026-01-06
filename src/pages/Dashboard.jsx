@@ -310,13 +310,13 @@ const lineOptions = {
               {dashboardData.comptes.map((compte, index) => (
                 <div
                   key={compte._id}
-                  className={`relative flex items-center w-full ${index % 2 === 0 ? "justify-start pl-4 sm:pl-[calc(50%+24px)]" : "justify-end pr-4 sm:pr-[calc(50%+24px)]"}`}
+                  className={`relative flex items-center w-full justify-center sm:justify-start ${index % 2 === 0 ? "sm:pl-[calc(50%+24px)]" : "sm:justify-end sm:pr-[calc(50%+24px)]"}`}
                 >
                   <span className=" hidden sm:flex absolute left-1/2 w-6 h-6 bg-gradient-to-tr from-[#cbb99a] via-[#d4b8a5] to-[#cbb99a] rounded-full shadow-lg -translate-x-1/2  flex items-center justify-center text-white font-bold">
                     {index + 1}
                   </span>
 
-                  <div className="w-full max-w-sm sm:max-w-md p-5 sm:p-6 rounded-2xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] shadow-lg">
+                  <div className="w-full max-w-sm sm:max-w-md mx-auto p-5 sm:p-6 rounded-2xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] shadow-lg">
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-xs uppercase tracking-widest text-[#6b5a49]/70">{compte.type}</p>
