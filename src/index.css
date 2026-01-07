@@ -159,7 +159,7 @@ body.dark .welcome-text {
   padding: 1.5rem;
 
   height: 100vh;
-  box-shadow: 4px 0 10px #f1e8dc;
+  box-shadow: 8px 0 30px #f1e8dc;
   z-index: 50;
 }
 
@@ -168,8 +168,8 @@ body.dark .welcome-text {
     background-color: #00171f !important;
   color: #f1e8dc;
   border: 1px solid #f1e8dc;
-  /* box-shadow:
-    0 8px 20px #f1e8dc; */
+  box-shadow:
+    0 8px 20px #f1e8dc;
 
 
 }
@@ -259,7 +259,7 @@ body.dark .welcome-text {
   /* background: linear-gradient(to top right, #f3e8d7, #e8dcc7, #f3e8d7); */
   background-color: #00171f;
   color: #6b5a49;
-  /* border: 2px solid #b9a896; */
+  border: 2px solid #b9a896;
   box-shadow: 0 8px 20px #6b5a49;
   transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
