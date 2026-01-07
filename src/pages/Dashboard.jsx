@@ -305,7 +305,7 @@ const lineOptions = {
         <div className="w-full max-w-7xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7]. dark:from-[#222] dark:via-[#2a2a2a] dark:to-[#222] rounded-3xl shadow-1xl p-10 relative">
           <h3 className="text-2xl sm:text-3xl font-bold text-center text-[#6b5a49] mb-12 account-card">Mes Comptes</h3>
           <div className="relative">
-            <div className="hidden sm:block absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-[#d8cbb4] via-[#cbbba3] to-transparent -translate-x-1/2 shadow-md dark:from-neutral-600 dark:via-neutral-500 "></div>
+            <div className="hidden sm:block timeline-gradient absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-[#d8cbb4] via-[#cbbba3] to-transparent -translate-x-1/2 shadow-md dark:from-neutral-600 dark:via-neutral-500 "></div>
             <div className="space-y-8 sm:space-y-12 md:space-y-16">
               {dashboardData.comptes.map((compte, index) => (
                 <div

@@ -5,63 +5,99 @@
 
 
 
-/* Appliquer le mode sombre sur tout le body */
+/* ===============================
+   🌙 MODE DARK GLOBAL – BANKREWMI
+================================ */
+
 body.dark {
-  background-color: #1a1a1a !important;
-  color: #f1f1f1 !important;
+  background-color: #1f1b17 !important;
+  color: #f1e8dc !important;
 }
 
-/* Header */
+/* ===== Layout global ===== */
+body.dark main,
+body.dark .app-layout {
+  background-color: #1f1b17 !important;
+}
+
+/* ===== Header ===== */
 body.dark header {
-  background-color: #333 !important;
-  border-color: #555 !important;
-  color: #f1f1f1 !important;
+  background-color: #2a241e !important;
+  border-bottom: 1px solid #6b5a49 !important;
+  color: #f1e8dc !important;
 }
 
-/* Sidebar */
+/* ===== Sidebar ===== */
+body.dark aside,
 body.dark .sidebar {
-  background-color: #222 !important;
-  color: #f1f1f1 !important;
-  border-color: #444 !important;
+  background-color: #2a241e !important;
+  border-right: 1px solid #6b5a49 !important;
+  color: #f1e8dc !important;
 }
 
-/* Dashboard container */
-body.dark .dashboard-container {
-  background-color: #222 !important;
-  color: #f1f1f1 !important;
+/* ===== Cards (GLOBAL) ===== */
+body.dark .card,
+body.dark .account-card,
+body.dark .top-card,
+body.dark .dashboard-card {
+  background-color: #3a3128 !important;
+  color: #f1e8dc !important;
+  border: 1px solid #6b5a49 !important;
+  box-shadow: 0 10px 25px rgba(0,0,0,.35) !important;
 }
 
-/* Cards */
-body.dark .card, 
-body.dark .top-card, 
-body.dark .account-card {
-  background-color: #2a2a2a !important;
-  border-color: #444 !important;
-  color: #f1f1f1 !important;
+body.dark .card:hover {
+  background-color: #463c32 !important;
 }
 
-/* Timeline / gradient des comptes */
+/* ===== Sections beige clair → dark ===== */
+body.dark .bg-beige,
+body.dark .section-light {
+  background-color: #2a241e !important;
+}
+
+/* ===== Timeline ===== */
 body.dark .timeline-gradient {
-  background: linear-gradient(to top, #222, #2a2a2a, #222) !important;
+  background: linear-gradient(
+    to bottom,
+    #2a241e,
+    #3a3128,
+    #2a241e
+  ) !important;
 }
 
-/* Boutons */
+/* ===== Boutons ===== */
 body.dark button {
-  background-color: #333 !important;
-  color: #f1f1f1 !important;
-  border-color: #555 !important;
+  background-color: #3a3128 !important;
+  color: #f1e8dc !important;
+  border: 1px solid #6b5a49 !important;
 }
 
-/* Inputs / form */
-body.dark input, body.dark select, body.dark textarea {
-  background-color: #2a2a2a !important;
-  color: #f1f1f1 !important;
-  border-color: #555 !important;
+body.dark button:hover {
+  background-color: #463c32 !important;
 }
 
-/* Textes secondaires */
-body.dark .text-secondary {
-  color: #ccc !important;
+/* ===== Inputs ===== */
+body.dark input,
+body.dark select,
+body.dark textarea {
+  background-color: #2a241e !important;
+  color: #f1e8dc !important;
+  border: 1px solid #6b5a49 !important;
+}
+
+/* ===== Textes ===== */
+body.dark .text-muted {
+  color: #cbb99a !important;
+}
+
+/* ===== Liens ===== */
+body.dark a {
+  color: #b19b7a !important;
+}
+
+body.dark a:hover {
+  color: #f1e8dc !important;
 }
 
 
