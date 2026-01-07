@@ -18,7 +18,7 @@
 ================================ */
 
 body.dark {
-  background-color: #6b5a49 !important;
+  background-color: #6b5a4932 !important;
   color: #f1e8dc;
 }
 
@@ -57,8 +57,8 @@ body.dark header,
 body.dark .sidebar,
 body.dark nav {
   /* background: linear-gradient(to right, #b9a896, #8f7e6b) !important; */
-    background-color: #6b5a49 !important;
-  border-color: #3f332e !important;
+  background-color: #6b5a4932 !important;
+  border-color: #a78c6ece !important;
 }
 
 /* liens */
@@ -74,7 +74,7 @@ body.dark a:hover {
 ================================ */
 
 .welcome-card {
-  background-color: #e8dcc7;
+  background-color: #6b5a49 !important;
   transition: all 0.3s ease;
 }
 
@@ -117,7 +117,7 @@ body.dark .welcome-text {
 
 .dark .sidebar {
  
-  background-color: #6b5a49 !important;
+  background-color: #6b5a4932 !important;
   color: #f1e8dc;
   border: 1px solid rgba(255, 255, 255, 0.04);
   box-shadow:
