@@ -181,8 +181,8 @@ body.dark .welcome-text {
 .dark .sidebar-link.active {
   background: linear-gradient(
     135deg,
-    #222,
-    #333
+    #614b32c5,
+   #8f7e6b
   );
   box-shadow: 0 0 20px rgba(255, 200, 140, 0.25);
 }
