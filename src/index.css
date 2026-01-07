@@ -324,7 +324,7 @@ body.dark .welcome-text {
 .timeline-gradient {
   background: linear-gradient(to top right, #f3e8d7, #e8dcc7, #f3e8d7); /* Dégradé clair */
   border: 1px solid #e7ded5; 
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); 
+  /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);  */
 }
 
 /* Texte dans les cartes en mode clair */
@@ -473,82 +473,6 @@ body.dark .timeline-gradient:hover {
 }
 
 
-/* Style général des cartes */
-body.dark .card {
-  background-color: #1a1a1a; /* Fond de la carte (foncé) */
-  color: #f1e8dc; /* Texte clair pour contraster avec le fond sombre */
-  border-radius: 1.25rem; /* Bords arrondis */
-  padding: 1.5rem; /* Espacement intérieur */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6); /* Ombre douce pour l'effet de lumière */
-  transition: all 0.3s ease; /* Transition fluide */
-}
-
-/* Effet de survol des cartes */
-body.dark .card:hover {
-  transform: translateY(-5px); /* Légère élévation de la carte */
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8); /* Ombre plus forte au survol */
-}
-
-/* Titres des cartes */
-body.dark .card h3,
-body.dark .card h4 {
-  color: #f1e8dc; /* Texte des titres en couleur claire */
-  font-weight: bold;
-}
-
-/* Sous-titres des cartes */
-body.dark .card p {
-  color: #cbbfae; /* Texte secondaire clair */
-  font-size: 0.9rem; /* Police un peu plus petite pour les sous-titres */
-}
-
-/* Icônes dans les cartes */
-body.dark .card .icon {
-  background-color: rgba(255, 255, 255, 0.1); /* Fond très clair avec une légère opacité */
-  color: #f1e8dc; /* Icônes en couleur claire */
-  border-radius: 50%;
-  padding: 0.5rem;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease; /* Effet de transition sur fond au survol */
-}
-
-/* Effet de survol sur l'icône */
-body.dark .card .icon:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* Augmenter l'opacité de fond au survol */
-}
-
-/* Style de la première carte */
-body.dark .card-1 {
-  background: linear-gradient(to right, #2a2a2a, #121212); /* Dégradé sombre pour la carte 1 */
-  border: 1px solid #444444; /* Bordure sombre */
-}
-
-/* Style de la deuxième carte */
-body.dark .card-2 {
-  background: linear-gradient(to right, #333333, #121212); /* Dégradé sombre pour la carte 2 */
-  border: 1px solid #444444; /* Bordure sombre */
-}
-
-/* Style de la troisième carte */
-body.dark .card-3 {
-  background: linear-gradient(to right, #444444, #121212); /* Dégradé sombre pour la carte 3 */
-  border: 1px solid #444444; /* Bordure sombre */
-}
-
-/* Légère lueur pour les cartes actives ou en focus */
-body.dark .card.active {
-  box-shadow: 0 12px 30px rgba(255, 255, 255, 0.2); /* Lueur discrète pour les cartes actives */
-}
-
-body.dark header {
-  border: 1px solid #d6c7b4; /* Bordure beige solide en mode sombre */
-}
-
-
-
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -693,7 +617,7 @@ padding: 20px;
 
 /* ........Tous Les Sections....... */
 .securite, .notifications, .Apparence{
- /* background: #e8dcc7; */
+ background: #e8dcc7;
   box-shadow: 2px 0 12px rgb(172, 171, 171);
   border-radius: 8px;
   padding: 20px;
@@ -927,5 +851,3 @@ padding: 20px;
 .animate-fadeUp {
   animation: fadeUp 0.5s forwards !important;
 }
-
-
