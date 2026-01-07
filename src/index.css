@@ -13,6 +13,11 @@
   scrollbar-width: none;
 }
 
+/* index.css ou global.css */
+html {
+  transition: background-color 0.3s, color 0.3s;
+}
+
 
 @keyframes slideIn {
   from {

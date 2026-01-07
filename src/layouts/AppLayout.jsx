@@ -26,10 +26,14 @@ export default function AppLayout({ darkMode, setDarkMode }) {
     }
   }, [setDarkMode]);
 
+  // useEffect(() => {
+  //   localStorage.setItem("theme", darkMode ? "dark" : "light");
+  //   document.body.classList.toggle("dark", darkMode);
+  // }, [darkMode]);
   useEffect(() => {
-    localStorage.setItem("theme", darkMode ? "dark" : "light");
-    document.body.classList.toggle("dark", darkMode);
-  }, [darkMode]);
+  localStorage.setItem("theme", darkMode ? "dark" : "light");
+  document.documentElement.classList.toggle("dark", darkMode);
+}, [darkMode]);
 
   
 
