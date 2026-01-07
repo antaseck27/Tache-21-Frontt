@@ -221,125 +221,6 @@ body.dark .welcome-text {
 }
 
 
-/* --------------------------- Timeline Wrapper --------------------------- */
-.card-timeline {
-  background: #f3e8d7; /* couleur claire */
-  padding: 2.5rem;
-  border-radius: 2rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-/* Dark mode timeline wrapper */
-.dark .card-timeline {
-  background: #6b5a49; /* beige foncé */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-}
-
-/* --------------------------- Timeline Gradient Line --------------------------- */
-.timeline-gradient {
-  width: 4px;
-  background: linear-gradient(to bottom, #d8cbb4, #cbbba3, transparent);
-  transition: background 0.3s ease;
-}
-
-.dark .timeline-gradient {
-  background: linear-gradient(to bottom, #cbb99a, #b59f87, #6b5a49);
-}
-
-/* --------------------------- Timeline Bubble --------------------------- */
-.timeline-bubble {
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-  background: linear-gradient(to top right, #cbb99a, #d4b8a5, #cbb99a);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  animation: bubbleGlow 2s infinite alternate;
-}
-
-.dark .timeline-bubble {
-  background: linear-gradient(to top right, #b59f87, #8f7e6b, #b59f87);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
-}
-
-/* Animation for the bubbles */
-@keyframes bubbleGlow {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  }
-  50% {
-    transform: scale(1.2);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  }
-}
-
-/* --------------------------- Timeline Cards --------------------------- */
-/* .timeline-gradient .timeline-card,
-.timeline-card {
-  background: linear-gradient(to top right, #f3e8d7, #e8dcc7, #f3e8d7);
-   width: 100%;
-  max-width: 28rem; /* équivalent sm:max-w-md 
-  margin: 0 auto;
-  padding: 1.5rem 1.5rem; sm:p-6 
-  border-radius: 1.5rem;  rounded-2xl 
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
-} */
-
-/* .dark .timeline-card {
-  background: linear-gradient(to top right, #8f7e6b, #7a6654, #8f7e6b);
-  color: #f1e8dc;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-}
-
-.timeline-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-}
-
-.dark .timeline-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
-} */
-
-/* --------------------------- Card Titles & Text --------------------------- */
-.account-card {
-  color: #6b5a49;
-}
-
-.dark .account-card {
-  color: #f1e8dc;
-}
-
-.timeline-card h4 {
-  color: #6b5a49;
-  font-weight: 700;
-}
-
-.dark .timeline-card h4 {
-  color: #f1e8dc;
-}
-
-.timeline-card p {
-  color: #6b5a49;
-}
-
-.dark .timeline-card p {
-  color: #f1e8dc;
-  opacity: 0.8;
-}
-
 /* --------------------------- Icon Circles --------------------------- */
 .icon-circle {
   border-radius: 50%;
@@ -356,7 +237,6 @@ body.dark .welcome-text {
   background: rgba(255, 255, 255, 0.1);
   color: #f1e8dc;
 }
-
 
 
 
