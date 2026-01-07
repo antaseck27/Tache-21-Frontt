@@ -229,16 +229,30 @@ const handleSubmit = async (e) => {
         {/* PROFIL */}
         <div className="flex flex-col md:flex-row gap-6">
           <div className="md:w-1/3 p-6 rounded-xl bg-[#e8dcc7] dark:bg-[#2a2a2a] shadow-md flex flex-col items-center">
-            <label className="relative cursor-pointer">
-              // <img
-              //   src={
-              //     previewAvatar ||
-              //     (user.avatar ? `${API}/api/${user.avatar}` : "/avatar.png")
-              //   }
-              //   alt=""
-              //   className="w-24 h-24 rounded-full object-cover"
-              // />
-              <img
+            // <label className="relative cursor-pointer">
+            //   <img
+            //     src={
+            //       previewAvatar ||
+            //       (user.avatar ? `${API}/api/${user.avatar}` : "/avatar.png")
+            //     }
+            //     alt=""
+            //     className="w-24 h-24 rounded-full object-cover"
+            //   />
+
+            //   <span className="absolute bottom-0 right-0 bg-[#6b5a49] text-white p-2 rounded-full">
+            //     <i className="fa-solid fa-camera"></i>
+            //   </span>
+            //   <input
+            //     type="file"
+            //     hidden
+            //     accept="image/*"
+            //     ref={fileInputRef}
+            //     onChange={(e) => handleAvatarChange(e.target.files[0])}
+            //   />
+            // </label>
+
+            <label className="cursor-pointer">
+            <img
               src={
                 previewAvatar
                   ? previewAvatar.startsWith("blob")
@@ -248,19 +262,13 @@ const handleSubmit = async (e) => {
               }
               className="w-24 h-24 rounded-full object-cover"
             />
-
-              <span className="absolute bottom-0 right-0 bg-[#6b5a49] text-white p-2 rounded-full">
-                <i className="fa-solid fa-camera"></i>
-              </span>
-              <input
-                type="file"
-                hidden
-                accept="image/*"
-                ref={fileInputRef}
-                onChange={(e) => handleAvatarChange(e.target.files[0])}
-              />
-              
-            </label>
+            <input
+              type="file"
+              hidden
+              ref={fileInputRef}
+              onChange={(e) => handleAvatarChange(e.target.files[0])}
+            />
+          </label>
 
             <h4 className="mt-4 text-lg font-semibold">
               {user.prenom
