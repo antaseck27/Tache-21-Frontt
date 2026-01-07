@@ -693,7 +693,7 @@ padding: 20px;
 
 /* ........Tous Les Sections....... */
 .securite, .notifications, .Apparence{
- background: #e8dcc7;
+ /* background: #e8dcc7; */
   box-shadow: 2px 0 12px rgb(172, 171, 171);
   border-radius: 8px;
   padding: 20px;
@@ -753,7 +753,8 @@ padding: 20px;
 .toggle {
   width: 50px;
   height: 25px;
-  background-color: #ccc;
+  /* background-color: #ccc; */
+  background-color: var(--highlight-bg);
   border-radius: 50px;
   position: relative;
   cursor: pointer;
@@ -764,7 +765,8 @@ padding: 20px;
 .toggle .circle {
   width: 21px;
   height: 21px;
-  background-color: #fff;
+  /* background-color: #fff; */
+  background-color: var(--card-bg);
   border-radius: 50%;
   position: absolute;
   top: 2px;
@@ -786,7 +788,8 @@ padding: 20px;
 .circle {
   width: 20px;
   height: 18px;
-  background: white;
+  /* background: white; */
+  background: var(--card-bg);
   border-radius: 50%;
   transition: transform 0.3s ease;
 }
@@ -856,10 +859,13 @@ padding: 20px;
 }
 
 .dark-mode .toggle{
-  background-color: rgb(228, 228, 229) !important; /* couleur foncée */
+  /* background-color: rgb(228, 228, 229) !important;  */
+    background-color:#bfa98a !important; 
+
 }
 .dark-mode .toggle .circle{
-  background: black !important;
+  /* background: black !important; */
+  background: #2a2a2a !important;
 }
 
 

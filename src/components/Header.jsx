@@ -213,10 +213,10 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
             </button>
 
             {openProfile && (
-              <div className="absolute right-0 mt-2 w-48 bg-[#f3e8d7] dark:bg-[#3a2e2a] border border-[#cbb99a] dark:border-[#b19b7a] rounded-md shadow-md overflow-hidden z-50">
+              <div className="absolute right-0 mt-2 w-48 bg-[#f3e8d7] text-[#6b5a49] dark:bg-[#3a2e2a] border border-[#cbb99a] dark:border-[#b19b7a] rounded-md shadow-md overflow-hidden z-50">
                 <Link
                   to="/profile"
-                  className="block px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#9c8b73]"
+                  className="block px-4 py-3 text-sm text-[#6b5a49] hover:bg-[#d6c5a9] dark:hover:bg-[#9c8b73]"
                   onClick={() => setOpenProfile(false)}
                 >
                   Profil
@@ -224,7 +224,7 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
 
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left px-4 py-3 text-sm hover:bg-[#d6c5a9] dark:hover:bg-[#9c8b73]"
+                  className="w-full text-left px-4 py-3 text-sm text-[#6b5a49] hover:bg-[#d6c5a9] dark:hover:bg-[#9c8b73]"
                 >
                   Déconnexion
                 </button>
