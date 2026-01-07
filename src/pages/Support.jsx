@@ -139,7 +139,7 @@ Démarrer le chat
 </div>
 <p className="text-lg font-semibold text-[#3a2f24] dark:text-[#f1e8dc]">Par email</p>
 <p className="text-sm text-beig-300 dark:text-[#bfb6a5] mb-2">Réponse sous 24h</p>
-<a href="https://mail.google.com/mail/?view=cm&fs=1&to=bankrewmi@gmail.com" target="_blank" rel="noopener noreferrer" className="text-beig-1900 font-medium hover:underline">bankrewmi@gmail.com</a>
+<a href="https://mail.google.com/mail/?view=cm&fs=1&to=mouhandiayeuh13@gmail.com" target="_blank" rel="noopener noreferrer" className="text-beig-1900 font-medium hover:underline">bankrewmi@gmail.com</a>
 </div>
 </div>
 
