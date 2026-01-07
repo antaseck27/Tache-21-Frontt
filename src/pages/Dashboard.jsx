@@ -247,15 +247,15 @@ const lineOptions = {
     <div className="space-y-6 p-4 sm:p-6 ">
 
       {/* Header */}
-      <div className="p-6 bg-[#e8dcc7] dark:bg-[#3a2e2a] rounded-xl shadow-lg"> 
-        <h2 className="text-3xl font-semibold text-[#8f7e6b]">
+      <div className=" welcome-card p-6 bg-[#e8dcc7] dark:bg-[#3a2e2a] rounded-xl shadow-lg"> 
+        <h2 className="welcome-title text-3xl font-semibold text-[#8f7e6b]">
   Bienvenue
   {user?.prenom
     ? `, ${user.prenom.charAt(0).toUpperCase()}${user.prenom.slice(1)}`
     : ""}
 </h2>
 
-        <p className="text-sm text-[#6b5a49] mt-1">
+        <p className="welcome-text text-sm text-[#6b5a49] mt-1">
           Voici un aperçu de votre situation financière
         </p>
       </div>
@@ -302,7 +302,7 @@ const lineOptions = {
 
       {/* Mes Comptes */}
       <section className="mt-17 mb-20 flex justify-center ">
-        <div className="w-full max-w-7xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7]. dark:from-[#222] dark:via-[#2a2a2a] dark:to-[#222] rounded-3xl shadow-1xl p-10 relative">
+        <div className="w-full max-w-7xl timeline-wrapper  rounded-3xl shadow-1xl p-10 relative">
           <h3 className="text-2xl sm:text-3xl font-bold text-center text-[#6b5a49] mb-12 account-card">Mes Comptes</h3>
           <div className="relative">
             <div className="hidden sm:block timeline-gradient absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-[#d8cbb4] via-[#cbbba3] to-transparent -translate-x-1/2 shadow-md dark:from-neutral-600 dark:via-neutral-500 "></div>
