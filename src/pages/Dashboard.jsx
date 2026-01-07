@@ -347,7 +347,7 @@ const lineOptions = {
       </section>
 
       {/* Charts et carte */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 card">
         <div className="lg:col-span-1"> 
           <Card>
             <div style={{ height: 300 }}>
