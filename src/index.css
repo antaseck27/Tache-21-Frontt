@@ -259,17 +259,17 @@ body.dark .welcome-text {
   /* background: linear-gradient(to top right, #f3e8d7, #e8dcc7, #f3e8d7); */
   background-color: #00171f;
   color: #6b5a49;
-  border: 2px solid #b9a896;
-  box-shadow: 0 8px 20px #6b5a49;
+  /* border: 2px solid #b9a896;
+  box-shadow: 0 8px 20px #6b5a49; */
   transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
 .dark .timeline-card {
   /* background: linear-gradient(to top right, #8f7e6b, #7a6654, #6b5a49); */
   background-color: #00171f;
-  border: 2px solid #bfa98a;
+  /* border: 2px solid #bfa98a; */
   color: #f1e8dc;
-  box-shadow: 0 8px 25px #b9a896;
+  /* box-shadow: 0 8px 25px #b9a896; */
 }
 
 .timeline-card:hover {
@@ -308,26 +308,7 @@ body.dark .welcome-text {
   color: #f1e8dc; /* Texte beige clair */
 }
 
-/* Titre du compte */
-.dark .timeline-gradient h4 {
-  color: #f1e8dc; /* Titre du compte en beige clair */
-}
 
-/* Texte secondaire dans la carte */
-.dark .timeline-gradient .card-info p {
-  color: #d6c5a9; /* Texte secondaire en beige clair */
-}
-
-/* Liens et autres éléments interactifs */
-.dark .timeline-gradient .card-info a {
-  color: #d6c7b4; /* Couleur des liens en beige clair */
-}
-
-/* Bordure et ombre de la carte */
-.dark .timeline-gradient .card-info {
-  /* border: 1px solid #d6c7b4;  */
-  box-shadow: 0 10px 20px rgba(218, 179, 107, 0.3); /* Ombre beige clair */
-}
 
 /* ===============================
    🌞 LIGHT MODE SPECIFIC STYLES (pour référence)
