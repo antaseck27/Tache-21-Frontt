@@ -222,7 +222,7 @@ body.dark .welcome-text {
 
 
 /* ---------------------- */
-/* SECTION MES COMPTES    */
+/* WRAPPER TIMELINE       */
 /* ---------------------- */
 .timeline-wrapper {
   background-color: #f3e8d7; /* clair par défaut */
@@ -236,17 +236,6 @@ body.dark .timeline-wrapper {
   background-color: #6b5a49; /* bg sombre harmonieux */
   color: #f1e8dc;
   box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-}
-
-/* TITRE SECTION */
-.account-card {
-  color: #6b5a49;
-  font-weight: 700;
-  transition: all 0.5s ease;
-}
-
-body.dark .account-card {
-  color: #f1e8dc;
 }
 
 /* ---------------------- */
@@ -271,7 +260,7 @@ body.dark .timeline-gradient {
 }
 
 /* ---------------------- */
-/* TIMELINE BULLES        */
+/* BULLES NUMÉROTÉES      */
 /* ---------------------- */
 .timeline-bubble {
   width: 1.8rem;
@@ -300,63 +289,58 @@ body.dark .timeline-bubble {
 }
 
 /* ---------------------- */
-/* CARDS COMPTE           */
+/* CARDS TIMELINE          */
 /* ---------------------- */
-.card-timeline {
-  background: #f3e8d7;
+.timeline-card {
+  background: #f3e8d7; /* clair */
   border-radius: 1.5rem;
   padding: 1.5rem;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   transition: all 0.5s ease, transform 0.3s ease;
 }
 
-body.dark .card-timeline {
+body.dark .timeline-card {
   background: #8f7e6b; /* beige/marron foncé */
   color: #f1e8dc;
   box-shadow: 0 8px 20px rgba(0,0,0,0.5);
 }
 
-/* CARD HOVER EFFECT */
-.card-timeline:hover {
+.timeline-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 25px rgba(0,0,0,0.2);
 }
 
-body.dark .card-timeline:hover {
+body.dark .timeline-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 25px rgba(0,0,0,0.6);
 }
 
-/* ---------------------- */
-/* TEXTES CARDS           */
-/* ---------------------- */
-.card-timeline p,
-.card-timeline h4 {
+/* TEXTES DANS LES CARDS */
+.timeline-card p,
+.timeline-card h4 {
   color: #6b5a49;
   transition: all 0.5s ease;
 }
 
-body.dark .card-timeline p,
-body.dark .card-timeline h4 {
+body.dark .timeline-card p,
+body.dark .timeline-card h4 {
   color: #f1e8dc;
 }
 
-.card-timeline .text-muted {
+.timeline-card .text-muted {
   color: #6b5a49aa;
 }
 
-body.dark .card-timeline .text-muted {
+body.dark .timeline-card .text-muted {
   color: #f1e8dc99;
 }
 
-/* ---------------------- */
-/* ICONS                  */
-/* ---------------------- */
-.card-timeline .icon-circle {
+/* ICONES */
+.timeline-card .icon-circle {
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background-color: #cbb99a33; /* léger beige translucide */
+  background-color: #cbb99a33; /* clair */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -364,14 +348,12 @@ body.dark .card-timeline .text-muted {
   transition: all 0.5s ease;
 }
 
-body.dark .card-timeline .icon-circle {
+body.dark .timeline-card .icon-circle {
   background-color: #a88f7233;
   color: #f1e8dc;
 }
 
-/* ---------------------- */
-/* CITATION EN BAS        */
-/* ---------------------- */
+/* CITATION EN BAS */
 .timeline-wrapper p.mt-8 {
   color: #8f7e6b;
   font-style: italic;
@@ -381,18 +363,6 @@ body.dark .card-timeline .icon-circle {
 
 body.dark .timeline-wrapper p.mt-8 {
   color: #f1e8dcaa;
-}
-
-/* ---------------------- */
-/* SPACING & RESPONSIVE   */
-/* ---------------------- */
-@media (min-width: 640px) {
-  .timeline-wrapper {
-    padding: 3rem;
-  }
-  .card-timeline {
-    padding: 2rem;
-  }
 }
 
 
