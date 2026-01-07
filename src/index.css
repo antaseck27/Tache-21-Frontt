@@ -306,10 +306,10 @@ body.dark .welcome-text {
 }
 
 /* Texte dans les cartes en mode sombre */
-.dark .timeline-gradient .card-info {
-  color: #f1e8dc; /* Texte beige clair */
+/* .dark .timeline-gradient .card-info {
+  color: #f1e8dc; 
   background-color: #00171f;
-}
+} */
 
 
 
