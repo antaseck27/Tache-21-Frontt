@@ -4,6 +4,67 @@
 @tailwind utilities;
 
 
+
+/* Appliquer le mode sombre sur tout le body */
+body.dark {
+  background-color: #1a1a1a !important;
+  color: #f1f1f1 !important;
+}
+
+/* Header */
+body.dark header {
+  background-color: #333 !important;
+  border-color: #555 !important;
+  color: #f1f1f1 !important;
+}
+
+/* Sidebar */
+body.dark .sidebar {
+  background-color: #222 !important;
+  color: #f1f1f1 !important;
+  border-color: #444 !important;
+}
+
+/* Dashboard container */
+body.dark .dashboard-container {
+  background-color: #222 !important;
+  color: #f1f1f1 !important;
+}
+
+/* Cards */
+body.dark .card, 
+body.dark .top-card, 
+body.dark .account-card {
+  background-color: #2a2a2a !important;
+  border-color: #444 !important;
+  color: #f1f1f1 !important;
+}
+
+/* Timeline / gradient des comptes */
+body.dark .timeline-gradient {
+  background: linear-gradient(to top, #222, #2a2a2a, #222) !important;
+}
+
+/* Boutons */
+body.dark button {
+  background-color: #333 !important;
+  color: #f1f1f1 !important;
+  border-color: #555 !important;
+}
+
+/* Inputs / form */
+body.dark input, body.dark select, body.dark textarea {
+  background-color: #2a2a2a !important;
+  color: #f1f1f1 !important;
+  border-color: #555 !important;
+}
+
+/* Textes secondaires */
+body.dark .text-secondary {
+  color: #ccc !important;
+}
+
+
 .hide-scrollbar::-webkit-scrollbar {
   width: 0;
   height: 0;

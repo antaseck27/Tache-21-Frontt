@@ -30,10 +30,14 @@ export default function AppLayout({ darkMode, setDarkMode }) {
   //   localStorage.setItem("theme", darkMode ? "dark" : "light");
   //   document.body.classList.toggle("dark", darkMode);
   // }, [darkMode]);
-  useEffect(() => {
-  localStorage.setItem("theme", darkMode ? "dark" : "light");
-  document.documentElement.classList.toggle("dark", darkMode);
+ useEffect(() => {
+  if(darkMode) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
 }, [darkMode]);
+
 
   
 
