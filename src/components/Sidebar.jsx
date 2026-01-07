@@ -48,7 +48,8 @@ if (onClose) onClose();
 return (
 <>
 {/* Mobile backdrop + drawer */}
-<div className={` sidebar mobile fixed inset-0 z-40 md:hidden transition-opacity ${open ? "pointer-events-auto" : "pointer-events-none"}`} aria-hidden={!open}>
+  <div className="fixed inset-0 z-40 md:hidden">
+{/* <div className={` sidebar mobile fixed inset-0 z-40 md:hidden transition-opacity ${open ? "pointer-events-auto" : "pointer-events-none"}`} aria-hidden={!open}> */}
 <div className={`absolute inset-0 bg-black/30 transition-opacity ${open ? "opacity-100" : "opacity-0"}`} onClick={() => { setOpen(false); if (onClose) onClose(); }} />
 <aside
 className={`absolute left-0 top-0 h-full w-72 bg-white dark:bg-[#111111] shadow-md p-6 transform transition-transform ${open ? "translate-x-0" : "-translate-x-full"} flex flex-col`}
