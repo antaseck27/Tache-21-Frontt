@@ -259,7 +259,7 @@ body.dark .welcome-text {
 
 .dark .shadow-md,
 .dark .rounded-xl {
-  background-color: var(--bg-card);
+   background: linear-gradient(to right, #b9a896, #8f7e6b) !important;
   border: 1px solid var(--bg-border);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
   color: var(--text-main);
@@ -278,6 +278,8 @@ body.dark .welcome-text {
 .dark .summary-card p,
 .dark .summary-card span {
   color: var(--text-main);
+   background: linear-gradient(to right, #b9a896, #8f7e6b) !important;
+    
 
 }
 .dark input,
