@@ -229,27 +229,7 @@ const handleSubmit = async (e) => {
         {/* PROFIL */}
         <div className="flex flex-col md:flex-row gap-6">
           <div className="md:w-1/3 p-6 rounded-xl bg-[#e8dcc7] dark:bg-[#2a2a2a] shadow-md flex flex-col items-center">
-            // <label className="relative cursor-pointer">
-            //   <img
-            //     src={
-            //       previewAvatar ||
-            //       (user.avatar ? `${API}/api/${user.avatar}` : "/avatar.png")
-            //     }
-            //     alt=""
-            //     className="w-24 h-24 rounded-full object-cover"
-            //   />
-
-            //   <span className="absolute bottom-0 right-0 bg-[#6b5a49] text-white p-2 rounded-full">
-            //     <i className="fa-solid fa-camera"></i>
-            //   </span>
-            //   <input
-            //     type="file"
-            //     hidden
-            //     accept="image/*"
-            //     ref={fileInputRef}
-            //     onChange={(e) => handleAvatarChange(e.target.files[0])}
-            //   />
-            // </label>
+            
 
             <label className="cursor-pointer">
             <img
@@ -303,10 +283,7 @@ const handleSubmit = async (e) => {
               </>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-2">
-                // <input className="w-full p-2 rounded" value={user.prenom} onChange={(e) => setUser({ ...user, prenom: e.target.value })} placeholder="Prénom" />
-                // <input className="w-full p-2 rounded" value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} placeholder="Nom" />
-                // <input className="w-full p-2 rounded" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} placeholder="Email" />
-                // <input className="w-full p-2 rounded" value={user.telephone} onChange={(e) => setUser({ ...user, telephone: e.target.value })} placeholder="Téléphone" />
+                
                 <input value={formData.prenom} onChange={e => setFormData({ ...formData, prenom: e.target.value })} />
               <input value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
               <input value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
