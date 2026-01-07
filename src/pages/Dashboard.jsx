@@ -358,11 +358,14 @@ const lineOptions = {
           </Card>
         </div>
         {/* Carte avec rotation */}
-  <div className="flex justify-center my-6">
+<div className="flex justify-center my-6">
       <div className="relative w-80 h-44">
         {/* Conteneur de la carte avec la rotation */}
-        <div className={`w-full h-full transform-style-preserve-3d transition-transform duration-500 ${isFlipped ? 'rotate-y-180' : ''}`}>
-          
+        <div
+          className={`w-full h-full transform-style-preserve-3d transition-transform duration-500 ${
+            isFlipped ? 'rotate-y-180' : ''
+          }`}
+        >
           {/* Face avant de la carte */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#8f7e6b] to-[#6b5a49] p-6 rounded-xl shadow-lg text-white">
             <div className="flex justify-between">
@@ -372,9 +375,10 @@ const lineOptions = {
             <div className="mt-6 text-2xl font-mono">
               <p>1234 5678 9876 5432</p>
             </div>
-            <button 
-              onClick={() => setIsFlipped(!isFlipped)} 
-              className="mt-4 text-sm text-[#f1e8dc] underline">
+            <button
+              onClick={() => setIsFlipped(!isFlipped)}
+              className="mt-4 text-sm text-[#f1e8dc] underline"
+            >
               Voir plus
             </button>
           </div>
@@ -386,9 +390,10 @@ const lineOptions = {
               <p>CVV: 123</p>
               <p>Date d'Expiration: 12/25</p>
             </div>
-            <button 
-              onClick={() => setIsFlipped(!isFlipped)} 
-              className="mt-4 text-sm text-[#f1e8dc] underline">
+            <button
+              onClick={() => setIsFlipped(!isFlipped)}
+              className="mt-4 text-sm text-[#f1e8dc] underline"
+            >
               Retour
             </button>
           </div>
