@@ -44,68 +44,127 @@ export default function ProfilePage() {
 
   const [twoFA, setTwoFA] = useState(user?.twoFA || false);
   const [emailNotif, setEmailNotif] = useState(true);
+    const [formData, setFormData] = useState({
+    prenom: "",
+    name: "",
+    email: "",
+    telephone: "",
+  });
   const [lightMode, setLightMode] = useState(() => {
     try {
       const saved = localStorage.getItem("theme");
       return saved === "light";
     } catch { return true; }
   });
-  useEffect(() => {
-    if (user?.avatar) setPreviewAvatar(user.avatar);
+    useEffect(() => {
+    if (user) {
+      setFormData({
+        prenom: user.prenom || "",
+        name: user.name || "",
+        email: user.email || "",
+        telephone: user.telephone || "",
+      });
+      setPreviewAvatar(user.avatar || "");
+    }
   }, [user]);
+  // useEffect(() => {
+  //   if (user?.avatar) setPreviewAvatar(user.avatar);
+  // }, [user]);
   /* ===================== AVATAR ===================== */
-  const handleAvatarChange = (file) => {
+  // const handleAvatarChange = (file) => {
+  //   if (!file) return;
+  //   setSelectedAvatar(file);
+
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => setPreviewAvatar(reader.result);
+  //   reader.readAsDataURL(file);
+  // };
+   const handleAvatarChange = (file) => {
     if (!file) return;
     setSelectedAvatar(file);
-
-    const reader = new FileReader();
-    reader.onloadend = () => setPreviewAvatar(reader.result);
-    reader.readAsDataURL(file);
+    setPreviewAvatar(URL.createObjectURL(file));
   };
 
   /* ===================== UPDATE PROFILE ===================== */
-  const handleSubmit = async (e) => {
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const resProfile = await axios.put(
+  //       `${API}/api/settings/update-profile`,
+  //       {
+  //         prenom: user.prenom,
+  //         name: user.name,
+  //         email: user.email,
+  //         telephone: user.telephone,
+  //       },
+  //       { headers: { Authorization: `Bearer ${token}` } }
+  //     );
+
+  //     let updatedUser = resProfile.data.user;
+
+  //     if (selectedAvatar) {
+  //       const formData = new FormData();
+  //       formData.append("avatar", selectedAvatar);
+
+  //       const resAvatar = await axios.put(
+  //         `${API}/api/settings/update-avatar`,
+  //         formData,
+  //         {
+  //           headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
+  //         }
+  //       );
+
+  //       updatedUser.avatar = resAvatar.data.avatar;
+  //     }
+
+  //     setUser(updatedUser);
+  //     setPreviewAvatar(updatedUser.avatar || "");
+  //     setSelectedAvatar(null);
+  //     setIsEditing(false);
+  //     alert("Profil mis à jour !");
+  //   } catch (err) {
+  //     console.error(err);
+  //     alert("Erreur lors de la mise à jour du profil");
+  //   }
+  // };
+const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const resProfile = await axios.put(
         `${API}/api/settings/update-profile`,
-        {
-          prenom: user.prenom,
-          name: user.name,
-          email: user.email,
-          telephone: user.telephone,
-        },
+        formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       let updatedUser = resProfile.data.user;
 
       if (selectedAvatar) {
-        const formData = new FormData();
-        formData.append("avatar", selectedAvatar);
+        const avatarData = new FormData();
+        avatarData.append("avatar", selectedAvatar);
 
         const resAvatar = await axios.put(
           `${API}/api/settings/update-avatar`,
-          formData,
-          {
-            headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
-          }
+          avatarData,
+          { headers: { Authorization: `Bearer ${token}` } }
         );
 
         updatedUser.avatar = resAvatar.data.avatar;
       }
 
       setUser(updatedUser);
-      setPreviewAvatar(updatedUser.avatar || "");
-      setSelectedAvatar(null);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+
       setIsEditing(false);
-      alert("Profil mis à jour !");
+      setSelectedAvatar(null);
+      alert("Profil mis à jour avec succès !");
     } catch (err) {
       console.error(err);
       alert("Erreur lors de la mise à jour du profil");
     }
   };
 
+  if (!user) return <div>Chargement...</div>;
   /* ===================== PASSWORD ===================== */
   const handleChangePassword = async () => {
     try {
@@ -171,14 +230,24 @@ export default function ProfilePage() {
         <div className="flex flex-col md:flex-row gap-6">
           <div className="md:w-1/3 p-6 rounded-xl bg-[#e8dcc7] dark:bg-[#2a2a2a] shadow-md flex flex-col items-center">
             <label className="relative cursor-pointer">
+              // <img
+              //   src={
+              //     previewAvatar ||
+              //     (user.avatar ? `${API}/api/${user.avatar}` : "/avatar.png")
+              //   }
+              //   alt=""
+              //   className="w-24 h-24 rounded-full object-cover"
+              // />
               <img
-                src={
-                  previewAvatar ||
-                  (user.avatar ? `${API}/api/${user.avatar}` : "/avatar.png")
-                }
-                alt=""
-                className="w-24 h-24 rounded-full object-cover"
-              />
+              src={
+                previewAvatar
+                  ? previewAvatar.startsWith("blob")
+                    ? previewAvatar
+                    : `${API}/${previewAvatar}`
+                  : "/avatar.png"
+              }
+              className="w-24 h-24 rounded-full object-cover"
+            />
 
               <span className="absolute bottom-0 right-0 bg-[#6b5a49] text-white p-2 rounded-full">
                 <i className="fa-solid fa-camera"></i>
@@ -190,6 +259,7 @@ export default function ProfilePage() {
                 ref={fileInputRef}
                 onChange={(e) => handleAvatarChange(e.target.files[0])}
               />
+              
             </label>
 
             <h4 className="mt-4 text-lg font-semibold">
@@ -225,10 +295,14 @@ export default function ProfilePage() {
               </>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-2">
-                <input className="w-full p-2 rounded" value={user.prenom} onChange={(e) => setUser({ ...user, prenom: e.target.value })} placeholder="Prénom" />
-                <input className="w-full p-2 rounded" value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} placeholder="Nom" />
-                <input className="w-full p-2 rounded" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} placeholder="Email" />
-                <input className="w-full p-2 rounded" value={user.telephone} onChange={(e) => setUser({ ...user, telephone: e.target.value })} placeholder="Téléphone" />
+                // <input className="w-full p-2 rounded" value={user.prenom} onChange={(e) => setUser({ ...user, prenom: e.target.value })} placeholder="Prénom" />
+                // <input className="w-full p-2 rounded" value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} placeholder="Nom" />
+                // <input className="w-full p-2 rounded" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} placeholder="Email" />
+                // <input className="w-full p-2 rounded" value={user.telephone} onChange={(e) => setUser({ ...user, telephone: e.target.value })} placeholder="Téléphone" />
+                <input value={formData.prenom} onChange={e => setFormData({ ...formData, prenom: e.target.value })} />
+              <input value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
+              <input value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+              <input value={formData.telephone} onChange={e => setFormData({ ...formData, telephone: e.target.value })} />
                 <div className="flex gap-2 pt-2">
                   <button className="px-5 py-2.5 rounded-lg font-semibold
   bg-gradient-to-tr from-[#f3e8d7] via-[#d4c2a8] to-[#f3e8d7]
