@@ -14,6 +14,9 @@
 }
 
 
+
+
+
 .dark {
   --bg-main: #121212;
   --text-main: #f5f5f5;
@@ -22,7 +25,6 @@
   --gradient-start: #222;
   --gradient-end: #333;
 }
-
 /* ===============================
    🌙 DARK MODE GLOBAL
 ================================ */
@@ -66,11 +68,12 @@ body.dark .dark-card {
 body.dark header,
 body.dark .sidebar,
 body.dark nav {
-  background-color: #121212 !important;
+  /* background: linear-gradient(to right, #b9a896, #8f7e6b) !important; */
+  background-color: #121212!important;
   border-color: #575348ce !important;
 }
 
-/* Liens */
+/* liens */
 body.dark a {
   color: #e2d6c4 !important;
 }
@@ -78,8 +81,7 @@ body.dark a {
 body.dark a:hover {
   color: #ffffff !important;
 }
-
-/* ===============================
+ /* ===============================
    🟫 WELCOME CARD
 ================================ */
 
@@ -89,6 +91,8 @@ body.dark a:hover {
 }
 
 body.dark .welcome-card {
+  /* background-color:  #3e3529  !important; */
+  
   box-shadow: 0 12px 30px rgba(0,0,0,0.4) !important;
 }
 
@@ -109,7 +113,6 @@ body.dark .welcome-title {
 body.dark .welcome-text {
   color: #d2c3af !important;
 }
-
 /* ============================= */
 /* SIDEBAR */
 /* ============================= */
@@ -125,20 +128,23 @@ body.dark .welcome-text {
 }
 
 .dark .sidebar {
+ 
   background-color: #121212 !important;
   color: #f1e8dc;
   border: 1px solid rgba(255, 255, 255, 0.04);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-}
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.6);
 
+
+}
 .sidebar-nav {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
   margin-top: 1.5rem;
-  background-color: transparent;
-}
+    background-color: transparent;
 
+}
 .sidebar-link {
   display: flex;
   align-items: center;
@@ -149,10 +155,12 @@ body.dark .welcome-text {
   font-weight: 500;
   color: #6b5a49;
   transition: all 0.25s ease;
+  
 }
 
 .sidebar-link:hover {
   background: #2a2a2a;
+  
 }
 
 .dark .sidebar-link {
@@ -162,18 +170,24 @@ body.dark .welcome-text {
 .dark .sidebar-link:hover {
   background: rgba(167, 147, 120, 0.765);
 }
-
 .sidebar-link.active {
-  background: linear-gradient(135deg, #b9a896, #8f7e6b);
+  background: linear-gradient(
+    135deg,
+    #b9a896,
+    #8f7e6b
+  );
   color: white;
   box-shadow: 0 6px 18px rgba(143, 126, 107, 0.5);
 }
 
 .dark .sidebar-link.active {
-  background: linear-gradient(135deg, #222, #333);
+  background: linear-gradient(
+    135deg,
+    #222,
+    #333
+  );
   box-shadow: 0 0 20px rgba(255, 200, 140, 0.25);
 }
-
 .sidebar-logout {
   margin-top: auto;
   padding: 0.75rem 1rem;
@@ -197,24 +211,13 @@ body.dark .welcome-text {
   background: rgba(255, 214, 160, 0.15);
 }
 
-.sidebar.mobile {
-  position: fixed;
-  inset: 0 auto 0 0;
-  width: 18rem;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-}
-
-.sidebar.mobile.open {
-  transform: translateX(0);
-}
 
 /* --------------------------- Timeline Card --------------------------- */
 .timeline-card {
   width: 100%;
-  max-width: 40rem;
+  max-width: 40rem; /* Augmenter la largeur maximale pour les cartes */
   margin: 0 auto;
-  padding: 2rem 2rem;
+  padding: 2rem 2rem; /* Augmenter le padding pour plus de contenu */
   border-radius: 1.5rem;
   background: linear-gradient(to top right, #f3e8d7, #e8dcc7, #f3e8d7);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -237,7 +240,16 @@ body.dark .welcome-text {
   box-shadow: 0 12px 30px rgba(0,0,0,0.6);
 }
 
-/* Animations */
+/* Responsivité pour grands écrans */
+@media (min-width: 1024px) {
+  .timeline-card {
+    max-width: 40rem; /* Ajuster la taille des cartes sur les grands écrans */
+  }
+}
+
+
+
+
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -261,6 +273,7 @@ body.dark .welcome-text {
     linear-gradient(135deg, #f3e8d7, #e8dcc7, #d8cbb4);
 }
 
+
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -276,6 +289,8 @@ body.dark .welcome-text {
   animation: fadeUp 0.6s ease-out forwards;
 }
 
+
+
 :root {
   --gradient-beige-gold: linear-gradient(90deg, #d6c7b4, #bfa98a);
   --gradient-beige-brown: linear-gradient(90deg, #e8dcc7, #c1a381);
@@ -284,26 +299,34 @@ body.dark .welcome-text {
   --gradient-beige-sand: linear-gradient(90deg, #eadfcf, #d1bfa8);
 }
 
+
 @keyframes floatY {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+0% { transform: translateY(0px); }
+50% { transform: translateY(-10px); }
+100% { transform: translateY(0px); }
 }
-
 .animate-float {
-  animation: floatY 6s ease-in-out infinite;
+animation: floatY 6s ease-in-out infinite;
 }
 
+/* Fade up on load */
+@keyframes fadeUp {
+0% { opacity: 0; transform: translateY(12px); }
+100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+animation: fadeUp 700ms cubic-bezier(.2,.9,.3,1) both;
+}
+
+/* Small pulse (already similar to tailwind's) */
 @keyframes tinyPulse {
-  0% { transform: scale(1); opacity: 1;}
-  50% { transform: scale(1.08); opacity: .9;}
-  100% { transform: scale(1); opacity: 1;}
+0% { transform: scale(1); opacity: 1;}
+50% { transform: scale(1.08); opacity: .9;}
+100% { transform: scale(1); opacity: 1;}
 }
-
 .pulse-soft {
-  animation: tinyPulse 2.6s ease-in-out infinite;
+animation: tinyPulse 2.6s ease-in-out infinite;
 }
-
 
 /* Tailwind micro utility fallback for beige colors if you didn't add custom palette */
 .bg-beige-50 { background-color: #f8f1e7; }
