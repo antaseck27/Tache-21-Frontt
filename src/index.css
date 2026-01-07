@@ -18,7 +18,7 @@
 ================================ */
 
 body.dark {
-  background-color: #635543 !important;
+  background-color: #6b5a49 !important;
   color: #f1e8dc;
 }
 
@@ -44,7 +44,7 @@ body.dark small {
 body.dark .card,
 body.dark .dashboard-card,
 body.dark .dark-card {
-  background-color: #3a2e2a !important; /* beige foncé */
+  background: linear-gradient(to right, #b9a896, #8f7e6b) !important;
   border: 1px solid #4a3b35 !important;
   box-shadow: 0 10px 25px rgba(0,0,0,0.35) !important;
 }
@@ -56,7 +56,8 @@ body.dark .dark-card {
 body.dark header,
 body.dark .sidebar,
 body.dark nav {
-  background-color: #2a211e !important;
+  /* background: linear-gradient(to right, #b9a896, #8f7e6b) !important; */
+    background-color: #6b5a49 !important;
   border-color: #3f332e !important;
 }
 
@@ -78,7 +79,8 @@ body.dark a:hover {
 }
 
 body.dark .welcome-card {
-  background-color:  #3e3529  !important;
+  /* background-color:  #3e3529  !important; */
+  
   box-shadow: 0 12px 30px rgba(0,0,0,0.4) !important;
 }
 
@@ -115,7 +117,7 @@ body.dark .welcome-text {
 
 .dark .sidebar {
  
-  background-color: #635543 !important;
+  background-color: #6b5a49 !important;
   color: #f1e8dc;
   border: 1px solid rgba(255, 255, 255, 0.04);
   box-shadow:
@@ -153,7 +155,7 @@ body.dark .welcome-text {
 }
 
 .dark .sidebar-link:hover {
-  background: rgba(167, 147, 120, 0.612);
+  background: rgba(167, 147, 120, 0.765);
 }
 .sidebar-link.active {
   background: linear-gradient(
