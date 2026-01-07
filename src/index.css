@@ -422,7 +422,8 @@ body.dark .timeline-gradient:hover {
 
 .dark .shadow-md,
 .dark .rounded-xl {
-   background: linear-gradient(to right, #b9a896, #8f7e6b) !important;
+  background-color: #2a2a2a !important;
+   /* background: linear-gradient(to right, #b9a896, #8f7e6b) !important; */
    color: var(--card-bg);
   border: 1px solid var(--bg-border);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
@@ -433,7 +434,8 @@ body.dark .timeline-gradient:hover {
   background-color: var(--summary-card-bg);
   border-color: var(--summary-card-border);
   /* color: var(--text-main); */
-   background: linear-gradient(to right, #80674e, #433525) !important;
+   /* background: linear-gradient(to right, #80674e, #433525) !important; */
+   background-color: #2a2a2a !important;
    color: rgba(255, 255, 255, 0.04);
 
 }
@@ -441,13 +443,15 @@ body.dark .timeline-gradient:hover {
 .dark .summary-card p,
 .dark .summary-card span {
   color: var(--text-main);
-   background: linear-gradient(to right, #b9a896, #8f7e6b) !important;
+   /* background: linear-gradient(to right, #b9a896, #8f7e6b) !important; */
+    background-color: #2a2a2a !important;
     
 
 }
 .dark input,
 .dark select {
-  background-color: #74614be7;
+  /* background-color: #74614be7; */
+  background-color:#2a2a2a;
   color: var(--text-main);
   border: 1px solid #4a4a4a;
 }
