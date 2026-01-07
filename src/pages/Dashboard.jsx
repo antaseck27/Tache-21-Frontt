@@ -358,8 +358,8 @@ const lineOptions = {
           </Card>
         </div>
         {/* Carte avec rotation */}
-<div className="flex justify-center my-6">
-      <div className="relative w-80 h-44">
+<div className=" flex justify-center my-6">
+      <div className="  relative w-80 h-44">
         {/* Conteneur de la carte avec la rotation */}
         <div
           className={`w-full h-full transform-style-preserve-3d transition-transform duration-500 ${
@@ -367,12 +367,12 @@ const lineOptions = {
           }`}
         >
           {/* Face avant de la carte */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#8f7e6b] to-[#6b5a49] p-6 rounded-xl shadow-lg text-white">
-            <div className="flex justify-between">
+          <div className=" card-bancaire absolute inset-0 bg-gradient-to-r from-[#8f7e6b] to-[#6b5a49] p-6 rounded-xl shadow-lg text-white">
+            <div className=" card-header flex justify-between">
               <h3 className="text-xl font-bold">BankRewmi</h3>
-              <div className="text-sm text-[#f1e8dc]">Visa</div>
+              <div className="text-sm text-[#f1e8dc] logo">Visa</div>
             </div>
-            <div className="mt-6 text-2xl font-mono">
+            <div className=" card-number mt-6 text-2xl font-mono">
               <p>1234 5678 9876 5432</p>
             </div>
             <button
@@ -384,9 +384,9 @@ const lineOptions = {
           </div>
 
           {/* Face arrière de la carte */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#6b5a49] to-[#8f7e6b] p-6 rounded-xl shadow-lg text-white transform rotate-y-180">
-            <div className="text-xl font-bold">Détails de la carte</div>
-            <div className="mt-4 text-sm">
+          <div className="card-details absolute inset-0 bg-gradient-to-r from-[#6b5a49] to-[#8f7e6b] p-6 rounded-xl shadow-lg text-white transform rotate-y-180">
+            <div className="  text-xl font-bold">Détails de la carte</div>
+            <div className="mt-4 text-sm valid-thru">
               <p>CVV: 123</p>
               <p>Date d'Expiration: 12/25</p>
             </div>

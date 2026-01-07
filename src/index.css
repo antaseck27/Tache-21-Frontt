@@ -927,3 +927,104 @@ padding: 20px;
 .animate-fadeUp {
   animation: fadeUp 0.5s forwards !important;
 }
+
+
+/* ==============================
+   Carte Bancaire (Design Moderne sans image)
+   ============================== */
+
+.card-bancaire {
+  width: 100%;
+  max-width: 350px; /* Largeur maximale */
+  height: 200px;
+  background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Dégradé dynamique de couleur chaude */
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Ombre douce */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Effet dynamique */
+  position: relative;
+  overflow: hidden;
+}
+
+.card-bancaire:hover {
+  transform: translateY(-10px); /* Légère élévation au survol */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); /* Ombre plus forte au survol */
+}
+
+/* Couverture de la carte */
+.card-bancaire .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-bancaire .card-header .logo {
+  font-size: 20px; /* Taille du texte du logo */
+  font-weight: 700; /* Gras pour le logo */
+  color: #fff; /* Couleur du logo */
+  text-transform: uppercase; /* Mettre en majuscule */
+}
+
+.card-bancaire .card-header .type {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Détails de la carte */
+.card-bancaire .card-details {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.card-bancaire .card-details .card-number {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.card-bancaire .card-details .valid-thru {
+  font-size: 14px;
+  font-weight: 400;
+  text-align: right;
+}
+
+.card-bancaire .card-details .valid-thru span {
+  font-weight: 600;
+}
+
+/* Ligne de séparation */
+.card-bancaire .card-line {
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.4); /* Ligne subtile */
+}
+
+/* Détails de la carte en mode sombre */
+body.dark .card-bancaire {
+  background: linear-gradient(135deg, #2c3e50, #34495e); /* Dégradé sombre */
+  color: #fff;
+}
+
+body.dark .card-bancaire .card-number {
+  color: #fff; /* Texte des numéros en blanc */
+}
+
+body.dark .card-bancaire .valid-thru span {
+  color: #ecf0f1; /* Couleur claire pour les dates */
+}
+
+/* Logo pour le mode sombre */
+body.dark .card-bancaire .logo {
+  filter: brightness(0) invert(1); /* Inverse le logo en mode sombre */
+}
