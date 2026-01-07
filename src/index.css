@@ -288,8 +288,11 @@ body.dark .welcome-text {
 .timeline-gradient .timeline-card,
 .timeline-card {
   background: linear-gradient(to top right, #f3e8d7, #e8dcc7, #f3e8d7);
-  /* padding: 1.5rem; */
-  border-radius: 1.5rem;
+   width: 100%;
+  max-width: 28rem; /* équivalent sm:max-w-md */
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem; /* sm:p-6 */
+  border-radius: 1.5rem; /* rounded-2xl */
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
