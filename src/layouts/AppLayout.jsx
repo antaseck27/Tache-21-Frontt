@@ -40,7 +40,7 @@ export default function AppLayout({ darkMode, setDarkMode }) {
   return (
     <div className="
       min-h-screen
-      bg-[#f7f3ee] dark:bg-[#1a1a1a]
+      bg-transparent  dark:bg-[#1a1a1a]
       text-[#6b5a49] dark:text-[#f1e8dc]
       transition-colors duration-300
     ">
