@@ -247,7 +247,7 @@ const lineOptions = {
     <div className="space-y-6 p-4 sm:p-6 ">
 
       {/* Header */}
-      <div className="p-6 bg-[#e8dcc7] rounded-xl shadow-lg"> 
+      <div className="p-6 bg-[#e8dcc7] dark:bg-[#3a2e2a] rounded-xl shadow-lg"> 
         <h2 className="text-3xl font-semibold text-[#8f7e6b]">
   Bienvenue
   {user?.prenom
@@ -264,7 +264,7 @@ const lineOptions = {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div
           onClick={() => setActiveCard("solde")}
-          className={`rounded-xl p-10 shadow-lg cursor-pointer transition-all duration-300 ${activeCard === "solde" ? "bg-[#6b5a49] text-white" : "bg-white text-[#6b5a49]"}`}
+          className={`rounded-xl p-10 shadow-lg cursor-pointer transition-all duration-300 ${activeCard === "solde" ? "bg-[#6b5a49] text-white" : "bg-white dark:bg-[#2a2a2a] dark:text-[#f1e8dc] text-[#6b5a49]"}`}
         >
           <div className="flex justify-between items-start">
             <div>
@@ -281,7 +281,7 @@ const lineOptions = {
 
         <div
           onClick={() => setActiveCard("revenu")}
-          className={`rounded-xl p-10 shadow-lg cursor-pointer transition-all duration-300 ${activeCard === "revenu" ? "bg-[#6b5a49] text-white" : "bg-white text-[#6b5a49]"}`}
+          className={`rounded-xl p-10 shadow-lg cursor-pointer transition-all duration-300 ${activeCard === "revenu" ? "bg-[#6b5a49] text-white" : "bg-white dark:bg-[#2a2a2a] dark:text-[#f1e8dc] text-[#6b5a49]"}`}
         >
           <div className="text-sm font-semibold">Revenus ce mois</div>
           <div className="text-sm font-semibold mt-2 text-green-500">
@@ -291,7 +291,7 @@ const lineOptions = {
 
         <div
           onClick={() => setActiveCard("depense")}
-          className={`rounded-xl p-10 shadow-lg cursor-pointer transition-all duration-300 ${activeCard === "depense" ? "bg-[#6b5a49] text-white" : "bg-white text-[#6b5a49]"}`}
+          className={`rounded-xl p-10 shadow-lg cursor-pointer transition-all duration-300 ${activeCard === "depense" ? "bg-[#6b5a49] text-white" : "bg-white dark:bg-[#2a2a2a] dark:text-[#f1e8dc] text-[#6b5a49]"}`}
         >
           <div className="text-sm font-semibold">Dépenses ce mois</div>
           <div className="text-sm font-semibold mt-2 text-red-500">
@@ -302,7 +302,7 @@ const lineOptions = {
 
       {/* Mes Comptes */}
       <section className="mt-17 mb-20 flex justify-center ">
-        <div className="w-full max-w-7xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] rounded-3xl shadow-1xl p-10 relative">
+        <div className="w-full max-w-7xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7]. dark:from-[#222] dark:via-[#2a2a2a] dark:to-[#222] rounded-3xl shadow-1xl p-10 relative">
           <h3 className="text-2xl sm:text-3xl font-bold text-center text-[#6b5a49] mb-12">Mes Comptes</h3>
           <div className="relative">
             <div className="hidden sm:block absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-[#d8cbb4] via-[#cbbba3] to-transparent -translate-x-1/2 shadow-md dark:from-neutral-600 dark:via-neutral-500 "></div>
