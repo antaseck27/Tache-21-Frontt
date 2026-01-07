@@ -159,7 +159,7 @@ body.dark .welcome-text {
   padding: 1.5rem;
 
   height: 100vh;
-  box-shadow: 8px 0 30px #f1e8dc;
+  box-shadow: 4px 0 10px #f1e8dc;
   z-index: 50;
 }
 
@@ -168,8 +168,8 @@ body.dark .welcome-text {
     background-color: #00171f !important;
   color: #f1e8dc;
   border: 1px solid #f1e8dc;
-  box-shadow:
-    0 8px 20px #f1e8dc;
+  /* box-shadow:
+    0 8px 20px #f1e8dc; */
 
 
 }
@@ -259,7 +259,7 @@ body.dark .welcome-text {
   /* background: linear-gradient(to top right, #f3e8d7, #e8dcc7, #f3e8d7); */
   background-color: #00171f;
   color: #6b5a49;
-  border: 2px solid #b9a896;
+  /* border: 2px solid #b9a896; */
   box-shadow: 0 8px 20px #6b5a49;
   transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
@@ -286,11 +286,11 @@ body.dark .welcome-text {
 .dark .timeline-card p {
   color: #f1e8dc;
 }
-.dark .timeline-gradient .card-info{
+/* .dark .timeline-gradient .card-info{
   color: #f1e8dc !important;
   background-color: #00171f !important;
   border: 2px solid #bfa98a !important;
-}
+} */
 
 /* ===============================
    🌙 DARK MODE SPECIFIC STYLES FOR CARDS
@@ -325,7 +325,7 @@ body.dark .welcome-text {
 
 /* Bordure et ombre de la carte */
 .dark .timeline-gradient .card-info {
-  border: 1px solid #d6c7b4; /* Bordure beige clair pour délimiter la carte */
+  /* border: 1px solid #d6c7b4;  */
   box-shadow: 0 10px 20px rgba(218, 179, 107, 0.3); /* Ombre beige clair */
 }
 
@@ -336,7 +336,7 @@ body.dark .welcome-text {
 /* Carte principale en mode clair */
 .timeline-gradient {
   background: linear-gradient(to top right, #f3e8d7, #e8dcc7, #f3e8d7); /* Dégradé clair */
-  border: 1px solid #e7ded5; /* Bordure claire */
+  border: 1px solid #e7ded5; 
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Ombre légère */
 }
 
