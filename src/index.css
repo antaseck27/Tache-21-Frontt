@@ -13,6 +13,42 @@
   scrollbar-width: none;
 }
 
+:root {
+  /* ===============================
+     🌙 DARK MODE COLORS
+  ================================= */
+
+  --bg-main: #121212; /* Fond général en mode sombre (très foncé) */
+  --bg-secondary: #1a1a1a; /* Fond secondaire pour les cartes et éléments */
+  
+  --text-main: #f1e8dc; /* Texte principal en mode sombre */
+  --text-secondary: #cbbfae; /* Texte secondaire (descriptions, etc.) */
+
+  --card-bg: #8f7e6b; /* Fond des cartes et sections secondaires */
+  --card-border: #4a3b35; /* Bordure des cartes et éléments */
+  
+  --accent-light: #f3e8d7; /* Beige clair (souvent utilisé pour les titres, accents, hover) */
+  --accent-dark: #8f7e6b; /* Beige foncé pour les accents en mode sombre */
+
+  --highlight-bg: #b9a896; /* Beige doré pour les boutons, liens ou éléments d'importance */
+  --highlight-hover: #6b5a49; /* Hover : Beige plus foncé pour les éléments interactifs */
+  
+  --link-color: #e2d6c4; /* Couleur des liens en mode sombre */
+  --link-hover: #ffffff; /* Couleur des liens au survol en mode sombre */
+  
+  --shadow-dark: rgba(0, 0, 0, 0.6); /* Ombre plus forte pour les éléments en mode sombre */
+  --shadow-light: rgba(0, 0, 0, 0.1); /* Ombre douce pour les éléments en mode clair */
+  
+  /* ===============================
+     🌞 LIGHT MODE COLORS (pour référence)
+  ================================= */
+  
+  --bg-light: #f7f3ee; /* Fond principal en mode clair */
+  --text-light: #6b5a49; /* Texte principal en mode clair */
+  --card-bg-light: #ffffff; /* Fond des cartes en mode clair */
+  --card-border-light: #e7ded5; /* Bordure des cartes en mode clair */
+}
+
 
 
 
@@ -30,7 +66,8 @@
 ================================ */
 
 body.dark {
-  background-color:  #121212 !important;
+  background-color: #00171f !important;
+  /* background-color:  #121212 !important; */
   color: #f1e8dc;
 }
 
@@ -69,7 +106,7 @@ body.dark header,
 body.dark .sidebar,
 body.dark nav {
   /* background: linear-gradient(to right, #b9a896, #8f7e6b) !important; */
-  background-color: #121212!important;
+    background-color: #00171f !important;
   border-color: #575348ce !important;
 }
 
@@ -117,18 +154,18 @@ body.dark .welcome-text {
 /* SIDEBAR */
 /* ============================= */
 
-.sidebar {
+/* .sidebar {
   background: #ffffff;
   padding: 1.5rem;
 
   height: 100vh;
   box-shadow: 8px 0 30px rgba(0, 0, 0, 0.08);
   z-index: 50;
-}
+} */
 
 .dark .sidebar {
  
-  background-color: #121212 !important;
+    background-color: #00171f !important;
   color: #f1e8dc;
   border: 1px solid rgba(255, 255, 255, 0.04);
   box-shadow:
@@ -136,14 +173,14 @@ body.dark .welcome-text {
 
 
 }
-.sidebar-nav {
+/* .sidebar-nav {
 
   gap: 0.4rem;
   margin-top: 1.5rem;
     background-color: transparent;
 
-}
-.sidebar-link {
+} */
+/* .sidebar-link {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -159,7 +196,7 @@ body.dark .welcome-text {
 .sidebar-link:hover {
   background: #2a2a2a;
   
-}
+} */
 
 .dark .sidebar-link {
   color: #dcccb8;
@@ -252,7 +289,8 @@ body.dark .welcome-text {
 /* transaction dark */
 .dark body,
 .dark .min-h-screen {
-  background-color: var(--bg-page);
+  /* background-color: var(--bg-page); */
+  background-color: #00171f !important;
   color: var(--text-main);
   transition: background 0.3s ease, color 0.3s ease;
 }
@@ -262,7 +300,7 @@ body.dark .welcome-text {
    background: linear-gradient(to right, #b9a896, #8f7e6b) !important;
    color: var(--card-bg);
   border: 1px solid var(--bg-border);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
   transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 .dark .summary-card,
@@ -270,7 +308,7 @@ body.dark .welcome-text {
   background-color: var(--summary-card-bg);
   border-color: var(--summary-card-border);
   /* color: var(--text-main); */
-   background: linear-gradient(to right, #b9a896, #8f7e6b) !important;
+   background: linear-gradient(to right, #80674e, #433525) !important;
    color: rgba(255, 255, 255, 0.04);
 
 }
