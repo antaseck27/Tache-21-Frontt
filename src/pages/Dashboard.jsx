@@ -305,7 +305,7 @@ const lineOptions = {
       {/* Mes Comptes */}
       <section className="mt-17 mb-20 flex justify-center ">
         <div className="w-full max-w-7xl card-timeline rounded-3xl shadow-1xl p-10 relative">
-          <h3 className="text-2xl sm:text-3xl font-bold text-center text-[#6b5a49] mb-12 account-card">Mes Comptes</h3>
+          <h3 className="text-2xl sm:text-3xl font-bold text-center text-[#6b5a49] mb-12 ">Mes Comptes</h3>
           <div className="relative">
             <div className="hidden sm:block timeline-gradient absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-[#d8cbb4] via-[#cbbba3] to-transparent -translate-x-1/2 shadow-md dark:from-neutral-600 dark:via-neutral-500 "></div>
             <div className="space-y-8 sm:space-y-12 md:space-y-16">
