@@ -337,7 +337,7 @@ body.dark .welcome-text {
 .timeline-gradient {
   background: linear-gradient(to top right, #f3e8d7, #e8dcc7, #f3e8d7); /* Dégradé clair */
   border: 1px solid #e7ded5; 
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Ombre légère */
+  /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);  */
 }
 
 /* Texte dans les cartes en mode clair */
@@ -346,14 +346,14 @@ body.dark .welcome-text {
 }
 
 /* Titre du compte */
-.timeline-gradient h4 {
-  color: #6b5a49; /* Titre du compte en foncé */
-}
+/* .timeline-gradient h4 {
+  color: #6b5a49;
+} */
 
 /* Texte secondaire dans la carte */
-.timeline-gradient .card-info p {
-  color: #8f7e6b; /* Texte secondaire en beige foncé */
-}
+/* .timeline-gradient .card-info p {
+  color: #8f7e6b; 
+} */
 
 
 
