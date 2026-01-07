@@ -267,9 +267,9 @@ body.dark .welcome-text {
 .dark .timeline-card {
   /* background: linear-gradient(to top right, #8f7e6b, #7a6654, #6b5a49); */
   background-color: #00171f;
-  border: 2px solid #bfa98a;
+  /* border: 2px solid #bfa98a; */
   color: #f1e8dc;
-  box-shadow: 0 8px 25px #b9a896;
+  /* box-shadow: 0 8px 25px #b9a896; */
 }
 
 .timeline-card:hover {
@@ -298,7 +298,7 @@ body.dark .welcome-text {
 
 /* Carte principale en mode sombre */
 .dark .timeline-gradient {
-  background: linear-gradient(to top right, #2a2a2a, #2a2a2a); /* Fond bleu foncé */
+  background-color: #00171f;
   border: 1px solid #d6c7b4; /* Bordure beige clair */
   box-shadow: 0 10px 20px rgba(218, 179, 107, 0.3); /* Ombre beige clair */
 }
@@ -326,7 +326,7 @@ body.dark .welcome-text {
 /* Bordure et ombre de la carte */
 .dark .timeline-gradient .card-info {
   /* border: 1px solid #d6c7b4;  */
-  box-shadow: 0 10px 20px rgba(218, 179, 107, 0.3); /* Ombre beige clair */
+  /* box-shadow: 0 10px 20px rgba(218, 179, 107, 0.3);  */
 }
 
 /* ===============================
