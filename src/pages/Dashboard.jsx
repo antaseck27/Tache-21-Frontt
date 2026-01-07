@@ -318,7 +318,7 @@ const lineOptions = {
 
                   <div className=" timeline-gradient w-full max-w-sm sm:max-w-md mx-auto p-5 sm:p-6 rounded-2xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] shadow-lg  dark:from-neutral-700 dark:via-neutral-600 dark:to-neutral-700">
                     <div className="flex items-center justify-between">
-                      <div>
+                      <div className="card-info">
                         <p className="text-xs uppercase tracking-widest text-[#6b5a49]/70 dark:text-neutral-100">{compte.type}</p>
                         <h4 className="text-lg sm:text-xl font-bold text-[#6b5a49] mt-1 dark:text-neutral-300">{compte.name}</h4>
                         <p className="text-xs sm:text-sm text-[#6b5a49]/70">
@@ -326,12 +326,12 @@ const lineOptions = {
                         </p>
                       </div>
 
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 icon-circle rounded-full bg-[#cbb99a]/30 flex items-center justify-center text-[#6b5a49]">
+                      <div className=" card-info w-10 h-10 sm:w-12 sm:h-12 icon-circle rounded-full bg-[#cbb99a]/30 flex items-center justify-center text-[#6b5a49]">
                         <i className={`fas ${compte.type === "courant" ? "fa-wallet" : compte.type === "epargne" ? "fa-piggy-bank" : "fa-briefcase"}`}></i>
                       </div>
                     </div>
 
-                    <div className="mt-4">
+                    <div className="card-info mt-4">
                       <p className="text-lg sm:text-xl  md:text-2xl font-extrabold text-[#6b5a49]">{compte.balance.toLocaleString()} {compte.currency}</p>
                       <p className="text-xs sm:text-sm text-[#6b5a49]/60 dark:text-neutral-400">Solde disponible</p>
                     </div>
