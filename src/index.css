@@ -4,222 +4,6 @@
 @tailwind utilities;
 
 
-
-/* ============================= */
-/* 🌍 VARIABLES GLOBALES */
-/* ============================= */
-:root {
-  --bg-main: #f5efe6;
-  --bg-card: #e8dcc7;
-  --bg-header: #f3e8d7;
-
-  --text-main: #4b3a2f;
-  --text-soft: #6b5a49;
-  --text-muted: #8f7e6b;
-
-  --accent: #b89b72;
-  --border-soft: #d6c5a9;
-}
-
-/* 🌙 MODE DARK */
-.dark {
-  --bg-main: #221b18;
-  --bg-card: #3a2e2a;
-  --bg-header: #2a211e;
-
-  --text-main: #f7f3ee;
-  --text-soft: #e0d6c6;
-  --text-muted: #bfae94;
-
-  --accent: #e6d3a3;
-  --border-soft: #4a3b35;
-}
-
-/* ============================= */
-/* 🧱 BASE */
-/* ============================= */
-html,
-body {
-  min-height: 100%;
-  background: var(--bg-main) !important;
-  color: var(--text-main) !important;
-  font-family: "Roboto", sans-serif;
-}
-
-#root {
-  min-height: 100vh;
-  background: var(--bg-main) !important;
-}
-
-/* ============================= */
-/* 🧭 HEADER */
-/* ============================= */
-header {
-  background: var(--bg-header) !important;
-  border-bottom: 1px solid var(--border-soft) !important;
-  color: var(--text-main) !important;
-}
-
-/* ============================= */
-/* 📂 SIDEBAR */
-/* ============================= */
-.sidebar {
-  background: var(--bg-header) !important;
-  border-right: 1px solid var(--border-soft) !important;
-}
-
-.sidebar a {
-  color: var(--text-soft) !important;
-}
-
-.sidebar a:hover {
-  color: var(--accent) !important;
-}
-
-/* ============================= */
-/* 🧩 CARDS */
-/* ============================= */
-.card,
-.timeline-card,
-.dashboard-card {
-  background: var(--bg-card) !important;
-  border: 1px solid var(--border-soft) !important;
-  border-radius: 18px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-  transition: all 0.4s ease;
-}
-
-.dark .card,
-.dark .timeline-card {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-}
-
-.card:hover {
-  transform: translateY(-6px) scale(1.02);
-}
-
-/* ============================= */
-/* ✍️ TEXTES */
-/* ============================= */
-h1,
-h2,
-h3,
-h4 {
-  color: var(--text-main) !important;
-}
-
-p {
-  color: var(--text-soft) !important;
-}
-
-.text-muted {
-  color: var(--text-muted) !important;
-}
-
-/* ============================= */
-/* 🔘 BOUTONS */
-/* ============================= */
-.btn-primary {
-  background: var(--accent) !important;
-  color: #2a211e !important;
-  border-radius: 999px;
-  padding: 10px 22px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-  filter: brightness(1.1);
-  transform: translateY(-2px);
-}
-
-/* ============================= */
-/* 🌌 TIMELINE */
-/* ============================= */
-.timeline-line {
-  background: linear-gradient(
-    to bottom,
-    #a8895c,
-    #e6d3a3,
-    #a8895c
-  ) !important;
-  box-shadow:
-    0 0 15px rgba(230, 211, 163, 0.6),
-    0 0 30px rgba(230, 211, 163, 0.3);
-  animation: flowLight 4s linear infinite;
-}
-
-@keyframes flowLight {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 0% 200%;
-  }
-}
-
-/* ============================= */
-/* 💡 DOTS 1 2 3 */
-/* ============================= */
-.timeline-dot {
-  background: radial-gradient(circle, #fff1c1, #c8a96b, #8a6a3f);
-  color: #2a211e;
-  box-shadow:
-    0 0 12px rgba(255, 241, 193, 0.9),
-    0 0 35px rgba(200, 169, 107, 0.8);
-  animation: glowPulse 2.5s infinite ease-in-out;
-}
-
-@keyframes glowPulse {
-  0% {
-    transform: translateX(-50%) scale(1);
-  }
-  50% {
-    transform: translateX(-50%) scale(1.25);
-    box-shadow:
-      0 0 25px rgba(255, 241, 193, 1),
-      0 0 50px rgba(200, 169, 107, 1);
-  }
-  100% {
-    transform: translateX(-50%) scale(1);
-  }
-}
-
-/* ============================= */
-/* 📦 FORMS */
-/* ============================= */
-input,
-select,
-textarea {
-  background: var(--bg-card) !important;
-  border: 1px solid var(--border-soft) !important;
-  color: var(--text-main) !important;
-  border-radius: 12px;
-}
-
-input::placeholder {
-  color: var(--text-muted) !important;
-}
-
-/* ============================= */
-/* ✨ ANIMATIONS GLOBALES */
-/* ============================= */
-.fade-in {
-  animation: fadeIn 0.8s ease forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
 .hide-scrollbar::-webkit-scrollbar {
   width: 0;
   height: 0;
@@ -229,10 +13,62 @@ input::placeholder {
   scrollbar-width: none;
 }
 
-/* index.css ou global.css */
-html {
-  transition: background-color 0.3s, color 0.3s;
+/* ===============================
+   🌙 DARK MODE GLOBAL
+================================ */
+
+body.dark {
+  background-color: #1f1b18 !important; /* fond général */
+  color: #e8dcc7 !important;
 }
+
+/* Titres */
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4 {
+  color: #f0e6d6 !important;
+}
+
+/* Textes secondaires */
+body.dark p,
+body.dark span,
+body.dark small {
+  color: #cbbfae !important;
+}
+
+/* ===============================
+   🧱 CARDS (beige foncé)
+================================ */
+
+body.dark .card,
+body.dark .dashboard-card,
+body.dark .dark-card {
+  background-color: #3a2e2a !important; /* beige foncé */
+  border: 1px solid #4a3b35 !important;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35) !important;
+}
+
+/* ===============================
+   🧭 HEADER / SIDEBAR
+================================ */
+
+body.dark header,
+body.dark .sidebar,
+body.dark nav {
+  background-color: #2a211e !important;
+  border-color: #3f332e !important;
+}
+
+/* liens */
+body.dark a {
+  color: #e2d6c4 !important;
+}
+
+body.dark a:hover {
+  color: #ffffff !important;
+}
+
 
 
 @keyframes slideIn {
