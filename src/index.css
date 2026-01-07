@@ -257,8 +257,8 @@ body.dark .welcome-text {
   padding: 2rem 2rem; /* Augmenter le padding pour plus de contenu */
   border-radius: 1.5rem;
   /* background: linear-gradient(to top right, #f3e8d7, #e8dcc7, #f3e8d7); */
-  background-color: #00171f;
-  color: #6b5a49;
+  background-color: #00171f !important;
+  color: #6b5a49 !important;
   /* border: 2px solid #b9a896;
   box-shadow: 0 8px 20px #6b5a49; */
   transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
@@ -266,9 +266,9 @@ body.dark .welcome-text {
 
 .dark .timeline-card {
   /* background: linear-gradient(to top right, #8f7e6b, #7a6654, #6b5a49); */
-  background-color: #00171f;
+  background-color: #00171f !important;
   /* border: 2px solid #bfa98a; */
-  color: #f1e8dc;
+  color: #f1e8dc !important;
   /* box-shadow: 0 8px 25px #b9a896; */
 }
 
@@ -306,6 +306,7 @@ body.dark .welcome-text {
 /* Texte dans les cartes en mode sombre */
 .dark .timeline-gradient .card-info {
   color: #f1e8dc; /* Texte beige clair */
+  background-color: #00171f !important;
 }
 
 
