@@ -238,6 +238,10 @@ body.dark .welcome-text {
   box-shadow: 0 12px 30px rgba(0,0,0,0.6);
 }
 
+
+
+
+
 /* Responsivité pour grands écrans */
 @media (min-width: 1024px) {
   .timeline-card {
@@ -245,6 +249,12 @@ body.dark .welcome-text {
   }
 }
 
+.dark body,
+.dark .min-h-screen {
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  transition: background 0.3s ease, color 0.3s ease;
+}
 
 
 
