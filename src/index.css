@@ -544,6 +544,30 @@ body.dark .card.active {
 }
 
 
+/* Carte active en mode sombre */
+body.dark .card.active {
+  background: linear-gradient(to right, #614b32, #8f7e6b); /* Dégradé doré pour la carte active */
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4); /* Lueur forte autour de la carte active */
+  border: 1px solid #d6c7b4; /* Bordure claire pour mieux la faire ressortir */
+  transform: scale(1.05); /* Agrandissement léger de la carte active */
+  transition: all 0.3s ease; /* Transition fluide */
+}
+
+/* Texte et autres éléments dans la carte active */
+body.dark .card.active .card-info {
+  color: #f1e8dc; /* Texte en blanc cassé pour contraster avec le fond */
+}
+
+body.dark .card.active h3,
+body.dark .card.active h4 {
+  color: #f1e8dc; /* Titre en blanc cassé pour le rendre plus visible */
+}
+
+body.dark .card.active p {
+  color: #cbbfae; /* Texte secondaire en beige clair */
+}
+
+
 @keyframes slideIn {
   from {
     opacity: 0;

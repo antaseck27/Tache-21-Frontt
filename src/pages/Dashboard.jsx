@@ -266,9 +266,9 @@ const lineOptions = {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6  dashboard-container">
         <div
           onClick={() => setActiveCard("solde")}
-          className={`rounded-xl card card p-10 shadow-lg cursor-pointer transition-all duration-300 ${activeCard === "solde" ? "bg-[#6b5a49] text-white" : "bg-white dark:bg-[#2a2a2a] dark:text-[#f1e8dc] text-[#6b5a49]"}`}
+          className={`rounded-xl card card-1 p-10 shadow-lg cursor-pointer transition-all duration-300 ${activeCard === "solde" ? "bg-[#6b5a49] text-white" : "bg-white dark:bg-[#2a2a2a] dark:text-[#f1e8dc] text-[#6b5a49]"}`}
         >
-          <div className="flex justify-between items-start card-1">
+          <div className="flex justify-between items-start">
             <div>
               <div className="text-sm">Solde Total</div>
               <div className="text-sm font-semibold mt-2">
