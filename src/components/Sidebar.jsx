@@ -28,12 +28,15 @@ export default function Sidebar({ open: openProp, onClose }) {
     navigate("/login", { replace: true });
   };
 
+  // const linkClass = ({ isActive }) =>
+  //   `flex items-center gap-3 px-4 py-3 rounded-lg text-sm ${
+  //     isActive
+  //       ? "bg-[#cbb99a] text-white"
+  //       : "hover:bg-gray-100 dark:hover:bg-[#3a3a3a]"
+  //   }`;
   const linkClass = ({ isActive }) =>
-    `flex items-center gap-3 px-4 py-3 rounded-lg text-sm ${
-      isActive
-        ? "bg-[#cbb99a] text-white"
-        : "hover:bg-gray-100 dark:hover:bg-[#3a3a3a]"
-    }`;
+  `sidebar-link ${isActive ? "active" : ""}`;
+
 
 
 
@@ -45,7 +48,7 @@ if (onClose) onClose();
 return (
 <>
 {/* Mobile backdrop + drawer */}
-<div className={`fixed inset-0 z-40 md:hidden transition-opacity ${open ? "pointer-events-auto" : "pointer-events-none"}`} aria-hidden={!open}>
+<div className={` sidebar mobile fixed inset-0 z-40 md:hidden transition-opacity ${open ? "pointer-events-auto" : "pointer-events-none"}`} aria-hidden={!open}>
 <div className={`absolute inset-0 bg-black/30 transition-opacity ${open ? "opacity-100" : "opacity-0"}`} onClick={() => { setOpen(false); if (onClose) onClose(); }} />
 <aside
 className={`absolute left-0 top-0 h-full w-72 bg-white dark:bg-[#111111] shadow-md p-6 transform transition-transform ${open ? "translate-x-0" : "-translate-x-full"} flex flex-col`}
@@ -64,7 +67,7 @@ aria-hidden={!open}
 </button>
 </div>
 
-<nav className="space-y-2 flex-1">
+<nav className=" sidebar-nav space-y-2 flex-1">
 <NavLink to="/dashboard" className={linkClass} onClick={handleLinkClick}>
 <HomeIcon className="w-5 h-5" />
 Dashboard
@@ -112,7 +115,7 @@ Déconnexion
 </div>
 
 {/* Desktop fixed sidebar (visible md+) */}
-<aside className="hidden md:fixed md:inset-y-0 md:left-0 md:w-72 md:bg-white md:p-6 md:overflow-y-auto md:flex md:flex-col dark:md:bg-[#0f0f0f]">
+<aside className=" sidebar hidden md:fixed md:inset-y-0 md:left-0 md:w-72 md:bg-white md:p-6 md:overflow-y-auto md:flex md:flex-col dark:md:bg-[#0f0f0f]">
 <div>
 <div className="flex items-center gap-3 mb-8">
 <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] flex items-center justify-center text-white font-semibold shadow-sm">B</div>
