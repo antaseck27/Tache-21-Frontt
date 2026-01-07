@@ -62,6 +62,8 @@ const getMonthlyStats = (transactions) => {
 
 
 export default function Dashboard() {
+  const [isFlipped, setIsFlipped] = useState(false);
+
   const { user } = useAuth();
 
   const [showBalance, setShowBalance] = useState(true);
@@ -357,23 +359,35 @@ const lineOptions = {
         </div>
         {/* Carte avec rotation */}
 <div className="flex justify-center my-6">
-  <div className="relative perspective-1000">
-    <div className="w-72 h-40 transform-style-preserve-3d transition-transform duration-500 hover:rotate-y-180">
-      {/* Face avant de la carte */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#8f7e6b] to-[#6b5a49] p-6 rounded-xl shadow-lg text-white">
-        <h3 className="text-xl font-bold">Numéro de Compte</h3>
-        <p className="mt-2 text-sm">1234 5678 9876 5432</p>
-      </div>
+      <div className="relative w-72 h-40">
+        {/* Conteneur de la carte avec la rotation */}
+        <div className={`w-full h-full transform-style-preserve-3d transition-transform duration-500 ${isFlipped ? 'rotate-y-180' : ''}`}>
+          
+          {/* Face avant de la carte */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#8f7e6b] to-[#6b5a49] p-6 rounded-xl shadow-lg text-white">
+            <h3 className="text-xl font-bold">Numéro de Compte</h3>
+            <p className="mt-2 text-sm">1234 5678 9876 5432</p>
+            <button 
+              onClick={() => setIsFlipped(!isFlipped)} 
+              className="mt-4 text-sm text-[#f1e8dc] underline">
+              Voir plus
+            </button>
+          </div>
 
-      {/* Face arrière de la carte */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#6b5a49] to-[#8f7e6b] p-6 rounded-xl shadow-lg text-white transform rotate-y-180">
-        <h3 className="text-xl font-bold">Détails de la carte</h3>
-        <p className="mt-4">CVV: 123</p>
-        <p>Date d'Expiration: 12/25</p>
+          {/* Face arrière de la carte */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#6b5a49] to-[#8f7e6b] p-6 rounded-xl shadow-lg text-white transform rotate-y-180">
+            <h3 className="text-xl font-bold">Détails de la carte</h3>
+            <p className="mt-4">CVV: 123</p>
+            <p>Date d'Expiration: 12/25</p>
+            <button 
+              onClick={() => setIsFlipped(!isFlipped)} 
+              className="mt-4 text-sm text-[#f1e8dc] underline">
+              Retour
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
       </div>
     </div>
