@@ -753,8 +753,7 @@ padding: 20px;
 .toggle {
   width: 50px;
   height: 25px;
-  /* background-color: #ccc; */
-  background-color: var(--highlight-bg);
+  background-color: #ccc;
   border-radius: 50px;
   position: relative;
   cursor: pointer;
@@ -765,8 +764,7 @@ padding: 20px;
 .toggle .circle {
   width: 21px;
   height: 21px;
-  /* background-color: #fff; */
-  background-color: var(--card-bg);
+  background-color: #fff;
   border-radius: 50%;
   position: absolute;
   top: 2px;
@@ -788,8 +786,7 @@ padding: 20px;
 .circle {
   width: 20px;
   height: 18px;
-  /* background: white; */
-  background: var(--card-bg);
+  background: white;
   border-radius: 50%;
   transition: transform 0.3s ease;
 }
@@ -859,13 +856,10 @@ padding: 20px;
 }
 
 .dark-mode .toggle{
-  /* background-color: rgb(228, 228, 229) !important;  */
-    background-color:#bfa98a !important; 
-
+  background-color: rgb(228, 228, 229) !important; /* couleur foncée */
 }
 .dark-mode .toggle .circle{
-  /* background: black !important; */
-  background: #2a2a2a !important;
+  background: black !important;
 }
 
 
