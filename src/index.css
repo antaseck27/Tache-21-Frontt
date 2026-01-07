@@ -18,8 +18,8 @@
 ================================ */
 
 body.dark {
-  background-color: #1f1b18 !important; /* fond général */
-  color: #e8dcc7 !important;
+  background-color: #635543 !important;
+  color: #f1e8dc;
 }
 
 /* Titres */
@@ -78,7 +78,7 @@ body.dark a:hover {
 }
 
 body.dark .welcome-card {
-  background-color: #3a2e2a !important;
+  background-color:  #3e3529  !important;
   box-shadow: 0 12px 30px rgba(0,0,0,0.4) !important;
 }
 
@@ -93,11 +93,11 @@ body.dark .welcome-title {
 
 /* Texte */
 .welcome-text {
-  color: #6b5a49;
+  color: #231d17;
 }
 
 body.dark .welcome-text {
-  color: #cbbfae !important;
+  color: #d2c3af !important;
 }
 /* ============================= */
 /* SIDEBAR */
@@ -114,19 +114,22 @@ body.dark .welcome-text {
 }
 
 .dark .sidebar {
-  background: linear-gradient(
-    180deg,
-    #0f0c0a,
-    #15110f,
-    #0f0c0a
-  ) !important;
-  box-shadow: 8px 0 40px rgba(0, 0, 0, 0.9);
+ 
+  background-color: #635543 !important;
+  color: #f1e8dc;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.6);
+
+
 }
 .sidebar-nav {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
   margin-top: 1.5rem;
+    background-color: transparent;
+
 }
 .sidebar-link {
   display: flex;
@@ -138,18 +141,19 @@ body.dark .welcome-text {
   font-weight: 500;
   color: #6b5a49;
   transition: all 0.25s ease;
+  
 }
 
 .sidebar-link:hover {
-  background: rgba(203, 185, 154, 0.25);
+  background: rgba(180, 157, 118, 0.25);
 }
 
 .dark .sidebar-link {
-  color: #e6dccf;
+  color: #dcccb8;
 }
 
 .dark .sidebar-link:hover {
-  background: rgba(255, 214, 160, 0.12);
+  background: rgba(167, 147, 120, 0.612);
 }
 .sidebar-link.active {
   background: linear-gradient(
@@ -197,6 +201,7 @@ body.dark .welcome-text {
   width: 18rem;
   transform: translateX(-100%);
   transition: transform 0.3s ease;
+  
 }
 
 .sidebar.mobile.open {
