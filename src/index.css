@@ -298,7 +298,7 @@ body.dark .welcome-text {
 
 /* Carte principale en mode sombre */
 .dark .timeline-gradient {
-  background-color: #00171f;
+  background: linear-gradient(to top right, #2a2a2a, #2a2a2a); /* Fond bleu foncé */
   border: 1px solid #d6c7b4; /* Bordure beige clair */
   box-shadow: 0 10px 20px rgba(218, 179, 107, 0.3); /* Ombre beige clair */
 }
@@ -326,7 +326,7 @@ body.dark .welcome-text {
 /* Bordure et ombre de la carte */
 .dark .timeline-gradient .card-info {
   /* border: 1px solid #d6c7b4;  */
-  /* box-shadow: 0 10px 20px rgba(218, 179, 107, 0.3);  */
+  box-shadow: 0 10px 20px rgba(218, 179, 107, 0.3); /* Ombre beige clair */
 }
 
 /* ===============================
