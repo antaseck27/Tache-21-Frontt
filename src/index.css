@@ -182,7 +182,12 @@ body.dark .welcome-text {
   box-shadow: 0 0 20px rgba(255, 200, 140, 0.25);
 }
 .sidebar-logout {
- 
+  margin-top: auto;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   color: #6b5a49;
   transition: background 0.25s;
 }
