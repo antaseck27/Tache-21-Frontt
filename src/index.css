@@ -267,9 +267,9 @@ body.dark .welcome-text {
 .dark .timeline-card {
   /* background: linear-gradient(to top right, #8f7e6b, #7a6654, #6b5a49); */
   background-color: #00171f;
-  /* border: 2px solid #bfa98a; */
+  border: 2px solid #bfa98a;
   color: #f1e8dc;
-  /* box-shadow: 0 8px 25px #b9a896; */
+  box-shadow: 0 8px 25px #b9a896;
 }
 
 .timeline-card:hover {
