@@ -98,6 +98,11 @@ body.dark .dark-card {
   box-shadow: 0 10px 25px rgba(0,0,0,0.35) !important;
 }
 
+body.dark .section-element,
+body.dark .other-element {
+  background-color: #00171f !important;
+}
+
 /* ===============================
    🧭 HEADER / SIDEBAR
 ================================ */
@@ -298,7 +303,8 @@ body.dark .welcome-text {
 
 /* Carte principale en mode sombre */
 .dark .timeline-gradient {
-  background: linear-gradient(to top right, #2a2a2a, #2a2a2a); /* Fond bleu foncé */
+  /*background: linear-gradient(to top right, #2a2a2a, #2a2a2a); /* Fond bleu foncé */
+  background-color: #00171f;
   border: 1px solid #d6c7b4; /* Bordure beige clair */
   box-shadow: 0 10px 20px rgba(218, 179, 107, 0.3); /* Ombre beige clair */
 }
@@ -306,7 +312,7 @@ body.dark .welcome-text {
 /* Texte dans les cartes en mode sombre */
 .dark .timeline-gradient .card-info {
   color: #f1e8dc; /* Texte beige clair */
-  background-color: #00171f !important;
+  /* background-color: #00171f; */
 }
 
 
