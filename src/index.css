@@ -1017,27 +1017,3 @@ padding: 20px;
    background: #e8dcc7;
 } */
 
-.carte-container {
-  perspective: 1000px;
-}
-
-.carte {
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-}
-
-.carte-avant, .carte-arriere {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-}
-
-.carte-arriere {
-  transform: rotateY(180deg);
-}
-
-.carte:hover {
-  transform: rotateY(180deg);
-}

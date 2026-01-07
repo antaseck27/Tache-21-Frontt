@@ -357,13 +357,16 @@ const lineOptions = {
         </div>
         {/* Carte avec rotation */}
 <div className="flex justify-center my-6">
-  <div className="carte-container perspective-1000">
-    <div className="carte w-72 h-40 rotate-3d transition-transform duration-500 hover:rotate-y-180">
-      <div className="carte-avant bg-gradient-to-r from-[#8f7e6b] to-[#6b5a49] p-6 rounded-xl shadow-lg text-white">
+  <div className="relative perspective-1000">
+    <div className="w-72 h-40 transform-style-preserve-3d transition-transform duration-500 hover:rotate-y-180">
+      {/* Face avant de la carte */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#8f7e6b] to-[#6b5a49] p-6 rounded-xl shadow-lg text-white">
         <h3 className="text-xl font-bold">Numéro de Compte</h3>
         <p className="mt-2 text-sm">1234 5678 9876 5432</p>
       </div>
-      <div className="carte-arriere bg-gradient-to-r from-[#6b5a49] to-[#8f7e6b] p-6 rounded-xl shadow-lg text-white">
+
+      {/* Face arrière de la carte */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#6b5a49] to-[#8f7e6b] p-6 rounded-xl shadow-lg text-white transform rotate-y-180">
         <h3 className="text-xl font-bold">Détails de la carte</h3>
         <p className="mt-4">CVV: 123</p>
         <p>Date d'Expiration: 12/25</p>
