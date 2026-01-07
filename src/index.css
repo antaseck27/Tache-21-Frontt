@@ -161,7 +161,7 @@ body.dark .welcome-text {
   padding: 1.5rem;
 
   height: 100vh;
-  box-shadow: 8px 0 30px #f1e8dc;
+  /* box-shadow: 8px 0 30px #f1e8dc; */
   z-index: 50;
 }
 
@@ -170,8 +170,8 @@ body.dark .welcome-text {
     background-color: #00171f !important;
   color: #f1e8dc;
   border: 1px solid #f1e8dc;
-  box-shadow:
-    0 8px 20px #f1e8dc;
+  /* box-shadow:
+    0 8px 20px #f1e8dc; */
 
 
 }
