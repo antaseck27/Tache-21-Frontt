@@ -347,15 +347,15 @@ const lineOptions = {
       </section>
 
       {/* Charts et carte */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-white dark:bg-[#2a2a2a] p-6 rounded-xl shadow-sm border border-beige-100 dark:border-beige-700">
-        <div className="lg:col-span-1"> 
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 ">
+        <div className="lg:col-span-1 bg-beige-50 dark:bg-[#2a2a2a] rounded-xl p-6 shadow-sm border border-beige-100 dark:border-beige-700"> 
           <Card>
             <div style={{ height: 300 }}>
               <Line data={lineData} options={lineOptions} />
             </div>
           </Card>
         </div>
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 bg-beige-50 dark:bg-[#2a2a2a] rounded-xl p-6 shadow-sm border border-beige-100 dark:border-beige-700">
           <Card className="flex justify-center items-center">
             {loadingCards ? (
               <p>Chargement carte...</p>
