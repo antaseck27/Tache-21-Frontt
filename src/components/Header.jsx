@@ -114,7 +114,7 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
   }, [token]);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white text-[#f1e8dc]   dark:bg-[#3a2e2a]  border-[#cbb99a] dark:border-[#b19b7a] text-[#6b5a49] dark:text-[#f1e8dc] transition-colors duration-300">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white text-[#f1e8dc]   dark:bg-[#3a2e2a]   border-[#cbb99a] dark:border-[#b19b7a] text-[#6b5a49] dark:text-[#f1e8dc] transition-colors duration-300">
       <div className="max-w-[1400px] mx-auto flex items-center h-20 px-4 gap-3">
         <button
           onClick={onOpenSidebar}

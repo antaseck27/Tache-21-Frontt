@@ -57,7 +57,7 @@ aria-hidden={!open}
 >
 <div className="flex items-center justify-between mb-6">
 <div className="flex items-center gap-3">
-<div className="w-10 h-10 rounded-lg bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] flex items-center justify-center text-white font-semibold shadow-sm ">B</div>
+{/* <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] flex items-center justify-center text-white font-semibold shadow-sm ">B</div> */}
 <div>
 <div className="text-lg font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">BankApp</div>
 <div className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">Gestion bancaire</div>
