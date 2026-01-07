@@ -266,9 +266,9 @@ const lineOptions = {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6  dashboard-container">
         <div
           onClick={() => setActiveCard("solde")}
-          className={`rounded-xl card p-10 shadow-lg cursor-pointer transition-all duration-300 ${activeCard === "solde" ? "bg-[#6b5a49] text-white" : "bg-white dark:bg-[#2a2a2a] dark:text-[#f1e8dc] text-[#6b5a49]"}`}
+          className={`rounded-xl card card p-10 shadow-lg cursor-pointer transition-all duration-300 ${activeCard === "solde" ? "bg-[#6b5a49] text-white" : "bg-white dark:bg-[#2a2a2a] dark:text-[#f1e8dc] text-[#6b5a49]"}`}
         >
-          <div className="flex justify-between items-start ">
+          <div className="flex justify-between items-start card-1">
             <div>
               <div className="text-sm">Solde Total</div>
               <div className="text-sm font-semibold mt-2">
@@ -283,7 +283,7 @@ const lineOptions = {
 
         <div
           onClick={() => setActiveCard("revenu")}
-          className={`rounded-xl p-10 shadow-lg cursor-pointer transition-all duration-300 card ${activeCard === "revenu" ? "bg-[#6b5a49] text-white" : "bg-white dark:bg-[#2a2a2a] dark:text-[#f1e8dc] text-[#6b5a49]"}`}
+          className={`rounded-xl p-10 shadow-lg card card-2 cursor-pointer transition-all duration-300 card ${activeCard === "revenu" ? "bg-[#6b5a49] text-white" : "bg-white dark:bg-[#2a2a2a] dark:text-[#f1e8dc] text-[#6b5a49]"}`}
         >
           <div className="text-sm font-semibold">Revenus ce mois</div>
           <div className="text-sm font-semibold mt-2 text-green-500">
@@ -293,7 +293,7 @@ const lineOptions = {
 
         <div
           onClick={() => setActiveCard("depense")}
-          className={`rounded-xl p-10 shadow-lg cursor-pointer transition-all duration-300 card ${activeCard === "depense" ? "bg-[#6b5a49] text-white" : "bg-white dark:bg-[#2a2a2a] dark:text-[#f1e8dc] text-[#6b5a49]"}`}
+          className={`rounded-xl card card-3 p-10 shadow-lg cursor-pointer transition-all duration-300 card ${activeCard === "depense" ? "bg-[#6b5a49] text-white" : "bg-white dark:bg-[#2a2a2a] dark:text-[#f1e8dc] text-[#6b5a49]"}`}
         >
           <div className="text-sm font-semibold">Dépenses ce mois</div>
           <div className="text-sm font-semibold mt-2 text-red-500">
