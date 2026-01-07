@@ -301,7 +301,7 @@ const lineOptions = {
       </div>
 
       {/* Mes Comptes */}
-      <section className="mt-17 mb-20 flex justify-center ">
+      {/* <section className="mt-17 mb-20 flex justify-center ">
         <div className="w-full max-w-7xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7]. dark:from-[#222] dark:via-[#2a2a2a] dark:to-[#222] rounded-3xl shadow-1xl p-10 relative">
           <h3 className="text-2xl sm:text-3xl font-bold text-center text-[#6b5a49] mb-12">Mes Comptes</h3>
           <div className="relative">
@@ -344,7 +344,75 @@ const lineOptions = {
             "Gérez vos comptes, simplifiez votre vie financière"
           </p>
         </div>
-      </section>
+      </section> */}
+      <section className="mt-17 mb-20 flex justify-center">
+  <div className="w-full max-w-7xl rounded-3xl shadow-1xl p-10 relative
+                  bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7]
+                  dark:from-[#222] dark:via-[#2a2a2a] dark:to-[#222] transition-colors duration-300">
+    <h3 className="text-2xl sm:text-3xl font-bold text-center text-[#6b5a49] dark:text-[#f1e8dc] mb-12">
+      Mes Comptes
+    </h3>
+    <div className="relative">
+      <div className="hidden sm:block absolute left-1/2 top-0 h-full w-1
+                      bg-gradient-to-b from-[#d8cbb4] via-[#cbbba3] to-transparent
+                      dark:from-[#444] dark:via-[#333] dark:to-transparent
+                      -translate-x-1/2 shadow-md">
+      </div>
+      <div className="space-y-8 sm:space-y-12 md:space-y-16">
+        {dashboardData.comptes.map((compte, index) => (
+          <div
+            key={compte._id}
+            className={`relative flex items-center w-full justify-center sm:justify-start
+                        ${index % 2 === 0 ? "sm:pl-[calc(50%+24px)]" : "sm:justify-end sm:pr-[calc(50%+24px)]"}`}
+          >
+            <span className="hidden sm:flex absolute left-1/2 w-6 h-6
+                             bg-gradient-to-tr from-[#cbb99a] via-[#d4b8a5] to-[#cbb99a]
+                             dark:from-[#555] dark:via-[#444] dark:to-[#555]
+                             rounded-full shadow-lg -translate-x-1/2 flex items-center justify-center text-white font-bold">
+              {index + 1}
+            </span>
+
+            <div className="w-full max-w-sm sm:max-w-md mx-auto p-5 sm:p-6
+                            rounded-2xl shadow-lg
+                            bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7]
+                            dark:from-[#2a2a2a] dark:via-[#333] dark:to-[#2a2a2a]
+                            transition-colors duration-300">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-[#6b5a49]/70 dark:text-neutral-100">
+                    {compte.type}
+                  </p>
+                  <h4 className="text-lg sm:text-xl font-bold text-[#6b5a49] mt-1 dark:text-neutral-300">
+                    {compte.name}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-[#6b5a49]/70 dark:text-neutral-400">
+                    Numéro : {compte.accountNumber ? compte.accountNumber.replace(/(.{4})/g, "$1 ") : "N/A"}
+                  </p>
+                </div>
+
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#cbb99a]/30 flex items-center justify-center text-[#6b5a49]">
+                  <i className={`fas ${compte.type === "courant" ? "fa-wallet" : compte.type === "epargne" ? "fa-piggy-bank" : "fa-briefcase"}`}></i>
+                </div>
+              </div>
+
+              <div className="mt-4">
+                <p className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#6b5a49] dark:text-[#f1e8dc]">
+                  {compte.balance.toLocaleString()} {compte.currency}
+                </p>
+                <p className="text-xs sm:text-sm text-[#6b5a49]/60 dark:text-neutral-400">Solde disponible</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <p className="mt-8 sm:mt-12 text-center text-[#8f7e6b] dark:text-[#d6c5a9] italic font-medium text-base sm:text-lg">
+      "Gérez vos comptes, simplifiez votre vie financière"
+    </p>
+  </div>
+</section>
+
 
       {/* Charts et carte */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
