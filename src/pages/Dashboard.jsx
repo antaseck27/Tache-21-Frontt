@@ -302,7 +302,7 @@ const lineOptions = {
 
       {/* Mes Comptes */}
       <section className="mt-17 mb-20 flex justify-center ">
-        <div className="w-full max-w-7xl timeline-wrapper  rounded-3xl shadow-1xl p-10 relative">
+        <div className="w-full max-w-7xl card-timeline rounded-3xl shadow-1xl p-10 relative">
           <h3 className="text-2xl sm:text-3xl font-bold text-center text-[#6b5a49] mb-12 account-card">Mes Comptes</h3>
           <div className="relative">
             <div className="hidden sm:block timeline-gradient absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-[#d8cbb4] via-[#cbbba3] to-transparent -translate-x-1/2 shadow-md dark:from-neutral-600 dark:via-neutral-500 "></div>
@@ -312,11 +312,11 @@ const lineOptions = {
                   key={compte._id}
                   className={`relative flex items-center w-full justify-center sm:justify-start ${index % 2 === 0 ? "sm:pl-[calc(50%+24px)]" : "sm:justify-end sm:pr-[calc(50%+24px)]"}`}
                 >
-                  <span className=" hidden sm:flex absolute left-1/2 w-6 h-6 bg-gradient-to-tr from-[#cbb99a] via-[#d4b8a5] to-[#cbb99a] rounded-full shadow-lg -translate-x-1/2  flex items-center justify-center text-white font-bold">
+                  <span className="timeline-bubble  hidden sm:flex absolute left-1/2 w-6 h-6 bg-gradient-to-tr from-[#cbb99a] via-[#d4b8a5] to-[#cbb99a] rounded-full shadow-lg -translate-x-1/2  flex items-center justify-center text-white font-bold">
                     {index + 1}
                   </span>
 
-                  <div className="w-full max-w-sm sm:max-w-md mx-auto p-5 sm:p-6 rounded-2xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] shadow-lg  dark:from-neutral-700 dark:via-neutral-600 dark:to-neutral-700">
+                  <div className=" timeline-gradient w-full max-w-sm sm:max-w-md mx-auto p-5 sm:p-6 rounded-2xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] shadow-lg  dark:from-neutral-700 dark:via-neutral-600 dark:to-neutral-700">
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-xs uppercase tracking-widest text-[#6b5a49]/70 dark:text-neutral-100">{compte.type}</p>
@@ -326,7 +326,7 @@ const lineOptions = {
                         </p>
                       </div>
 
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#cbb99a]/30 flex items-center justify-center text-[#6b5a49]">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 icon-circle rounded-full bg-[#cbb99a]/30 flex items-center justify-center text-[#6b5a49]">
                         <i className={`fas ${compte.type === "courant" ? "fa-wallet" : compte.type === "epargne" ? "fa-piggy-bank" : "fa-briefcase"}`}></i>
                       </div>
                     </div>
