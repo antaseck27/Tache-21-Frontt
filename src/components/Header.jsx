@@ -330,7 +330,7 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
   const fullName = `${user.prenom || ""} ${user.name || ""}`.trim();
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#3a2e2a] border-b border-[#cbb99a] dark:border-[#b19b7a]">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-[#3a2e2a]  border-[#cbb99a] dark:border-[#b19b7a]">
       <div className="max-w-[1400px] mx-auto flex items-center h-20 px-4 gap-3">
 
         {/* ===== SIDEBAR BTN ===== */}
@@ -343,7 +343,7 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
 
         {/* ===== LOGO ===== */}
         <Link to="/dashboard" className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-white shadow  flex items-center justify-center">
+          <div className="w-10 h-10 rounded-lg bg-white shadow overflow-hidden flex items-center justify-center">
             <img src={logo} alt="logo" className="w-8 h-8 object-contain" />
           </div>
           <div className="hidden sm:block">
