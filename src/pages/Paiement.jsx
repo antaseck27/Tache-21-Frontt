@@ -217,7 +217,7 @@ const services = [
         </div>
 
         {/* CONTENT */}
-        <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow p-4 sm:p-6 overflow-x-auto">
+        <div className=" dark:bg-neutral-800 rounded-2xl shadow p-4 sm:p-6 overflow-x-auto">
           {/* BENEFICIAIRES */}
           {activeTab === "beneficiaires" && (
             <>
