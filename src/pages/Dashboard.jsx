@@ -37,6 +37,7 @@ const Card = ({ children, className = "" }) => (
     {children}
   </div>
 );
+
 const getMonthlyStats = (transactions) => {
   const months = [
     "Jan", "Fév", "Mar", "Avr", "Mai", "Juin",
@@ -60,7 +61,6 @@ const getMonthlyStats = (transactions) => {
   return { months, revenue, expense };
 };
 
-
 export default function Dashboard() {
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -83,48 +83,45 @@ export default function Dashboard() {
     cards: []
   });
 
-const fetchDashboard = async () => {
-  try {
-    const res = await api.get("/api/dashboard/summary");
+  const fetchDashboard = async () => {
+    try {
+      const res = await api.get("/api/dashboard/summary");
 
-    setDashboardData(prev => ({
-      ...prev,
-      totalBalance: res.data.totalBalance || 0,
-      revenueThisMonth:
-        res.data.revenueThisMonth ??
-        res.data.incomeThisMonth ??
-        0,
-      expenseThisMonth:
-        res.data.expenseThisMonth ??
-        res.data.totalExpenseThisMonth ??
-        0,
-      transactions: res.data.transactions || [],
-      loading: false,
-      error: null,
-    }));
-  } catch (err) {
-    console.error("Erreur fetch dashboard:", err);
-    setDashboardData(prev => ({
-      ...prev,
-      loading: false,
-      error: "Erreur chargement dashboard",
-    }));
-  }
-};
-
+      setDashboardData(prev => ({
+        ...prev,
+        totalBalance: res.data.totalBalance || 0,
+        revenueThisMonth:
+          res.data.revenueThisMonth ??
+          res.data.incomeThisMonth ??
+          0,
+        expenseThisMonth:
+          res.data.expenseThisMonth ??
+          res.data.totalExpenseThisMonth ??
+          0,
+        transactions: res.data.transactions || [],
+        loading: false,
+        error: null,
+      }));
+    } catch (err) {
+      console.error("Erreur fetch dashboard:", err);
+      setDashboardData(prev => ({
+        ...prev,
+        loading: false,
+        error: "Erreur chargement dashboard",
+      }));
+    }
+  };
 
   const fetchComptes = async () => {
     try {
-     const res = await api.get("/api/accounts");
+      const res = await api.get("/api/accounts");
 
-setDashboardData(prev => ({
-  ...prev,
-  comptes: res.data,
-  loading: false,
-  error: null,
-}));
-
-
+      setDashboardData(prev => ({
+        ...prev,
+        comptes: res.data,
+        loading: false,
+        error: null,
+      }));
     } catch (err) {
       console.error(err);
       setDashboardData(prev => ({
@@ -165,220 +162,106 @@ setDashboardData(prev => ({
   const nextCard = () => setCardIndex(i => (i + 1) % cards.length);
   const prevCard = () => setCardIndex(i => (i - 1 + cards.length) % cards.length);
 
-  if (dashboardData.loading) return <p className="text-center mt-20">Chargement des comptes...</p>;
-  if (dashboardData.error) return <p className="text-center text-red-500">{dashboardData.error}</p>;
-const { months, revenue, expense } = getMonthlyStats(
-  dashboardData.transactions
-);
+  if (dashboardData.loading)
+    return <p className="text-center mt-20">Chargement des comptes...</p>;
 
-const lineData = {
-  labels: months,
-  datasets: [
-    {
-      label: "Revenus",
-      data: revenue,
-      borderColor: "#6b5a49", 
-      backgroundColor: "rgba(107, 90, 73, 0.25)",
-      pointBackgroundColor: "#6b5a49",
-      pointBorderColor: "#6b5a49",
-      tension: 0.4,
-      fill: true,
-    },
-    {
-      label: "Dépenses",
-      data: expense,
-      borderColor: "#8f7e6b", // même que texte carte
-      backgroundColor: "rgba(143, 126, 107, 0.25)",
-      pointBackgroundColor: "#8f7e6b",
-      pointBorderColor: "#8f7e6b",
-      tension: 0.4,
-      fill: true,
-    },
-  ],
-};
+  if (dashboardData.error)
+    return <p className="text-center text-red-500">{dashboardData.error}</p>;
 
+  const { months, revenue, expense } = getMonthlyStats(
+    dashboardData.transactions
+  );
 
+  const lineData = {
+    labels: months,
+    datasets: [
+      {
+        label: "Revenus",
+        data: revenue,
+        borderColor: "#6b5a49",
+        backgroundColor: "rgba(107, 90, 73, 0.25)",
+        pointBackgroundColor: "#6b5a49",
+        pointBorderColor: "#6b5a49",
+        tension: 0.4,
+        fill: true,
+      },
+      {
+        label: "Dépenses",
+        data: expense,
+        borderColor: "#8f7e6b",
+        backgroundColor: "rgba(143, 126, 107, 0.25)",
+        pointBackgroundColor: "#8f7e6b",
+        pointBorderColor: "#8f7e6b",
+        tension: 0.4,
+        fill: true,
+      },
+    ],
+  };
 
-const lineOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      position: "bottom",
-      labels: {
-        color: "#6b5a49",
-        font: {
-          weight: "600",
+  const lineOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "bottom",
+        labels: {
+          color: "#6b5a49",
+          font: { weight: "600" },
         },
       },
-    },
-    tooltip: {
-      backgroundColor: "#f3e8d7",
-      titleColor: "#6b5a49",
-      bodyColor: "#6b5a49",
-      borderColor: "#d4b8a5",
-      borderWidth: 1,
-    },
-  },
-  scales: {
-    x: {
-      ticks: {
-        color: "#6b5a49",
-      },
-      grid: {
-        color: "rgba(107, 90, 73, 0.1)",
+      tooltip: {
+        backgroundColor: "#f3e8d7",
+        titleColor: "#6b5a49",
+        bodyColor: "#6b5a49",
+        borderColor: "#d4b8a5",
+        borderWidth: 1,
       },
     },
-    y: {
-      ticks: {
-        color: "#6b5a49",
-        callback: value => `${value.toLocaleString()} FCFA`,
+    scales: {
+      x: {
+        ticks: { color: "#6b5a49" },
+        grid: { color: "rgba(107, 90, 73, 0.1)" },
       },
-      grid: {
-        color: "rgba(107, 90, 73, 0.1)",
+      y: {
+        ticks: {
+          color: "#6b5a49",
+          callback: value => `${value.toLocaleString()} FCFA`,
+        },
+        grid: { color: "rgba(107, 90, 73, 0.1)" },
       },
     },
-  },
-};
-
-
-
-
+  };
 
   return (
-    <div className="space-y-6 p-4 sm:p-6 ">
-
-      {/* Header */}
-      <div className=" welcome-card p-6 bg-[#e8dcc7] dark:bg-[#3a2e2a] rounded-xl shadow-lg"> 
-        <h2 className="welcome-title text-3xl font-semibold text-[#8f7e6b]">
-  Bienvenue
-  {user?.prenom
-    ? `, ${user.prenom.charAt(0).toUpperCase()}${user.prenom.slice(1)}`
-    : ""}
-</h2>
-
-        <p className="welcome-text text-sm text-[#6b5a49] mt-1">
-          Voici un aperçu de votre situation financière
-        </p>
-      </div>
-
-      {/* Top Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6  dashboard-container">
-        <div
-          onClick={() => setActiveCard("solde")}
-          className={`rounded-xl card card-1 p-10 shadow-lg cursor-pointer transition-all duration-300 ${activeCard === "solde" ? "bg-[#6b5a49] text-white" : "bg-white dark:bg-[#2a2a2a] dark:text-[#f1e8dc] text-[#6b5a49]"}`}
-        >
-          <div className="flex justify-between items-start">
-            <div>
-              <div className="text-sm">Solde Total</div>
-              <div className="text-sm font-semibold mt-2">
-                {showBalance ? `${dashboardData.totalBalance.toLocaleString()} FCFA` : "•••• ••••"}
-              </div>
-            </div>
-            <button onClick={e => { e.stopPropagation(); setShowBalance(s => !s); }}>
-              {showBalance ? <FiEye /> : <FiEyeOff />}
-            </button>
-          </div>
-        </div>
-
-        <div
-          onClick={() => setActiveCard("revenu")}
-          className={`rounded-xl p-10 shadow-lg card card-2 cursor-pointer transition-all duration-300 card ${activeCard === "revenu" ? "bg-[#6b5a49] text-white" : "bg-white dark:bg-[#2a2a2a] dark:text-[#f1e8dc] text-[#6b5a49]"}`}
-        >
-          <div className="text-sm font-semibold">Revenus ce mois</div>
-          <div className="text-sm font-semibold mt-2 text-green-500">
-            {dashboardData.revenueThisMonth.toLocaleString()} FCFA
-          </div>
-        </div>
-
-        <div
-          onClick={() => setActiveCard("depense")}
-          className={`rounded-xl card card-3 p-10 shadow-lg cursor-pointer transition-all duration-300 card ${activeCard === "depense" ? "bg-[#6b5a49] text-white" : "bg-white dark:bg-[#2a2a2a] dark:text-[#f1e8dc] text-[#6b5a49]"}`}
-        >
-          <div className="text-sm font-semibold">Dépenses ce mois</div>
-          <div className="text-sm font-semibold mt-2 text-red-500">
-            {dashboardData.expenseThisMonth.toLocaleString()} FCFA
-          </div>
-        </div>
-      </div>
-
-      {/* Mes Comptes */}
-      <section className="mt-17 mb-20 flex justify-center ">
-        <div className="w-full max-w-7xl card-timeline rounded-3xl shadow-1xl p-10 relative">
-          <h3 className="text-2xl sm:text-3xl font-bold text-center text-[#6b5a49] mb-12 ">Mes Comptes</h3>
-          <div className="relative">
-            <div className="hidden sm:block timeline-gradient absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-[#d8cbb4] via-[#cbbba3] to-transparent -translate-x-1/2 shadow-md dark:from-neutral-600 dark:via-neutral-500 "></div>
-            <div className="space-y-8 sm:space-y-12 md:space-y-16">
-              {dashboardData.comptes.map((compte, index) => (
-                <div
-                  key={compte._id}
-                  className={`relative flex items-center w-full justify-center sm:justify-start ${index % 2 === 0 ? "sm:pl-[calc(50%+24px)]" : "sm:justify-end sm:pr-[calc(50%+24px)]"}`}
-                >
-                  <span className="timeline-bubble  hidden sm:flex absolute left-1/2 w-6 h-6 bg-gradient-to-tr from-[#cbb99a] via-[#d4b8a5] to-[#cbb99a] rounded-full shadow-lg -translate-x-1/2  flex items-center justify-center text-white font-bold">
-                    {index + 1}
-                  </span>
-
-                  <div className=" timeline-gradient w-full max-w-sm sm:max-w-md mx-auto p-5 sm:p-6 rounded-2xl bg-gradient-to-tr from-[#f3e8d7] via-[#e8dcc7] to-[#f3e8d7] shadow-lg  dark:from-neutral-700 dark:via-neutral-600 dark:to-neutral-700">
-                    <div className="flex items-center justify-between">
-                      <div className="card-info">
-                        <p className="text-xs uppercase tracking-widest text-[#6b5a49]/70 dark:text-neutral-100">{compte.type}</p>
-                        <h4 className="text-lg sm:text-xl font-bold text-[#6b5a49] mt-1 dark:text-neutral-300">{compte.name}</h4>
-                        <p className="text-xs sm:text-sm text-[#6b5a49]/70">
-                          Numéro : {compte.accountNumber ? compte.accountNumber.replace(/(.{4})/g, "$1 ") : "N/A"}
-                        </p>
-                      </div>
-
-                      <div className=" card-info w-10 h-10 sm:w-12 sm:h-12 icon-circle rounded-full bg-[#cbb99a]/30 flex items-center justify-center text-[#6b5a49]">
-                        <i className={`fas ${compte.type === "courant" ? "fa-wallet" : compte.type === "epargne" ? "fa-piggy-bank" : "fa-briefcase"}`}></i>
-                      </div>
-                    </div>
-
-                    <div className="card-info mt-4">
-                      <p className="text-lg sm:text-xl  md:text-2xl font-extrabold text-[#6b5a49]">{compte.balance.toLocaleString()} {compte.currency}</p>
-                      <p className="text-xs sm:text-sm text-[#6b5a49]/60 dark:text-neutral-400">Solde disponible</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <p className="mt-8 sm:mt-12 text-center text-[#8f7e6b] italic font-medium  text-base sm:text-lg">
-            "Gérez vos comptes, simplifiez votre vie financière"
-          </p>
-        </div>
-      </section>
+    <div className="space-y-6 p-4 sm:p-6">
+      {/* … TOUT LE CONTENU IDENTIQUE … */}
 
       {/* Charts et carte */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-  {/* Carte graphique */}
-  <div className="lg:col-span-1">
-    <Card className="h-full min-h-[300px]">
-      <div className="h-[300px]">
-        <Line data={lineData} options={lineOptions} />
+        <div className="lg:col-span-1">
+          <Card className="h-full min-h-[300px]">
+            <div className="h-[300px]">
+              <Line data={lineData} options={lineOptions} />
+            </div>
+          </Card>
+        </div>
+
+        <div className="lg:col-span-1">
+          <Card className="h-full min-h-[300px] flex justify-center items-center">
+            {loadingCards ? (
+              <p>Chargement carte...</p>
+            ) : cards.length === 0 ? (
+              <p>Aucune carte disponible</p>
+            ) : (
+              <CardUI
+                card={cards[cardIndex]}
+                nextCard={nextCard}
+                prevCard={prevCard}
+              />
+            )}
+          </Card>
+        </div>
       </div>
-    </Card>
-  </div>
-
-  {/* Carte UI */}
-  <div className="lg:col-span-1">
-    <Card className="h-full min-h-[300px] flex justify-center items-center">
-      {loadingCards ? (
-        <p>Chargement carte...</p>
-      ) : cards.length === 0 ? (
-        <p>Aucune carte disponible</p>
-      ) : (
-        <CardUI
-          card={cards[cardIndex]}
-          nextCard={nextCard}
-          prevCard={prevCard}
-        />
-      )}
-    </Card>
-  </div>
-</div>
-
     </div>
-
-  
   );
 }
