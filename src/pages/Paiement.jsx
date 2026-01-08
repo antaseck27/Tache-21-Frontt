@@ -185,7 +185,7 @@ export default function Paiement() {
         </div>
 
         {/* SERVICES */}
-        <div className="grid grid-cols-1 rounded-xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
+        <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
           {services.map((s) => (
             <button
               key={s.id}
@@ -221,7 +221,7 @@ export default function Paiement() {
           {/* BENEFICIAIRES */}
           {activeTab === "beneficiaires" && (
             <>
-              <div className="flex rounded-xl justify-end mb-4">
+              <div className="flex justify-end mb-4">
                 <button onClick={() => setShowNewBenefModal(true)} className="bg-gradient-to-br from-[#b9a896] to-[#8f7e6b] text-white px-4 py-2 rounded-xl">
                   Nouveau bénéficiaire
                 </button>
@@ -271,9 +271,9 @@ export default function Paiement() {
 
               {/* Pagination */}
               <div className="flex justify-center items-center gap-3 mt-6">
-                <button disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)} className="px-4 py-2 rounded-lg bg-gray-200 disabled:opacity-50">Précédent</button>
+                <button disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)} className="px-4 py-2 rounded-lg bg-gray-200 disabled:opacity-50 rounded-xl">Précédent</button>
                 <span className="text-sm text-gray-600">Page {currentPage} / {totalPages}</span>
-                <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)} className="px-4 py-2 rounded-lg bg-gray-200 disabled:opacity-50">Suivant</button>
+                <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)} className="px-4 py-2 rounded-lg bg-gray-200 disabled:opacity-50 rounded-xl">Suivant</button>
               </div>
             </div>
           )}
