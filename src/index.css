@@ -181,27 +181,13 @@ body.dark .welcome-text {
   color: #f1e8dc;
 }
 .dark .timeline-gradient .card-info{
-  color: #f1e8dc !important;
-  /* background-color: #00171f !important;
+  /* color: #f1e8dc !important;
+  background-color: #00171f !important;
   border: 2px solid #bfa98a !important; */
 }
+/* Carte principale en mode sombre */
 .dark .timeline-gradient {
   background: linear-gradient(to top right, #2a2a2a, #2a2a2a); /* Fond bleu foncé */
   border: 1px solid #d6c7b4; /* Bordure beige clair */
   box-shadow: 0 10px 20px rgba(218, 179, 107, 0.3); /* Ombre beige clair */
-}
-
-/* Texte dans les cartes en mode sombre */
-/* .dark .timeline-gradient .card-info {
-  color: #f1e8dc; 
-  background-color: #00171f;
-} */
-/*--------- transaction dark--------- */
-.dark body,
-/* .dark .min-h-screen { */
-.dark .collectMode {
-  /* background-color: var(--bg-page); */
-  background-color: #00171f !important;
-  color: var(--text-main);
-  transition: background 0.3s ease, color 0.3s ease;
 }
