@@ -74,8 +74,8 @@ export default function Home() {
           <motion.div {...fadeUp} transition={{ delay: 0.6, duration: 1 }} className="mt-8 flex gap-4">
             <Link
               to="/signup"
-              // className="px-4 py-2 rounded-xl shadow-lg font-semibold but1"
-                className="px-4 py-2 rounded-xl shadow-lg font-semibold text-base text-white"
+              // className="px-4 py-2 rounded-xs shadow-lg font-semibold but1"
+                className="px-4 py-2 rounded-xs shadow-lg font-semibold text-base text-white"
 
               style={{
                background: "linear-gradient(90deg, #e4c69bff, #755e3cff)",
@@ -85,7 +85,7 @@ export default function Home() {
             </Link>
             <Link
               to="/login"
-              className="px-4 py-2 rounded-xl shadow-lg border  border-white font-semibold text-base transition transform hover:bg-white hover:text-[#5a4a3a] hover:scale-105"
+              className="px-4 py-2 rounded-xs shadow-lg border  border-white font-semibold text-base transition transform hover:bg-white hover:text-[#5a4a3a] hover:scale-105"
             >
               Se connecter
             </Link>
@@ -123,7 +123,7 @@ export default function Home() {
               whileInView={fadeUp.animate}
               viewport={{ once: true }}
               transition={{ delay: i * 0.2, duration: 0.6 }}
-              className="p-8 rounded-xl shadow-lg bg-white text-center"
+              className="p-8 rounded-xs shadow-lg bg-white text-center"
             >
               <div className="text-[#bfa98a] mb-4">{item.icon}</div>
               <h3 className="text-2xl font-semibold">{item.title}</h3>
@@ -167,7 +167,7 @@ export default function Home() {
               whileInView={fadeUp.animate}
               viewport={{ once: true }}
               transition={{ delay: i * 0.2, duration: 0.6 }}
-              className="flex items-start gap-5 p-6 rounded-xl bg-[#e8dcc7]"
+              className="flex items-start gap-5 p-6 rounded-xs bg-[#e8dcc7]"
             >
               <div className="text-[#bfa98a]">{f.icon}</div>
               <div>
@@ -206,7 +206,7 @@ export default function Home() {
               whileInView={fadeUp.animate}
               viewport={{ once: true }}
               transition={{ delay: i * 0.2, duration: 0.6 }}
-              className="p-8 rounded-xl shadow-lg bg-white border border-[#ebdfcc] text-center"
+              className="p-8 rounded-xs shadow-lg bg-white border border-[#ebdfcc] text-center"
             >
               <img
                 src={a.img}
@@ -226,7 +226,7 @@ export default function Home() {
         <p className="text-[#6b5a49] mt-3 text-lg">Ouvrez votre compte en 2 minutes.</p>
         <Link
           to="/Login"
-          className="mt-6 inline-block px-8 py-3 bg-[#e8dcc7]  font-semibold rounded-xl shadow-lg"
+          className="mt-6 inline-block px-8 py-3 bg-[#e8dcc7]  font-semibold rounded-xs shadow-lg"
         >
           Commencer maintenant
         </Link>
