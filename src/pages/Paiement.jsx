@@ -247,9 +247,9 @@ const services = [
 
           {/* HISTORIQUE */}
           {activeTab === "historique" && (
-            <div className="overflow-x-auto rounded-xl ">
+            <div className="historique-container overflow-x-auto rounded-xl ">
               <table className="w-full table-auto text-center min-w-[500px]">
-                <thead className="text-gray-500">
+                <thead className="table-header text-gray-500">
                   <tr>
                     <th className="text-left">Service</th>
                     <th>Montant</th>
@@ -259,11 +259,11 @@ const services = [
                 </thead>
                 <tbody>
                   {historique.map((h) => (
-                    <tr key={h.id} className="border-t">
+                    <tr key={h.id} className=" table-row border-t">
                       <td className="text-left py-3">{h.service}</td>
                       <td>{h.montant}</td>
                       <td>{h.date}</td>
-                      <td><span className="bg-gradient-to-br from-[#b9a896] to-[#8f7e6b] text-white px-3 py-1 rounded-lg text-sm">{h.statut}</span></td>
+                      <td><span className="statut bg-gradient-to-br from-[#b9a896] to-[#8f7e6b] text-white px-3 py-1 rounded-lg text-sm">{h.statut}</span></td>
                     </tr>
                   ))}
                 </tbody>
@@ -271,9 +271,9 @@ const services = [
 
               {/* Pagination */}
               <div className="flex justify-center items-center gap-3 mt-6">
-                <button disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)} className="px-4 py-2 rounded-lg bg-gray-200 disabled:opacity-50 rounded-xl">Précédent</button>
-                <span className="text-sm text-gray-600">Page {currentPage} / {totalPages}</span>
-                <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)} className="px-4 py-2 rounded-lg bg-gray-200 disabled:opacity-50 rounded-xl">Suivant</button>
+                <button disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)} className="pagination-button px-4 py-2 rounded-lg bg-gray-200 disabled:opacity-50 rounded-xl">Précédent</button>
+                <span className=" text-sm text-gray-600">Page {currentPage} / {totalPages}</span>
+                <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)} className="pagination-button px-4 py-2 rounded-lg bg-gray-200 disabled:opacity-50 rounded-xl">Suivant</button>
               </div>
             </div>
           )}
