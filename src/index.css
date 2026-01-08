@@ -276,8 +276,46 @@ body.dark .welcome-text {
 .dark .shadow-md,
 .dark .rounded-xl {
    background: linear-gradient(to right, #b9a896, #8f7e6b) !important;
-   color: var(--card-bg);
+   color: #1a1a1a;
   border: 1px solid var(--bg-border);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
   transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+.dark .summary-card,
+.dark .card {
+  background-color: var(--summary-card-bg);
+  border-color: var(--summary-card-border);
+  /* color: var(--text-main); */
+   background: linear-gradient(to right, #80674e, #433525) !important;
+   color: rgba(255, 255, 255, 0.04);
+
+}
+
+.dark .summary-card p,
+.dark .summary-card span {
+  color: var(--text-main);
+   background: linear-gradient(to right, #b9a896, #8f7e6b) !important;
+    
+
+}
+.dark input,
+.dark select {
+  background-color: #74614be7;
+  color: var(--text-main);
+  border: 1px solid #4a4a4a;
+}
+.dark input::placeholder,
+.dark select::placeholder {
+  /* color: var(--text-secondary); */
+  color: #cbbfae;
+}
+.dark .text-2xl.p-2.rounded-full,
+.dark .icon-circle {
+  background-color: var(--icon-bg);
+  color: var(--text-main);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.dark .px-2.py-1.text-xs.rounded-full {
+  background-color: var(--badge-bg);
+  color: var(--badge-text);
 }
