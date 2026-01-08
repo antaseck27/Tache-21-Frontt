@@ -265,3 +265,42 @@ body.dark .welcome-text {
   box-shadow: 0 10px 20px rgba(218, 179, 107, 0.3); /* Ombre beige clair */
 }
 /* -------transaction--------- */
+.dark body,
+/* .dark .min-h-screen { */
+.dark .collectMode {
+  /* background-color: var(--bg-page); */
+  background-color: #00171f !important;
+  color: var(--text-main);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.dark .shadow-md,
+.dark .rounded-xl {
+   background: linear-gradient(to right, #b9a896, #8f7e6b) !important;
+   color: var(--card-bg);
+  border: 1px solid var(--bg-border);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+.dark .summary-card,
+.dark .card {
+  background-color: var(--summary-card-bg);
+  border-color: var(--summary-card-border);
+  /* color: var(--text-main); */
+   background: linear-gradient(to right, #80674e, #433525) !important;
+   color: rgba(255, 255, 255, 0.04);
+
+}
+
+.dark .summary-card p,
+.dark .summary-card span {
+  color: var(--text-main);
+   background: linear-gradient(to right, #b9a896, #8f7e6b) !important;
+    
+
+}
+.dark input,
+.dark select {
+  background-color: #74614be7;
+  color: var(--text-main);
+  border: 1px solid #4a4a4a;
+}
