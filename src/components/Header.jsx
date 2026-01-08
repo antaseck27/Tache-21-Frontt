@@ -178,7 +178,7 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
             {openNotif && (
               <div className="absolute right-0 mt-2 w-64 max-h-80 overflow-y-auto bg-white dark:bg-[#222] border border-[#cbb99a] dark:border-[#b19b7a] rounded-md shadow-md z-50">
                 {notifications.length === 0 ? (
-                  <p className="p-3 text-sm  dark:text-[#f1e8dc]">Aucune notification</p>
+                  <p className="p-3 text-sm text-[#f1e8dc] dark:text-[#f1e8dc]">Aucune notification</p>
                 ) : (
                   notifications.map(n => (
                     <div key={n._id} className={`p-3 text-sm text-brown-800 border-b border-[#cbb99a] dark:border-[#b19b7a] cursor-pointer ${!n.read ? "bg-[#e8dcc7] dark:bg-[#b19b7a]" : ""}`} onClick={() => handleMarkAsRead(n._id)}>
