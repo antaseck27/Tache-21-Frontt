@@ -120,15 +120,16 @@ Déconnexion
 <aside className=" sidebar hidden md:fixed md:inset-y-0 md:left-0 md:w-72 md:bg-white md:p-6 md:overflow-y-auto md:flex md:flex-col dark:md:bg-[#0f0f0f]">
 <div>
 <div className="flex items-center gap-3 mb-8">
-<div className="w-10 h-10 rounded-lg bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] flex items-center justify-center text-white font-semibold shadow-sm">B</div>
-<div>
     <div className="w-10 h-10 rounded-lg bg-white shadow overflow-hidden flex items-center justify-center">
                 <img src={logo} alt="logo" className="w-8 h-8 object-contain" />
-              </div>
-              <div className="hidden sm:block">
-                <p className="font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">
+    </div>
+      <div>
+        <p className="font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">
                   BankRewmi
-                </p>
+              </p>
+       <div/>
+              <div className="hidden sm:block">
+                
                 <p className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">
                   Sa Karàngué Koppar
                 </p>
