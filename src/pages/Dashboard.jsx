@@ -162,8 +162,8 @@ setDashboardData(prev => ({
     fetchCards();
   }, [user]);
 
-  const nextCard = () => setCardIndex(i => (i + 1) % cards.length);
-  const prevCard = () => setCardIndex(i => (i - 1 + cards.length) % cards.length);
+  // const nextCard = () => setCardIndex(i => (i + 1) % cards.length);
+  // const prevCard = () => setCardIndex(i => (i - 1 + cards.length) % cards.length);
 
   if (dashboardData.loading) return <p className="text-center mt-20">Chargement des comptes...</p>;
   if (dashboardData.error) return <p className="text-center text-red-500">{dashboardData.error}</p>;
@@ -242,6 +242,9 @@ const lineOptions = {
 };
 
 
+const compteCourant = dashboardData.comptes.find(
+  c => c.type === "courant"
+);
 
 
 
@@ -362,17 +365,12 @@ const lineOptions = {
   {/* Carte UI */}
   <div className="lg:col-span-1">
     <Card className="h-full min-h-[300px] flex justify-center items-center">
-      {loadingCards ? (
-        <p>Chargement carte...</p>
-      ) : cards.length === 0 ? (
-        <p>Aucune carte disponible</p>
-      ) : (
-        <CardUI
-          card={cards[cardIndex]}
-          nextCard={nextCard}
-          prevCard={prevCard}
-        />
-      )}
+      {!compteCourant ? (
+  <p>Aucun compte courant disponible</p>
+) : (
+  <CardUI compte={compteCourant} />
+)}
+
     </Card>
   </div>
 </div>

@@ -1,48 +1,53 @@
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import React from "react";
 
-export default function CardUI({ card, nextCard, prevCard }) {
-  if (!card) return null;
+export default function CardUI({ compte }) {
+  const fakeExpiry = "09/30";
+  const fakeCVV = "381";
+
+  const accountNumber = compte?.accountNumber
+    ? compte.accountNumber.replace(/(.{4})/g, "$1 ")
+    : "0000 0000 0000 0000";
 
   return (
-    <div className="relative">
-      <div
-        className={`w-64 h-36 rounded-xl p-4 text-white shadow-lg
-        ${card.status === "blocked"
-          ? "bg-gray-800"
-          : "bg-gradient-to-br from-blue-600 to-indigo-800"}`}
-      >
-        {/* BRAND */}
-        <div className="flex justify-between text-xs">
-          <span>{card.brand || "Mastercard"}</span>
-          <span>Carte Débit</span>
+    <div className="relative w-[340px] h-[210px] rounded-2xl 
+      bg-gradient-to-br from-[#6b5a49] via-[#8f7e6b] to-[#cbb99a]
+      shadow-2xl text-white p-6 overflow-hidden">
+
+      {/* Décor */}
+      <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-40 h-40 bg-black/10 rounded-full translate-y-1/2 -translate-x-1/2" />
+
+      {/* Header */}
+      <div className="flex justify-between">
+        <div>
+          <p className="text-xs uppercase tracking-widest opacity-80">
+            Compte Courant
+          </p>
+          <p className="text-sm font-semibold">
+            {compte.name}
+          </p>
         </div>
 
-        {/* NUMÉRO MASQUÉ */}
-        <div className="text-lg mt-4 tracking-widest">
-          **** **** **** {card.dernierCard}
-        </div>
-
-        {/* FOOTER */}
-        <div className="flex justify-between mt-4 text-xs">
-          <div>
-            <div className="opacity-70">EXP</div>
-            <div>{card.expiration}</div>
-          </div>
-
-          <div>
-            <div className="opacity-70">STATUS</div>
-            <div className="uppercase">{card.status}</div>
-          </div>
-        </div>
+        <div className="w-10 h-7 bg-gradient-to-r from-yellow-300 to-yellow-500 rounded-sm" />
       </div>
 
-      {/* NAVIGATION */}
-      <button onClick={prevCard} className="absolute -left-6 top-1/2">
-        <FiChevronLeft />
-      </button>
-      <button onClick={nextCard} className="absolute -right-6 top-1/2">
-        <FiChevronRight />
-      </button>
+      {/* Numéro */}
+      <div className="mt-8 text-lg tracking-widest font-semibold">
+        {accountNumber}
+      </div>
+
+      {/* Footer */}
+      <div className="absolute bottom-6 left-6 right-6 flex justify-between">
+        <div>
+          <p className="text-[10px] opacity-70">EXP</p>
+          <p className="text-sm font-semibold">{fakeExpiry}</p>
+        </div>
+
+        <div className="text-right">
+          <p className="text-[10px] opacity-70">CVV</p>
+          <p className="text-sm font-semibold">{fakeCVV}</p>
+        </div>
+      </div>
     </div>
   );
 }
