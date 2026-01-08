@@ -306,7 +306,7 @@ const services = [
         {/* MODAL NOUVEAU BENEFICIAIRE */}
         {showNewBenefModal && (
           <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-            <div className="bg-white dark:bg-neutral-800 rounded-2xl p-6 w-full max-w-md sm:max-w-lg">
+            <div className=" dark:bg-neutral-800 rounded-2xl p-6 w-full max-w-md sm:max-w-lg">
               <h3 className="font-semibold text-[#6b4f2c] dark:text-white mb-4">Nouveau bénéficiaire</h3>
               <input placeholder="Nom" className="w-full mb-3 p-3 rounded-xl border" value={newBenefForm.nom} onChange={(e) => setNewBenefForm({ ...newBenefForm, nom: e.target.value })} />
               <input placeholder="Référence / Numéro client" className="w-full mb-3 p-3 rounded-xl border" value={newBenefForm.reference} onChange={(e) => setNewBenefForm({ ...newBenefForm, reference: e.target.value })} />
