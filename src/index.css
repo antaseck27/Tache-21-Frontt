@@ -128,6 +128,49 @@ body.dark .welcome-text {
 }
 
 /* sidebar */
+.sidebar {
+  background: #ffffff;
+  padding: 1.5rem;
+
+  height: 100vh;
+  /* box-shadow: 8px 0 30px #f1e8dc; */
+  z-index: 50;
+}
+.sidebar-nav {
+
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+    background-color: transparent;
+
+}
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #6b5a49;
+  transition: all 0.25s ease;
+  
+}
+
+.sidebar-link:hover {
+  /* background: #2a2a2a; */
+  background: rgba(203, 185, 154, 0.664);
+  
+}
+.sidebar-link.active {
+  background: linear-gradient(
+    135deg,
+    #b9a896,
+    #8f7e6b
+  );
+  color: white;
+  box-shadow: 0 6px 18px #f1e8dc;
+}
+
 .dark .sidebar {
  
     background-color: #00171f !important;
@@ -221,3 +264,4 @@ body.dark .welcome-text {
   border: 1px solid #d6c7b4; /* Bordure beige clair */
   box-shadow: 0 10px 20px rgba(218, 179, 107, 0.3); /* Ombre beige clair */
 }
+/* -------transaction--------- */
