@@ -69,12 +69,94 @@ body.dark h1,
 body.dark h2,
 body.dark h3,
 body.dark h4 {
-  color: #f0e6d6 !important;
+  color: #9b9080f8 !important;
 }
 
 /* Textes secondaires */
 body.dark p,
 body.dark span,
 body.dark small {
-  color: #cbbfae !important;
+  color: #b1a698 !important;
+}
+/* ===============================
+    CARDS (beige foncé)
+================================ */
+
+
+body.dark .card,
+body.dark .dashboard-card,
+body.dark .dark-card {
+  background-color: #8f7e6b !important;
+  border: 1px solid #4a3b35 !important;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35) !important;
+}
+
+
+
+
+/* ===============================
+   🧭 HEADER / SIDEBAR
+================================ */
+
+body.dark header,
+body.dark .sidebar,
+body.dark nav {
+  /* background: linear-gradient(to right, #b9a896, #8f7e6b) !important; */
+    background-color: #00171f !important;
+  border-color: #575348ce !important;
+}
+
+/* liens */
+body.dark a {
+  color: #e2d6c4 !important;
+}
+
+body.dark a:hover {
+  color: #ffffff !important;
+}
+
+body.dark .welcome-card {
+  /* background-color:  #3e3529  !important; */
+  
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4) !important;
+}
+body.dark .welcome-title {
+  color: #f1e7d8 !important;
+}
+body.dark .welcome-text {
+  color: #d2c3af !important;
+}
+
+/* sidebar */
+.dark .sidebar {
+ 
+    background-color: #00171f !important;
+  color: #f1e8dc;
+  border: 1px solid #f1e8dc;
+  /* box-shadow:
+    0 8px 20px #f1e8dc; */
+
+}
+.dark .sidebar-link {
+  color: #dcccb8;
+}
+
+.dark .sidebar-link:hover {
+  background: rgba(167, 147, 120, 0.765);
+}
+.dark .sidebar-link.active {
+  background: linear-gradient(
+    135deg,
+    #614b32c5,
+   #8f7e6b
+  );
+  box-shadow: 0 0 10px #f1e8dc;
+}
+.dark .sidebar-logout {
+  color: #f1e8dc;
+}
+
+.dark .sidebar-logout:hover {
+  /* background: rgba(255, 214, 160, 0.15); */
+  background: rgba(167, 147, 120, 0.765);
 }
