@@ -138,7 +138,7 @@ const handleContactClick = (contact) => {
     : [];
 
   return (
-    <div className="min-h-screen p-6 bg-[#f7f3ee] dark:bg-[#1a1a1a] text-[#6b5a49] dark:text-[#f1e8dc] transition-colors duration-300">
+    <div className="min-h-screen p-6 collectMode dark:bg-[#1a1a1a] text-[#6b5a49] dark:text-[#f1e8dc] transition-colors duration-300">
       <div className="max-w-6xl mx-auto text-center mb-8">
         <h2 className="text-3xl font-bold mb-2 dark:text-[#f1e8dc]">Transfert d'argent</h2>
         <p className="text-[#8f7e6b] dark:text-[#d6c5a9] text-lg">Envoyez de l'argent à vos proches ou payez vos factures</p>

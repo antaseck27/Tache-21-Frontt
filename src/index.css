@@ -359,7 +359,8 @@ body.dark .welcome-text {
 
 /* transaction dark */
 .dark body,
-.dark .min-h-screen {
+/* .dark .min-h-screen { */
+.dark .collectMode {
   /* background-color: var(--bg-page); */
   background-color: #00171f !important;
   color: var(--text-main);

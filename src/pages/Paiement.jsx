@@ -174,7 +174,7 @@ export default function Paiement() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f6f1e9] dark:bg-neutral-900 p-4 sm:p-10">
+    <div className="min-h-screen collectMode dark:bg-neutral-900 p-4 sm:p-10">
       <div className="max-w-6xl mx-auto">
         {/* TITRE */}
         <div className="text-center mb-8 px-2">

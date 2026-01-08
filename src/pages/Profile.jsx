@@ -500,7 +500,7 @@ export default function ProfilePage() {
   if (!user) return <div>Chargement...</div>;
 
   return (
-    <div className="min-h-screen px-4 md:px-8 py-6 bg-[#f7f3ee] dark:bg-[#1a1a1a] text-[#6b5a49] dark:text-[#f1e8dc] transition-colors duration-300">
+    <div className="min-h-screen  collectMode px-4 md:px-8 py-6  dark:bg-[#1a1a1a] text-[#6b5a49] dark:text-[#f1e8dc] transition-colors duration-300">
       <div className="max-w-5xl mx-auto space-y-6">
         {/* PROFIL */}
         <div className="flex flex-col md:flex-row gap-6">

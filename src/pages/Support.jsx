@@ -96,7 +96,7 @@ const handleSubmit = async (e) => {
 
 
 return (
-<div className="p-4 sm:p-6 max-w-7xl mx-auto min-h-screen bg-[#f7f3ee] dark:bg-[#1a1a1a] transition-colors duration-300">
+<div className="p-4 sm:p-6 max-w-7xl  collectMode mx-auto min-h-screen  dark:bg-[#1a1a1a] transition-colors duration-300">
 {/* Header */}
 <div className="text-center mb-10">
 <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">

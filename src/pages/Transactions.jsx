@@ -92,14 +92,14 @@ export default function Transactions() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen collectMode flex items-center justify-center">
         Chargement...
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-6 bg-[#f7f3ee] dark:bg-[#1a1a1a] text-[#6b5a49] dark:text-[#f1e8dc] transition-colors duration-300">
+    <div className="min-h-screen  collectMode p-4 md:p-6  dark:bg-[#1a1a1a] text-[#6b5a49] dark:text-[#f1e8dc] transition-colors duration-300">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold mb-2 md:mb-4">Transactions</h2>
         <p className="mb-4 md:mb-6 text-sm text-[#8f7e6b]">
