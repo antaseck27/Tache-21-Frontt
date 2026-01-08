@@ -21,7 +21,7 @@ const services = [
   { id: "eau", label: "Eau", icon: <FaTint /> },
 ];
 
-export default function Paiement() {
+  export default function Paiement() {
   const [activeTab, setActiveTab] = useState("beneficiaires");
   const [activeService, setActiveService] = useState(null);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -248,7 +248,7 @@ export default function Paiement() {
           {/* HISTORIQUE */}
           {activeTab === "historique" && (
             <div className="overflow-x-auto">
-              <table className="w-full table-auto text-center min-w-[500px]">
+              <table className="w-full rounded-xl table-auto text-center min-w-[500px]">
                 <thead className="text-gray-500">
                   <tr>
                     <th className="text-left">Service</th>
