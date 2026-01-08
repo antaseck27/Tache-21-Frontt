@@ -205,10 +205,8 @@
 //   );
 // }
 import React, { useState } from "react";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
-import { Link } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import dayjs from "dayjs";
 
@@ -233,9 +231,7 @@ export default function SignupCompact() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // ============================
   // Vérifier si email existe
-  // ============================
   const checkEmailExists = async (email) => {
     try {
       const res = await fetch(`${API}/api/auth/check-email?email=${email}`);
@@ -243,18 +239,15 @@ export default function SignupCompact() {
       return data.exists; // true si email existe
     } catch (err) {
       console.error("CHECK EMAIL ERROR:", err);
-      return false; // on laisse passer si erreur
+      return false;
     }
   };
 
-  // ============================
   // Inscription
-  // ============================
   const registerUser = async () => {
     try {
       setLoading(true);
 
-      // Vérification email avant submit
       const emailUsed = await checkEmailExists(formData.email);
       if (emailUsed) {
         setError("Email déjà utilisé");
@@ -262,7 +255,6 @@ export default function SignupCompact() {
         return null;
       }
 
-      // Convertir date pour MongoDB
       const dateMongo = formData.dateNaissance
         ? dayjs(formData.dateNaissance).toISOString()
         : null;
@@ -274,7 +266,7 @@ export default function SignupCompact() {
           prenom: formData.prenom,
           name: formData.name,
           email: formData.email,
-          telephone: formData.telephone,
+          telephone: formData.telephone, // ajout du téléphone simple
           dateDeNaissance: dateMongo,
           password: formData.password
         })
@@ -297,9 +289,6 @@ export default function SignupCompact() {
     }
   };
 
-  // ============================
-  // Submit
-  // ============================
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -307,6 +296,7 @@ export default function SignupCompact() {
 
     if (!formData.prenom || !formData.name) return setError("Veuillez saisir votre prénom et nom.");
     if (!formData.email) return setError("Veuillez saisir votre email.");
+    if (!formData.telephone) return setError("Veuillez saisir votre numéro de téléphone.");
     if (!formData.password || formData.password.length < 4) return setError("Mot de passe trop court.");
 
     const result = await registerUser();
@@ -317,7 +307,6 @@ export default function SignupCompact() {
       `Compte créé avec succès pour ${result.user.prenom} ${result.user.name}, né(e) le ${formattedDate}`
     );
 
-    // Reset formulaire
     setFormData({
       prenom: "",
       name: "",
@@ -367,18 +356,22 @@ export default function SignupCompact() {
           {successMessage && <div className="bg-green-100 text-green-600 px-2 py-1 rounded-lg text-sm">{successMessage}</div>}
 
           <form onSubmit={handleSubmit} className="space-y-2">
+            {/* Prénom & Nom */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <input type="text" placeholder="Prénom" value={formData.prenom} onChange={e => updateField("prenom", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm" />
               <input type="text" placeholder="Nom" value={formData.name} onChange={e => updateField("name", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm" />
             </div>
 
+            {/* Email + Téléphone simple */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <input type="email" placeholder="Email" value={formData.email} onChange={e => updateField("email", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm" />
-              <PhoneInput country={"sn"} value={formData.telephone} onChange={(phone) => updateField("telephone", phone)} inputClass="!w-full !bg-[#fdf8f2] !border-[#d8c4a8] !rounded-lg py-5 !text-sm" buttonClass="!border-[#d8c4a8]" dropdownClass="!bg-white" inputStyle={{ width: "100%", backgroundColor: "#fdf8f2", borderRadius: "0.5rem", borderColor: "#d8c4a8" }} />
+              <input type="text" placeholder="Numéro de téléphone" value={formData.telephone} onChange={e => updateField("telephone", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm" />
             </div>
 
+            {/* Date de naissance */}
             <input type="date" value={formData.dateNaissance ? dayjs(formData.dateNaissance).format("YYYY-MM-DD") : ""} onChange={(e) => updateField("dateNaissance", e.target.value ? new Date(e.target.value) : null)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] text-sm text-[#6b5a49] focus:outline-none focus:ring-2 focus:ring-[#bfa98a]" />
 
+            {/* Mot de passe */}
             <div className="relative">
               <input type={showPassword ? "text" : "password"} placeholder="Mot de passe" value={formData.password} onChange={e => updateField("password", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-[#d8c4a8] bg-[#fdf8f2] focus:ring-2 focus:ring-[#bfa98a] text-sm pr-10" />
               <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-2 top-1/2 -translate-y-1/2 text-[#8f7e6b]">
