@@ -160,3 +160,39 @@ body.dark .welcome-text {
   /* background: rgba(255, 214, 160, 0.15); */
   background: rgba(167, 147, 120, 0.765);
 }
+
+/* --------------------------- Timeline Card --------------------------- */
+
+.dark .timeline-card {
+  /* background: linear-gradient(to top right, #8f7e6b, #7a6654, #6b5a49); */
+  background-color: #00171f !important;
+  /* border: 2px solid #bfa98a; */
+  color: #f1e8dc !important;
+  /* box-shadow: 0 8px 25px #b9a896; */
+}
+
+.dark .timeline-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px #b9a896;
+}
+
+.dark .timeline-card h3,
+.dark .timeline-card p {
+  color: #f1e8dc;
+}
+.dark .timeline-gradient .card-info{
+  color: #f1e8dc !important;
+  background-color: #00171f !important;
+  border: 2px solid #bfa98a !important;
+}
+.dark .timeline-gradient {
+  background: linear-gradient(to top right, #2a2a2a, #2a2a2a); /* Fond bleu foncé */
+  border: 1px solid #d6c7b4; /* Bordure beige clair */
+  box-shadow: 0 10px 20px rgba(218, 179, 107, 0.3); /* Ombre beige clair */
+}
+
+/* Texte dans les cartes en mode sombre */
+.dark .timeline-gradient .card-info {
+  color: #f1e8dc; 
+  background-color: #00171f;
+}
