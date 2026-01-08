@@ -285,3 +285,7 @@ body.dark .welcome-text {
 .dark header {
   border: 1px solid #575348ce !important;
 }
+.toast-container {
+  background-color: #f3e8d7; /* Beige clair */
+  color: #6b5a49; /* Texte foncé */
+}
