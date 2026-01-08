@@ -343,7 +343,7 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
 
         {/* ===== LOGO ===== */}
         <Link to="/dashboard" className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-white shadow overflow-hidden flex items-center justify-center">
+          <div className="w-10 h-10 rounded-lg bg-white shadow  flex items-center justify-center">
             <img src={logo} alt="logo" className="w-8 h-8 object-contain" />
           </div>
           <div className="hidden sm:block">
