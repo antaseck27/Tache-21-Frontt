@@ -185,14 +185,14 @@ export default function Paiement() {
         </div>
 
         {/* SERVICES */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
+        <div className="grid grid-cols-1 rounded-xl sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
           {services.map((s) => (
             <button
               key={s.id}
               onClick={() => { setActiveService(s); setShowPaymentModal(true); }}
               className="bg-white dark:bg-neutral-800 rounded-2xl p-6 shadow text-center"
             >
-              <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-gradient-to-br from-[#b9a896] to-[#8f7e6b] text-white flex items-center justify-center text-xl">{s.icon}</div>
+              <div className="w-14 h-14 rounded-xl mx-auto mb-3 rounded-full bg-gradient-to-br from-[#b9a896] to-[#8f7e6b] text-white flex items-center justify-center text-xl">{s.icon}</div>
               <p className="font-medium text-[#6b4f2c] dark:text-white">{s.label}</p>
             </button>
           ))}
@@ -200,7 +200,7 @@ export default function Paiement() {
 
         {/* TABS */}
         <div className="flex flex-col sm:flex-row justify-center mb-8 gap-2 sm:gap-4">
-          <div className="bg-white  dark:bg-neutral-800 rounded-full p-2 shadow flex gap-1 flex-wrap justify-center">
+          <div className="bg-white rounded-xl dark:bg-neutral-800 rounded-full p-2 shadow flex gap-1 flex-wrap justify-center">
             <button
               onClick={() => setActiveTab("beneficiaires")}
               className={`px-4 sm:px-6 py-2 rounded-full flex items-center gap-2 ${activeTab === "beneficiaires" ? "bg-gradient-to-br from-[#b9a896] to-[#8f7e6b] text-white" : "text-beige"}`}
@@ -221,7 +221,7 @@ export default function Paiement() {
           {/* BENEFICIAIRES */}
           {activeTab === "beneficiaires" && (
             <>
-              <div className="flex justify-end mb-4">
+              <div className="flex rounded-xl justify-end mb-4">
                 <button onClick={() => setShowNewBenefModal(true)} className="bg-gradient-to-br from-[#b9a896] to-[#8f7e6b] text-white px-4 py-2 rounded-xl">
                   Nouveau bénéficiaire
                 </button>
@@ -232,10 +232,10 @@ export default function Paiement() {
                 return (
                   <div key={b._id} className="flex justify-between items-center bg-[#faf7f2] dark:bg-neutral-700 p-4 rounded-xl mb-3">
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-[#6b4f2c] text-white flex items-center justify-center">{service.icon}</div>
+                      <div className="w-10 h-10 rounded-xl   rounded-full bg-[#6b4f2c] text-white flex items-center justify-center">{service.icon}</div>
                       <div>
-                        <p className="font-medium text-[#6b4f2c] dark:text-white">{b.nom}</p>
-                        <p className="text-sm text-gray-500">{b.type}</p>
+                        <p className=" rounded-xl font-medium text-[#6b4f2c] dark:text-white">{b.nom}</p>
+                        <p className=" rounded-xl text-sm text-gray-500">{b.type}</p>
                       </div>
                     </div>
                     <button onClick={() => openPaymentFromBenef(b)} className="bg-gradient-to-br from-[#b9a896] to-[#8f7e6b] text-white px-4 py-2 rounded-xl">Payer</button>

@@ -293,7 +293,8 @@ body.dark .welcome-text {
 
 .dark .summary-card p,
 .dark .summary-card span {
-  color: var(--text-main);
+  /* color: var(--text-main); */
+  color: rgba(255, 255, 255, 0.04);
    background: linear-gradient(to right, #b9a896, #8f7e6b) !important;
     
 
