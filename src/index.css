@@ -253,11 +253,11 @@ body.dark .welcome-text {
 .dark .timeline-card p {
   color: #f1e8dc;
 }
-.dark .timeline-gradient .card-info{
-  /* color: #f1e8dc !important;
+/* .dark .timeline-gradient .card-info{
+   color: #f1e8dc !important;
   background-color: #00171f !important;
-  border: 2px solid #bfa98a !important; */
-}
+  border: 2px solid #bfa98a !important; 
+} */
 /* Carte principale en mode sombre */
 .dark .timeline-gradient {
   background: linear-gradient(to top right, #2a2a2a, #2a2a2a); /* Fond bleu foncé */
