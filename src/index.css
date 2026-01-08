@@ -3,166 +3,78 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Mode sombre : Applique la couleur de fond et texte principal */
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@layer utilities {
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+}
+:root {
+  /* ===============================
+     🌙 DARK MODE COLORS
+  ================================= */
+
+  --bg-main: #121212; /* Fond général en mode sombre (très foncé) */
+  --bg-secondary: #1a1a1a; /* Fond secondaire pour les cartes et éléments */
+  
+  --text-main: #f1e8dc; /* Texte principal en mode sombre */
+  --text-secondary: #cbbfae; /* Texte secondaire (descriptions, etc.) */
+
+  --card-bg: #8f7e6b; /* Fond des cartes et sections secondaires */
+  --card-border: #4a3b35; /* Bordure des cartes et éléments */
+  
+  --accent-light: #f3e8d7; /* Beige clair (souvent utilisé pour les titres, accents, hover) */
+  --accent-dark: #8f7e6b; /* Beige foncé pour les accents en mode sombre */
+
+  --highlight-bg: #b9a896; /* Beige doré pour les boutons, liens ou éléments d'importance */
+  --highlight-hover: #6b5a49; /* Hover : Beige plus foncé pour les éléments interactifs */
+  
+  --link-color: #e2d6c4; /* Couleur des liens en mode sombre */
+  --link-hover: #ffffff; /* Couleur des liens au survol en mode sombre */
+  
+  --shadow-dark: rgba(0, 0, 0, 0.6); /* Ombre plus forte pour les éléments en mode sombre */
+  --shadow-light: rgba(0, 0, 0, 0.1); /* Ombre douce pour les éléments en mode clair */
+  --gradient-start: #1a1a1a; /* Dégradé de fond en mode sombre - début */
+  --gradient-end: #2a2a2a; /* Dégradé de fond en mode sombre - fin */
+}
+
+.dark {
+  --bg-main: #121212;
+  --text-main: #f5f5f5;
+  --card-bg: #2a2a2a;
+  --card-border: #8f7e6b;
+  --gradient-start: #222;
+  --gradient-end: #333;
+}
+/* ===============================
+   🌙 DARK MODE GLOBAL
+================================ */
+
 body.dark {
-  background-color: #121212;
-  color: #f1e8dc; /* Texte clair sur fond sombre */
-}
-
-/* Cartes */
-.dark .card,
-.dark .dashboard-card,
-.dark .dark-card {
-  background-color: #2a2a2a;
-  border: 1px solid #8f7e6b; /* Bordure beige foncée */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
-}
-
-/* Titre des cartes et éléments */
-.dark .card h1,
-.dark .card h2,
-.dark .card h3,
-.dark .card h4 {
-  color: #f0e6d6;
-}
-
-/* Liens en mode sombre */
-.dark a {
-  color: #e2d6c4; /* Beige clair pour les liens */
-}
-.dark a:hover {
-  color: #ffffff; /* Couleur blanche au survol */
-}
-
-/* Sidebar */
-.dark .sidebar {
-  background-color: #1a1a1a;
-  color: #f1e8dc;
-  border: 1px solid #4a3b35; /* Bordure beige foncée */
-}
-
-/* Liens dans la sidebar */
-.dark .sidebar-link {
-  color: #dcccb8; /* Couleur des liens dans la sidebar */
-}
-.dark .sidebar-link:hover {
-  background: rgba(167, 147, 120, 0.765); /* Hover avec fond beige foncé */
-}
-.dark .sidebar-link.active {
-  background: linear-gradient(135deg, #614b32c5, #8f7e6b);
-  color: white;
-  box-shadow: 0 0 10px #f1e8dc;
-}
-
-/* Déconnexion dans la sidebar */
-.dark .sidebar-logout {
-  color: #f1e8dc;
-  background: rgba(167, 147, 120, 0.765);
-}
-
-/* Les cartes Timeline */
-.dark .timeline-card {
-  background-color: #00171f;
-  color: #f1e8dc;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-}
-.dark .timeline-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px #b9a896;
-}
-
-/* Les liens et textes dans la timeline */
-.dark .timeline-card .card-info {
-  color: #f1e8dc;
-  background-color: #00171f;
-}
-
-/* Barre de navigation dans le header */
-.dark header,
-.dark .sidebar {
-  background-color: #00171f;
-}
-
-/* Formulaires et entrées */
-.dark input,
-.dark select {
-  background-color: #2a2a2a;
-  color: #f1e8dc;
-  border: 1px solid #4a4a4a;
-}
-
-.dark input::placeholder,
-.dark select::placeholder {
-  color: #cbbfae;
-}
-
-/* Icones dans la sidebar */
-.dark .sidebar .icon-circle {
-  background-color: #b9a896;
+  background-color: #00171f !important;
+  /* background-color:  #121212 !important; */
   color: #f1e8dc;
 }
 
-/* Les boutons du formulaire */
-.dark .form button {
-  background-color: #80674e;
-  color: #f1e8dc;
-}
-.dark .form button:hover {
-  background-color: #b9a896;
-  transform: scale(1.04);
-  transition: transform 0.8s;
+/* Titres */
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4 {
+  color: #f0e6d6 !important;
 }
 
-/* Section du profile */
-.dark .infoPersonel {
-  background-color: #2a2a2a;
-  color: #f1e8dc;
+/* Textes secondaires */
+body.dark p,
+body.dark span,
+body.dark small {
+  color: #cbbfae !important;
 }
-
-/* Sidebar mobile */
-.dark .sidebar.mobile {
-  background-color: #1a1a1a;
-  color: #f1e8dc;
-}
-
-/* Notifications et autres sections */
-.dark .notifications,
-.dark .Apparence {
-  background-color: #00171f;
-  color: #f1e8dc;
-  box-shadow: 0 0 0 1px rgb(70, 70, 70);
-}
-
-/* Section Sécurité */
-.dark .securite {
-  background-color: #1a1a1a;
-  color: #f1e8dc;
-}
-.dark .securite button {
-  background: #80674e;
-  color: #f1e8dc;
-}
-
-/* Toggle switch en mode sombre */
-.dark .toggle {
-  background-color: #444;
-}
-.dark .toggle .circle {
-  background-color: #ffffff;
-}
-
-/* Animation de "glow" pour certains éléments */
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 5px #f3e8d7, 0 0 10px #cbb99a, 0 0 15px #d4b8a5;
-    transform: scale(1);
-  }
-  50% {
-    box-shadow: 0 0 10px #f3e8d7, 0 0 20px #cbb99a, 0 0 30px #d4b8a5;
-    transform: scale(1.2);
-  }
-}
-.animate-glow {
-  animation: glow 2s infinite ease-in-out;
-}
-
