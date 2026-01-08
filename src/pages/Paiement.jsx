@@ -190,7 +190,7 @@ export default function Paiement() {
             <button
               key={s.id}
               onClick={() => { setActiveService(s); setShowPaymentModal(true); }}
-              className="bg-white dark:bg-neutral-800 rounded-2xl p-6 shadow text-center"
+              className="bg-white dark:bg-neutral-800 rounded-2xl p-6 rounded-xl shadow text-center"
             >
               <div className="w-14 h-14 rounded-xl mx-auto mb-3 rounded-full bg-gradient-to-br from-[#b9a896] to-[#8f7e6b] text-white flex items-center justify-center text-xl">{s.icon}</div>
               <p className="font-medium text-[#6b4f2c] dark:text-white">{s.label}</p>
@@ -203,13 +203,13 @@ export default function Paiement() {
           <div className="bg-white rounded-xl dark:bg-neutral-800 rounded-full p-2 shadow flex gap-1 flex-wrap justify-center">
             <button
               onClick={() => setActiveTab("beneficiaires")}
-              className={`px-4 sm:px-6 py-2 rounded-full flex items-center gap-2 ${activeTab === "beneficiaires" ? "bg-gradient-to-br from-[#b9a896] to-[#8f7e6b] text-white" : "text-beige"}`}
+              className={`px-4 sm:px-6 py-2 rounded-full rounded-xl flex  items-center gap-2 ${activeTab === "beneficiaires" ? "bg-gradient-to-br from-[#b9a896] to-[#8f7e6b] text-white" : "text-beige"}`}
             >
               <FaUsers /> Bénéficiaires
             </button>
             <button
               onClick={() => setActiveTab("historique")}
-              className={`px-4 sm:px-6 py-2 rounded-full flex items-center gap-2 ${activeTab === "historique" ? "bg-gradient-to-br from-[#b9a896] to-[#8f7e6b] text-white" : "text-beige"}`}
+              className={`px-4 sm:px-6 py-2 rounded-full rounded-xl flex items-center gap-2 ${activeTab === "historique" ? "bg-gradient-to-br from-[#b9a896] to-[#8f7e6b] text-white" : "text-beige"}`}
             >
               <FaHistory /> Historique
             </button>
