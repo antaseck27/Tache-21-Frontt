@@ -349,6 +349,7 @@ const lineOptions = {
       </section>
 
       {/* Charts et carte */}
+<<<<<<< HEAD
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 ">
         <div className="lg:col-span-1 bg-beige-50 dark:bg-[#2a2a2a] rounded-xl p-6 shadow-sm border border-beige-100 dark:border-beige-700"> 
           <Card>
@@ -398,7 +399,36 @@ const lineOptions = {
             </button>
           </div>
         </div>
+=======
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  {/* Carte graphique */}
+  <div className="lg:col-span-1">
+    <Card className="h-full min-h-[300px]">
+      <div className="h-[300px]">
+        <Line data={lineData} options={lineOptions} />
+>>>>>>> 87c78b4 (update1)
       </div>
+    </Card>
+  </div>
+
+  {/* Carte UI */}
+  <div className="lg:col-span-1">
+    <Card className="h-full min-h-[300px] flex justify-center items-center">
+      {loadingCards ? (
+        <p>Chargement carte...</p>
+      ) : cards.length === 0 ? (
+        <p>Aucune carte disponible</p>
+      ) : (
+        <CardUI
+          card={cards[cardIndex]}
+          nextCard={nextCard}
+          prevCard={prevCard}
+        />
+      )}
+    </Card>
+  </div>
+</div>
+
     </div>
 
       </div>
