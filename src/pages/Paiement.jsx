@@ -247,8 +247,8 @@ const services = [
 
           {/* HISTORIQUE */}
           {activeTab === "historique" && (
-            <div className="overflow-x-auto">
-              <table className="w-full rounded-xl table-auto text-center min-w-[500px]">
+            <div className="overflow-x-auto rounded-xl ">
+              <table className="w-full table-auto text-center min-w-[500px]">
                 <thead className="text-gray-500">
                   <tr>
                     <th className="text-left">Service</th>
