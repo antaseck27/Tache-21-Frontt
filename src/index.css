@@ -281,15 +281,15 @@ body.dark .welcome-text {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
   transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
-.dark .summary-card,
+/* .dark .summary-card,
 .dark .card {
   background-color: var(--summary-card-bg);
   border-color: var(--summary-card-border);
-  /* color: var(--text-main); */
+  /* color: var(--text-main); 
    background: linear-gradient(to right, #80674e, #433525) !important;
    color: rgba(255, 255, 255, 0.04);
 
-}
+} */
 
 .dark .summary-card p,
 .dark .summary-card span {
