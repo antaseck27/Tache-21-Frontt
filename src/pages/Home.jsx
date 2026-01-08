@@ -180,8 +180,8 @@ export default function Home() {
       </section>
 
       {/* ======================= AVIS CLIENTS ======================= */}
-      <section className="px-8 md:px-20 py-24 bg-white">
-        <h2 className="text-4xl font-bold text-center mb-12 text-[#5a4a3a]">Ils nous font confiance</h2>
+      <section className="px-8 md:px-20 py-24 bg-[#e8dcc7]">
+        <h2 className="text-4xl font-bold text-center mb-12">Ils nous font confiance</h2>
         <div className="grid md:grid-cols-3 gap-10">
           {[
             {
@@ -226,7 +226,7 @@ export default function Home() {
         <p className="text-[#6b5a49] mt-3 text-lg">Ouvrez votre compte en 2 minutes.</p>
         <Link
           to="/Login"
-          className="mt-6 inline-block px-8 py-3 bg-[#e8dcc7]  font-semibold rounded-xl shadow-sm text-[#5a4a3a] hover:bg-[#d2bca0] transition"
+          className="mt-6 inline-block px-8 py-3 bg-[#e8dcc7]  font-semibold rounded-xl shadow-lg"
         >
           Commencer maintenant
         </Link>

@@ -192,7 +192,16 @@ body.dark .welcome-text {
 }
 
 /* Texte dans les cartes en mode sombre */
-.dark .timeline-gradient .card-info {
+/* .dark .timeline-gradient .card-info {
   color: #f1e8dc; 
   background-color: #00171f;
+} */
+/*--------- transaction dark--------- */
+.dark body,
+/* .dark .min-h-screen { */
+.dark .collectMode {
+  /* background-color: var(--bg-page); */
+  background-color: #00171f !important;
+  color: var(--text-main);
+  transition: background 0.3s ease, color 0.3s ease;
 }
