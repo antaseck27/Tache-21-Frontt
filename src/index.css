@@ -182,8 +182,8 @@ body.dark .welcome-text {
 }
 .dark .timeline-gradient .card-info{
   color: #f1e8dc !important;
-  background-color: #00171f !important;
-  border: 2px solid #bfa98a !important;
+  /* background-color: #00171f !important;
+  border: 2px solid #bfa98a !important; */
 }
 .dark .timeline-gradient {
   background: linear-gradient(to top right, #2a2a2a, #2a2a2a); /* Fond bleu foncé */
