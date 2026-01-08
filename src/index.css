@@ -289,3 +289,41 @@ body.dark .welcome-text {
   background-color: #f3e8d7; /* Beige clair */
   color: #6b5a49; /* Texte foncé */
 }
+
+/* ===============================
+   🌙 Dark Mode Styles
+================================ */
+
+/* Historique container */
+.dark .historique-container {
+  background-color: #1a1a1a; /* Fond général pour historique en mode sombre */
+  color: #f1e8dc; /* Texte en mode sombre */
+}
+
+.dark .historique-container .table-header {
+  color: #f1e8dc; /* Couleur des titres de colonnes en mode sombre */
+}
+
+.dark .historique-container .table-row {
+  border-top: 1px solid #4a3b35; /* Bordure pour chaque ligne */
+}
+
+.dark .historique-container .table-row td {
+  color: #f1e8dc; /* Texte des lignes */
+}
+
+.dark .historique-container .statut {
+  background: linear-gradient(to right, #b9a896, #8f7e6b); /* Dégradé de fond */
+  color: white;
+}
+
+/* Boutons de pagination */
+.dark .pagination-button {
+  background-color: #333; /* Fond sombre pour le bouton de pagination */
+  color: #f1e8dc; /* Texte blanc cassé */
+  border-radius: 1rem;
+}
+
+.dark .pagination-button:disabled {
+  opacity: 0.5; /* Désactiver l'opacité des boutons */
+}
