@@ -160,7 +160,37 @@ body.dark .welcome-text {
   /* background: rgba(255, 214, 160, 0.15); */
   background: rgba(167, 147, 120, 0.765);
 }
+.dark .sidebar-link.active {
+  background: linear-gradient(
+    135deg,
+    #614b32c5,
+   #8f7e6b
+  );
+  box-shadow: 0 0 10px #f1e8dc;
+}
+.sidebar-logout {
+  margin-top: auto;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #6b5a49;
+  transition: background 0.25s;
+}
 
+.sidebar-logout:hover {
+  background: rgba(203, 185, 154, 0.664);
+}
+
+.dark .sidebar-logout {
+  color: #f1e8dc;
+}
+
+.dark .sidebar-logout:hover {
+  /* background: rgba(255, 214, 160, 0.15); */
+  background: rgba(167, 147, 120, 0.765);
+}
 /* --------------------------- Timeline Card --------------------------- */
 
 .dark .timeline-card {
