@@ -11,7 +11,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { useAuth } from "../context/AuthContext";
-
+import logo from "../assets/logo.png"
 export default function Sidebar({ open: openProp, onClose }) {
   const [open, setOpen] = useState(!!openProp);
   const { logout } = useAuth();
@@ -58,10 +58,21 @@ aria-hidden={!open}
 <div className="flex items-center justify-between mb-6">
 <div className="flex items-center gap-3">
 {/* <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-[#b9a896] to-[#8f7e6b] flex items-center justify-center text-white font-semibold shadow-sm ">B</div> */}
-<div>
-<div className="text-lg font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">BankApp</div>
-<div className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">Gestion bancaire</div>
-</div>
+// <div>
+// <div className="text-lg font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">BankApp</div>
+// <div className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">Gestion bancaire</div>
+// </div>
+ <div className="w-10 h-10 rounded-lg bg-white shadow overflow-hidden flex items-center justify-center">
+            <img src={logo} alt="logo" className="w-8 h-8 object-contain" />
+          </div>
+          <div className="hidden sm:block">
+            <p className="font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">
+              BankRewmi
+            </p>
+            <p className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">
+              Sa Karàngué Koppar
+            </p>
+          </div>
 </div>
 <button onClick={() => { setOpen(false); if (onClose) onClose(); }} className="p-2 rounded hover:bg-beig-100 dark:hover:bg-beig-700" aria-label="Fermer le menu">
 <XMarkIcon className="w-5 h-5 text-beig-600 dark:text-beig-200" />
