@@ -3,154 +3,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Variables pour les couleurs */
-:root {
-  --bg-sidebar-light: #ffffff;
-  --bg-sidebar-dark: #111111;
-  --text-light: #6b5a49;
-  --text-dark: #f1e8dc;
-  --bg-accent-light: #f3e8d7;
-  --bg-accent-dark: #3a3a3a;
-  --hover-bg-light: #f5e0b1; /* Beige clair pour le survol */
-  --hover-bg-dark: #3a3a3a; /* Fond sombre pour le survol en mode sombre */
-  --button-bg-light: #f3e8d7;
-  --button-bg-dark: #333;
-  --button-hover-bg-light: #e1c49a;
-  --button-hover-bg-dark: #444;
-  --border-color-light: #d6c5a9;
-  --border-color-dark: #8f7e6b;
+/* Mode sombre */
+.dark .sidebar {
+  background-color: #111111; /* Fond sombre */
+  color: #f1e8dc; /* Texte clair */
+  border-right: 1px solid #8f7e6b; /* Bordure sombre */
 }
 
-/* Styles globaux pour la sidebar */
-.sidebar {
-  background-color: var(--bg-sidebar-light);
-  color: var(--text-light);
-  padding: 20px;
-  width: 300px;
-  transition: all 0.3s ease;
-  border-right: 1px solid var(--border-color-light);
+.dark .sidebar .sidebar-link {
+  color: #f1e8dc; /* Texte clair pour les liens */
 }
 
-.sidebar.dark {
-  background-color: var(--bg-sidebar-dark);
-  color: var(--text-dark);
-  border-right: 1px solid var(--border-color-dark);
+.dark .sidebar .sidebar-link:hover,
+.dark .sidebar .sidebar-link.active {
+  background-color: #3a3a3a; /* Fond sombre lors du survol ou actif */
+  color: white; /* Texte blanc lors du survol ou actif */
 }
 
-/* Styles pour les liens de la sidebar */
-.sidebar-nav a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  text-decoration: none;
-  color: var(--text-light);
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
+.dark .sidebar button {
+  background-color: #333; /* Fond sombre pour les boutons */
+  color: #f1e8dc; /* Texte clair pour les boutons */
 }
 
-.sidebar-nav a:hover,
-.sidebar-nav a.active {
-  background-color: var(--hover-bg-light);
-  color: white;
+.dark .sidebar button:hover {
+  background-color: #444; /* Hover sur les boutons sombres */
 }
 
-.sidebar.dark .sidebar-nav a:hover,
-.sidebar.dark .sidebar-nav a.active {
-  background-color: var(--hover-bg-dark);
+.dark .sidebar-nav {
+  background-color: #111111; /* Fond de la navigation en sombre */
 }
 
-/* Styles pour les boutons de déconnexion */
-button {
-  background-color: var(--button-bg-light);
-  color: var(--text-light);
-  padding: 12px 16px;
-  border-radius: 8px;
-  border: none;
-  font-size: 16px;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
+.dark .sidebar-nav a {
+  color: #f1e8dc; /* Texte clair pour les éléments de navigation */
 }
 
-button:hover {
-  background-color: var(--button-hover-bg-light);
+.dark .sidebar-nav a:hover {
+  background-color: #444; /* Fond plus foncé lors du survol */
+  color: white; /* Texte blanc lors du survol */
 }
 
-button.dark {
-  background-color: var(--button-bg-dark);
-  color: var(--text-dark);
+.dark .sidebar .text-xs,
+.dark .sidebar .text-lg {
+  color: #f1e8dc; /* Texte clair dans la sidebar */
 }
 
-button.dark:hover {
-  background-color: var(--button-hover-bg-dark);
+.dark .sidebar button {
+  background-color: #333; /* Fond pour les boutons en mode sombre */
+  color: #f1e8dc; /* Texte clair */
 }
 
-/* Styles pour les éléments du mobile */
-.sidebar.mobile {
-  background-color: var(--bg-sidebar-light);
-  border: none;
-}
-
-.sidebar.mobile.dark {
-  background-color: var(--bg-sidebar-dark);
-  color: var(--text-dark);
-}
-
-/* Fond mobile */
-.sidebar.mobile .overlay {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  transition: opacity 0.3s ease;
-}
-
-/* Styles pour les éléments de la sidebar mobile */
-.sidebar.mobile nav a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  text-decoration: none;
-  color: var(--text-light);
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-.sidebar.mobile .sidebar-nav a:hover,
-.sidebar.mobile .sidebar-nav a.active {
-  background-color: var(--hover-bg-light);
-  color: white;
-}
-
-.sidebar.mobile.dark .sidebar-nav a:hover,
-.sidebar.mobile.dark .sidebar-nav a.active {
-  background-color: var(--hover-bg-dark);
-}
-
-.sidebar.mobile button {
-  background-color: var(--button-bg-light);
-  color: var(--text-light);
-  padding: 12px 16px;
-  border-radius: 8px;
-  border: none;
-  font-size: 16px;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-.sidebar.mobile button:hover {
-  background-color: var(--button-hover-bg-light);
-}
-
-.sidebar.mobile button.dark {
-  background-color: var(--button-bg-dark);
-  color: var(--text-dark);
-}
-
-.sidebar.mobile button.dark:hover {
-  background-color: var(--button-hover-bg-dark);
+.dark .sidebar button:hover {
+  background-color: #444; /* Hover foncé pour les boutons */
 }
