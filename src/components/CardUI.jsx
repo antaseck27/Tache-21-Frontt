@@ -21,10 +21,10 @@ export default function CardUI({ compte }) {
       <div className="flex justify-between">
         <div>
           <p className="text-xs uppercase tracking-widest opacity-80">
-            Compte Courant
+            BANK REWMI
           </p>
           <p className="text-sm font-semibold">
-            {compte.name}
+            carte bancaire
           </p>
         </div>
 
