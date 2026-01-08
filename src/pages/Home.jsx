@@ -180,7 +180,7 @@ export default function Home() {
       </section>
 
       {/* ======================= AVIS CLIENTS ======================= */}
-      <section className="px-8 md:px-20 py-24 bg-[#f7f3ee]">
+      <section className="px-8 md:px-20 py-24 bg-white">
         <h2 className="text-4xl font-bold text-center mb-12 text-[#5a4a3a]">Ils nous font confiance</h2>
         <div className="grid md:grid-cols-3 gap-10">
           {[
