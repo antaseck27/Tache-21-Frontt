@@ -230,12 +230,12 @@ const services = [
               {beneficiaires.map((b) => {
                 const service = services.find((s) => s.id === b.service);
                 return (
-                  <div key={b._id} className="flex justify-between items-center bg-[#faf7f2] dark:bg-neutral-700 p-4 rounded-xl mb-3">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl   rounded-full bg-[#6b4f2c] text-white flex items-center justify-center">{service.icon}</div>
+                  <div key={b._id} className="rounded-xl flex justify-between items-center bg-[#faf7f2] dark:bg-neutral-700 p-4 rounded-xl mb-3">
+                    <div className=" rounded-xl flex items-center gap-4">
+                      <div className="w-10 h-10   rounded-full bg-[#6b4f2c] text-white flex items-center justify-center">{service.icon}</div>
                       <div>
-                        <p className=" rounded-xl font-medium text-[#6b4f2c] dark:text-white">{b.nom}</p>
-                        <p className=" rounded-xl text-sm text-gray-500">{b.type}</p>
+                        <p className="  font-medium text-[#6b4f2c] dark:text-white">{b.nom}</p>
+                        <p className="  text-sm text-gray-500">{b.type}</p>
                       </div>
                     </div>
                     <button onClick={() => openPaymentFromBenef(b)} className="bg-gradient-to-br from-[#b9a896] to-[#8f7e6b] text-white px-4 py-2 rounded-xl">Payer</button>
