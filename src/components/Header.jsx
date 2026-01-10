@@ -347,9 +347,9 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
             <img src={logo} alt="logo" className="w-8 h-8 object-contain" />
           </div>
           <div className="hidden sm:block">
-            <p className="font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">
+            {/* <p className="font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">
               BankRewmi
-            </p>
+            </p> */}
             {/* <p className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">
               Sa Karàngué Koppar
             </p> */}
