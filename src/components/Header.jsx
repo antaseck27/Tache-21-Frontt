@@ -350,9 +350,9 @@ export default function Header({ onOpenSidebar, darkMode, setDarkMode }) {
             <p className="font-semibold text-[#6b5a49] dark:text-[#f1e8dc]">
               BankRewmi
             </p>
-            <p className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">
+            {/* <p className="text-xs text-[#8f7e6b] dark:text-[#d6c5a9]">
               Sa Karàngué Koppar
-            </p>
+            </p> */}
           </div>
         </Link>
 
